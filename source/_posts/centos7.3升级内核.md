@@ -4,12 +4,9 @@ date: 2017-09-19 18:13:37
 categories: centos
 tags: [centos,内核]
 ---
-###  阿里云centos7.3升级内核
-
 ### centos7.3升级内核
 
 ```shell
-
 #查看内核版本
 uname -a
 uname -r

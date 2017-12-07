@@ -38,6 +38,8 @@ nslookup my-web
 nslookup tasks.my-web
 #从busybox容器内部，通过wget来访问my-web服务中运行的nginx网页服务器
 wget -O- my-web
+#增加实例
+docker service update my-busybox --replicas 2
 ```
 
 #### 参考

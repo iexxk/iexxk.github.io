@@ -96,3 +96,8 @@ docker node update --availability active moby
 
 ###### 参考[Use swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/)
 
+  ```json
+{
+  "registry-mirrors": ["https://rq98iipq.mirror.aliyuncs.com"]
+}
+  ```
