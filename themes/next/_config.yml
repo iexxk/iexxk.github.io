@@ -400,7 +400,7 @@ gitment:
   cleanly: false # Hide 'Powered by ...' on footer, and more
   language: # Force language, or auto switch by theme
   github_user: xuanfong1 # MUST HAVE, Your Github ID
-  github_repo: hexo # MUST HAVE, The repo you use to store Gitment comments
+  github_repo: xuanfong1.github.io # MUST HAVE, The repo you use to store Gitment comments
   client_id: ff47a05197bc142b8dc0 # MUST HAVE, Github client id for the Gitment
   client_secret: b52d05ee5566230edfcf653efab9fd9fce6756c8 # EITHER this or proxy_gateway, Github access secret token for the Gitment
   proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
