@@ -2,22 +2,6 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
-# Head images set
-avatar: /uploads/headimg.jpg
-
-#Duoshuo ShortName
-duoshuo_shortname: xuanfong1
-
-# Share
-#jiathis: true
-
-# Swiftype Search API Key
-#swiftype_key: p2epiQzikbahcyZ3nPpD
-
-search:
-  path: search.xml
-  field: post
-
 # Site
 title: e想行空
 subtitle:
@@ -58,7 +42,16 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-
+  
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+  
 # Category & Tag
 default_category: uncategorized
 category_map:
