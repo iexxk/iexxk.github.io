@@ -146,7 +146,8 @@ links_layout: block
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-#avatar: /images/avatar.gif
+#设置头像
+avatar: /uploads/headimg.jpg
 
 # Table Of Contents in the Sidebar
 toc:
@@ -234,10 +235,12 @@ post_wordcount:
   #description: ex. subscribe to my blog by scanning my public wechat account
 
 # Reward
-#reward_comment: Donate comment here
-#wechatpay: /images/wechatpay.jpg
-#alipay: /images/alipay.jpg
+reward_comment: e想天开，天马行空
+wechatpay: /uploads/wechatpay.png
+alipay: /uploads/alipay.jpg
 #bitcoin: /images/bitcoin.png
+
+
 
 # Declare license on posts
 post_copyright:
