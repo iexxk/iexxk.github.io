@@ -2,6 +2,10 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
+search:
+  path: search.xml
+  field: post
+
 # Site
 title: e想行空
 subtitle:
