@@ -20,3 +20,26 @@ sudo apt install docker-ce=17.09.1~ce-0~ubuntu
 
    解决降级版本17.09.1解决
 
+
+#### 挂载卷Volume与Bind
+
+##### Volume 数据卷
+
+会把container的一个目录映射到一个数据卷，一个目录只能映射一个数据卷，不需要新建目录
+
+```mermaid
+graph LR
+A[containner目录] --> |映射| B[数据卷]
+```
+
+##### Bind 绑定本地目录
+
+container的一个目录会加载本地目录，因此需要在本地提前新建该目录，不然启动会找不到目录
+
+```mermaid
+graph LR
+A[本地目录] --> |指向| B[containner目录]
+```
+
+
+

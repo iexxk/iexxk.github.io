@@ -21,3 +21,14 @@ sql语句跳转生成
 
 #### Lombok
 
+
+
+#### checkstyle
+
+
+
+
+
+### 参考
+
+[JAVA后端工作流推荐三--IDEA安装Checkstyle、FindBugs、Markdown等插件及其使用](http://blog.dxscx.com/2017/01/05/idea-plugins/)
