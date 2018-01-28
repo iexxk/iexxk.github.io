@@ -1,7 +1,7 @@
 ---
 title: github博客之更新完善
 date: 2017-12-07 18:16:37
-categories: 杂谈
+updated: 2017-12-13 12:06:35categories: 杂谈
 tags: [github,hexo,Travis,WSL]
 ---
 
@@ -46,7 +46,7 @@ hexo g && hexo s
 ```properties
   #菜单
   tags: /tags/ || tags
-  categories: /categories/ || th
+  updated: 2017-12-13 12:06:35categories: /categories/ || th
   #样式
   scheme: Pisces
   #评论

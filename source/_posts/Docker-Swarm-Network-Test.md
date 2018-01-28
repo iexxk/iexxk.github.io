@@ -1,7 +1,7 @@
 ---
 title: Docker集群之Swarm网络测试
 date: 2017-09-19 17:27:37
-categories: Docker
+updated: 2017-12-13 12:06:35categories: Docker
 tags: [集群,Swarm,docker,nginx,overlay,ingress]
 ---
 ### Swarm 网络连通测试

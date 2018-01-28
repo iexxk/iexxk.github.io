@@ -1,7 +1,7 @@
 ---
 title: SSM实战之用户登陆流程
 date: 2017-05-17 17:42:28
-categories: JavaEE
+updated: 2017-07-03 23:25:16categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,实战]
 ---
 

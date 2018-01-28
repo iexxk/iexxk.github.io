@@ -1,7 +1,7 @@
 ---
 title: android自定义标题栏Toolbar
 date: 2016-08-30 16:17:33
-categories: Android
+updated: 2017-07-03 23:11:59categories: Android
 tags: [v7,标题栏]
 ---
 ### 新建一个xml,放标题内容

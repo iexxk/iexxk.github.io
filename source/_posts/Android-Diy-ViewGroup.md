@@ -1,7 +1,7 @@
 ---
 title: viewGroup自定义控件
 date: 2016-12-13 16:48:12
-categories: Android
+updated: 2017-07-03 23:18:29categories: Android
 tags: [viewGroup,卫星菜单，测量]
 ---
 ## 自定义控件的基本使用

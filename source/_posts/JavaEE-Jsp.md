@@ -1,7 +1,7 @@
 ---
 title: JSP基础语法
 date: 2017-03-06 11:47:27
-categories: JavaEE
+updated: 2017-12-13 11:25:52categories: JavaEE
 tags: [jsp,基础,入门,语法]
 ---
 ### 什么是jsp

@@ -1,7 +1,7 @@
 ---
 title: Android分包(MultiDex)后编译加速方案
 date: 2016-08-25 09:45:12
-categories: Android
+updated: 2017-12-13 10:37:19categories: Android
 tags: [MultiDex,编译,android studio]
 ---
 

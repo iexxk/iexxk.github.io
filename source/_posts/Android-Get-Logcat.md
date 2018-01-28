@@ -1,7 +1,7 @@
 ---
 title: Android抓Logcat
 date: 2016-08-24 10:58:31
-categories: Android
+updated: 2017-07-03 22:16:10categories: Android
 tags: [adb,logcat]
 ---
 # 定位adb的路径

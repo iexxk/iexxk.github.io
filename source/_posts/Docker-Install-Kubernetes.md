@@ -1,7 +1,7 @@
 ---
 title: Docker集群之安装Kubernetes
 date: 2017-09-14 10:07:37
-categories: Docker
+updated: 2017-12-13 11:09:11categories: Docker
 tags: [集群,k8s,docker,kubectl,Minikube]
 ---
 # kubectl安装

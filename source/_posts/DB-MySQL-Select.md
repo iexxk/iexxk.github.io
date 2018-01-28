@@ -1,7 +1,7 @@
 ---
 title: 数据库MySQL之查询
 date: 2017-06-27 20:14:28
-categories: 数据库
+updated: 2017-06-27 21:50:39categories: 数据库
 tags: [基础,数据库,面试]
 ---
 

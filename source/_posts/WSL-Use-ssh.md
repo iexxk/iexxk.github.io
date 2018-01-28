@@ -1,7 +1,7 @@
 ---
 title: WSL使用ssh
 date: 2017-11-22 22:12:28
-categories: WSL
+updated: 2017-12-13 11:00:13categories: WSL
 tags: [ssh,ubuntu,sshd]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: idea+maven+ssm框架之springMVC配置
 date: 2017-05-04 13:16:28
-categories: JavaEE
+updated: 2017-05-04 17:15:33categories: JavaEE
 tags: [JavaEE,idea,maven,Spring,SpringMVC,MyBatis,ssm框架]
 ---
 

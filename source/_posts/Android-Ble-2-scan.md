@@ -1,7 +1,7 @@
 ---
 title: Ble蓝牙开发之二搜索
 date: 2016-08-24 16:35:45
-categories: Android
+updated: 2017-12-13 12:09:57categories: Android
 tags: [Ble,搜索]
 ---
 # 添加权限

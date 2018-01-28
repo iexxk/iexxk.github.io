@@ -1,7 +1,7 @@
 ---
 title: Retrofit学习之二请求json
 date: 2016-08-25 12:52:21
-categories: Retrofit
+updated: 2016-08-26 14:25:13categories: Retrofit
 tags: [网络框架,Retrofit]
 ---
 # 创建json对应得实体类

@@ -1,7 +1,7 @@
 ---
 title: EasyUi的使用
 date: 2017-12-14 18:33:27
-categories: JavaEE
+updated: 2017-12-27 14:34:07categories: JavaEE
 tags: [jsp,EasyUi,ComboBox]
 ---
 ### [EasyUi Demo](https://www.jeasyui.com/demo/main/index.php)

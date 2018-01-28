@@ -1,7 +1,7 @@
 ---
 title: app图标分辨率适配
 date: 2016-09-21 14:17:36
-categories: Android
+updated: 2017-07-03 23:13:13categories: Android
 tags: [图标,dpi,适配]
 ---
 ### 启动图标

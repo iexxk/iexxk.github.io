@@ -1,7 +1,7 @@
 ---
 title: greenDAO3.1框架（三）常用注解
 date: 2016-08-27 10:33:45
-categories: greenDAO
+updated: 2016-11-29 16:20:10categories: greenDAO
 tags: [greenDAO,ORM]
 ---
 ### 类注解

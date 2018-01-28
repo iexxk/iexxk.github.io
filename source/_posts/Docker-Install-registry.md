@@ -1,7 +1,7 @@
 ---
 title: Docker集群之安装Swarm
 date: 2018-01-24 16:17:37
-updated: 2018-01-25 16:18:54
+updated: 2018-01-25 17:40:32
 categories: Docker
 tags: [集群,Swarm,Docker,registry]
 ---

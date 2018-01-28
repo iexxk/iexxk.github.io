@@ -1,7 +1,7 @@
 ---
 title: frp内网穿透
 date: 2017-09-07 09:39:38
-categories: 网络
+updated: 2017-12-13 12:06:35categories: 网络
 tags: [frp,集群,网络代理,局域网远程访问]
 ---
 # fatedier[/frp](https://github.com/fatedier/frp)

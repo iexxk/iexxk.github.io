@@ -1,7 +1,7 @@
 ---
 title: Docker 制作 gitlabRunner+gradle镜像
 date: 2018-01-17 23:40:37
-categories: Docker
+updated: 2018-01-18 13:47:39categories: Docker
 tags: [docker,gitlab,runner,gradle,java]
 ---
 ### gitlabRunner 镜像

@@ -1,7 +1,7 @@
 ---
 title: RxJava概念(1)
 date: 2016-09-08 17:15:44
-categories: RxJava
+updated: 2017-07-03 23:17:00categories: RxJava
 tags: [异步,RxJava,简洁,观察者]
 ---
 ### button点击事件

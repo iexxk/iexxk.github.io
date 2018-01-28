@@ -1,7 +1,7 @@
 ---
 title: idea之mybatis插件安装注册
 date: 2017-09-08 17:33:28
-categories: 工具
+updated: 2017-12-13 12:06:35categories: 工具
 tags: [JavaEE,idea,MyBatis]
 ---
 

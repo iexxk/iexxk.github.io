@@ -1,7 +1,7 @@
 ---
 title: greenDAO3.1框架（二）入门
 date: 2016-08-27 10:33:45
-categories: greenDAO
+updated: 2016-08-27 13:34:19categories: greenDAO
 tags: [greenDAO,ORM]
 ---
 # 主流的ORM框架

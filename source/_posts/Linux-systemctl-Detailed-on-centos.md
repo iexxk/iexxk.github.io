@@ -1,7 +1,7 @@
 ---
 title: centos7 systemctl服务详解
 date: 2017-12-05 13:56:37
-categories: Linux
+updated: 2017-12-12 17:13:44categories: Linux
 tags: [centos,systemd,service]
 ---
 ### 介绍

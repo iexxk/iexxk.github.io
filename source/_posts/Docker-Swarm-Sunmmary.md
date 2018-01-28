@@ -1,7 +1,7 @@
 ---
 title: Docker swarm搭建总结
 date: 2017-12-05 16:12:37
-categories: Docker
+updated: 2018-01-28 13:23:11categories: Docker
 tags: [集群,Swarm,Docker]
 ---
 
@@ -40,6 +40,30 @@ container的一个目录会加载本地目录，因此需要在本地提前新�
 graph LR
 A[本地目录] --> |指向| B[containner目录]
 ```
+
+
+
+## 方案选型与测试
+
+方案有
+
+- Flannel
+
+- Open vSwitch
+
+  http://dockone.io/article/228
+
+- Weave
+
+- pipework
+
+- libnetwork
+
+  [Docker Libnetwork 使用](http://dockone.io/article/1100)
+
+- 动态路由
+
+  [一条命令取代etcd+flannel，全网贯通无需端口映射](http://dockone.io/article/466)
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: JavaEE之MVC目录结构
 date: 2017-03-17 10:20:28
-categories: JavaEE
+updated: 2017-05-01 22:17:34categories: JavaEE
 tags: [JavaEE,环境搭建,MVC]
 ---
 

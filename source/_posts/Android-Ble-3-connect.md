@@ -1,7 +1,7 @@
 ---
 title: Ble蓝牙开发之三连接
 date: 2016-08-24 17:31:57
-categories: Android
+updated: 2017-12-13 12:10:07categories: Android
 tags: [Ble,连接]
 ---
 # 蓝牙连接

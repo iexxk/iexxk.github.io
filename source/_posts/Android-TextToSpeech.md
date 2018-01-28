@@ -1,7 +1,7 @@
 ---
 title: android之文本转语音
 date: 2016-09-06 13:29:28
-categories: Android
+updated: 2017-07-03 23:12:31categories: Android
 tags: [android组件,TextToSpeech]
 ---
 # android 系统自带了文本转语音的功能

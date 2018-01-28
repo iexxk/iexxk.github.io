@@ -1,7 +1,7 @@
 ---
 title: linux脚本
 date: 2017-12-29 17:25:52
-categories: Linux
+updated: 2017-12-29 18:41:49categories: Linux
 tags: [linux,脚本]
 ---
 ## shell基础知识

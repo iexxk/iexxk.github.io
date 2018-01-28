@@ -1,7 +1,7 @@
 ---
 title: Docker集群之Docker-machine使用
 date: 2017-10-10 10:25:37
-categories: Docker
+updated: 2017-12-13 12:06:35categories: Docker
 tags: [集群,Swarm,docker,nginx,overlay,ingress]
 ---
 ### Docker-machine

@@ -1,7 +1,7 @@
 ---
 title: Mybatis Generator Example使用
 date: 2017-12-14 16:26:28
-categories: JavaEE
+updated: 2017-12-14 16:27:33categories: JavaEE
 tags: [java,Mybatis]
 ---
 

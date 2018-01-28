@@ -1,7 +1,7 @@
 ---
 title: Ble蓝牙开发之五扫描与连接速度优化
 date: 2016-08-30 09:06:44
-categories: Android
+updated: 2017-12-13 12:10:25categories: Android
 tags: [Ble,优化]
 ---
 # 扫描模式
