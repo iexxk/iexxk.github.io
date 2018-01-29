@@ -1,7 +1,7 @@
 ---
 title: ubuntu14.04 使用 idea
 date: 2017-02-28 09:32:53
-updated: 2017-12-12 18:30:42categories: 工具
+updated: 2018-01-28 21:41:27categories: 工具
 tags: [idea,tomcat,Ubuntu]
 ---
 ### 常见问题

@@ -1,7 +1,7 @@
 ---
 title: github博客之Travis自动部署Hexo
 date: 2017-12-07 18:16:37
-updated: 2017-12-07 18:38:01categories: 杂谈
+updated: 2018-01-28 21:41:27categories: 杂谈
 tags: [github,hexo,Travis]
 ---
 

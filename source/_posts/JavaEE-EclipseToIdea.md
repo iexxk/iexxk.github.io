@@ -1,7 +1,7 @@
 ---
 title: eclipse项目导入idea
 date: 2017-04-20 20:57:28
-updated: 2017-05-01 17:42:35categories: JavaEE
+updated: 2018-01-28 21:41:27categories: JavaEE
 tags: [JavaEE,idea,项目移植]
 ---
 

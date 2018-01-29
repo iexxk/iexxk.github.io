@@ -1,7 +1,7 @@
 ---
 title: win10下JavaEE之环境搭建
 date: 2017-03-15 10:20:28
-updated: 2017-04-01 23:27:52categories: JavaEE
+updated: 2018-01-28 21:41:27categories: JavaEE
 tags: [JavaEE,环境搭建,基础]
 ---
 

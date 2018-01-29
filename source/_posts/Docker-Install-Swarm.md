@@ -1,7 +1,7 @@
 ---
 title: Docker集群之安装Swarm
 date: 2017-09-14 10:07:37
-updated: 2017-12-13 10:37:19categories: Docker
+updated: 2018-01-28 21:41:27categories: Docker
 tags: [集群,Swarm,Docker]
 ---
 ### [Docker Swarm](https://docs.docker.com/engine/swarm/)官网

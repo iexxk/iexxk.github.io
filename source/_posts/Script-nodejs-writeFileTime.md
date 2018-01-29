@@ -1,9 +1,9 @@
 ---
 title: 批量写入文件的修改时间
 date: 2018-01-28 22:05:33
-updated: 2018-01-28 22:05:33
+updated: 2018-01-29 22:39:30
 categories: script
-tags: [script,npm,nodejs,file]
+tags: [script,npm,nodejs,file,hexo]
 ---
 
 ### 环境

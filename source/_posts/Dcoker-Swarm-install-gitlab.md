@@ -1,7 +1,7 @@
 ---
 title: dcoker swarm安装gitlab
 date: 2017-12-11 14:54:37
-updated: 2017-12-13 12:48:23categories: Docker
+updated: 2018-01-28 21:41:27categories: Docker
 tags: [docker swarm,gitlab]
 ---
 

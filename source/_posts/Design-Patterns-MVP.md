@@ -1,7 +1,7 @@
 ---
 title: 设计模式之MVP
 date: 2016-12-16 17:13:05
-updated: 2016-12-16 17:23:07categories: 设计模式
+updated: 2018-01-28 21:41:27categories: 设计模式
 tags: [框架,mvp,rxjava,单元测试]
 ---
 ### 参考链接

@@ -1,7 +1,7 @@
 ---
 title: android stuido 常用插件
 date: 2016-09-22 14:11:05
-updated: 2017-12-13 11:35:58categories: 工具
+updated: 2018-01-28 21:41:27categories: 工具
 tags: [android studio,插件]
 ---
 ### 快速初始画布局id

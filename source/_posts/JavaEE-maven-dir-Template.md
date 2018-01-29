@@ -1,7 +1,7 @@
 ---
 title: idea ssm 目录结构
 date: 2017-05-04 17:16:28
-updated: 2017-05-04 18:17:30categories: JavaEE
+updated: 2018-01-28 21:41:27categories: JavaEE
 tags: [JavaEE,idea,maven]
 
 ---
