@@ -1,7 +1,7 @@
 ---
 title: idea+gradle+ssm框架之整合模板
 date: 2017-05-09 08:16:28
-updated: 2017-05-17 17:39:43categories: JavaEE
+updated: 2018-01-28 21:41:27categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,ssm框架]
 ---
 

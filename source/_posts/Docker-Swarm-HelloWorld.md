@@ -1,7 +1,7 @@
 ---
 title: Docker Swarm之HelloWorld
 date: 2017-12-05 13:56:37
-updated: 2017-12-13 12:06:35categories: Docker
+updated: 2018-01-28 21:41:27categories: Docker
 tags: [集群,Swarm,Docker,nginx,overlay,ingress]
 ---
 ### 服务发现
