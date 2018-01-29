@@ -1,7 +1,7 @@
 ---
 title: jsp自定义模板（解决样式改变问题）
 date: 2017-06-09 21:14:28
-updated: 2017-07-03 23:25:58categories: JavaEE
+updated: 2018-01-28 21:41:27categories: JavaEE
 tags: [idea,jsp,DOCTYPE]
 ---
 

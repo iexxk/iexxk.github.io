@@ -1,7 +1,7 @@
 ---
 title: centos7.3升级内核
 date: 2017-09-19 18:13:37
-updated: 2017-12-13 11:08:05categories: Linux
+updated: 2018-01-28 21:41:27categories: Linux
 tags: [centos,内核]
 ---
 ### centos7.3升级内核
