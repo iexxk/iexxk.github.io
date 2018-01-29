@@ -1,7 +1,7 @@
 ---
 title: JavaEE之数据库基础
 date: 2017-06-20 13:14:28
-updated: 2017-12-13 12:06:35categories: 数据库
+updated: 2018-01-28 21:41:27categories: 数据库
 tags: [基础,数据库,面试]
 ---
 
