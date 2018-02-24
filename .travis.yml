@@ -6,7 +6,7 @@ install:
   - npm install
   - npm install hexo-generator-sitemap --save
   - npm install hexo-generator-baidu-sitemap --save
-  - gem install faraday activesupport sitemap-parser
+#  - gem install faraday activesupport sitemap-parser
 
 script:
   - hexo cl
