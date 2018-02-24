@@ -19,6 +19,7 @@ after_script:
   - git add .
   - git commit -m "update"
   - git push --force --quiet "https://${BLOG_GITHUB}@${GH_REF}" master:master
+  - ls
   - ruby comment.rb ${BLOG_GITHUB}
 
 branches:
