@@ -8,7 +8,6 @@ install:
   - npm install hexo-generator-baidu-sitemap --save
 
 script:
-  - ruby -v
   - hexo cl
   - hexo g
 
@@ -20,6 +19,7 @@ after_script:
   - git add .
   - git commit -m "update"
   - git push --force --quiet "https://${BLOG_GITHUB}@${GH_REF}" master:master
+  - ruby comment.rb ${BLOG_GITHUB}
 
 branches:
   only:
