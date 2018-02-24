@@ -90,7 +90,10 @@ tags: [hexo,bolg,gitment,ruby]
       - GH_REF: github.com/xuanfong1/xuanfong1.github.io.git
    ```
 
-   ​
+
+##### 不足
+
+会初始化多余的评论，例如目录页，没做过滤
 
 ##### 错误解决
 
@@ -107,7 +110,8 @@ tags: [hexo,bolg,gitment,ruby]
    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
    ```
 
-   ​
 
 
+##### 参考
 
+[自动初始化 Gitalk 和 Gitment 评论](https://draveness.me/git-comments-initialize)
