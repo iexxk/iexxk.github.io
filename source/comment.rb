@@ -10,6 +10,8 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'sitemap-parser'
 
+puts"Token #{new_token}"
+
 sitemap = SitemapParser.new sitemap_url
 urls = sitemap.to_a
 
