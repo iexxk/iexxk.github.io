@@ -14,7 +14,7 @@ sitemap = SitemapParser.new sitemap_url
 urls = sitemap.to_a
 
 conn = Faraday.new(:url => "https://api.github.com/repos/#{username}/#{repo_name}/issues") do |conn|
-  conn.basic_auth(username, token)
+  conn.basic_auth(username, new_token)
   conn.adapter  Faraday.default_adapter
 end
 
