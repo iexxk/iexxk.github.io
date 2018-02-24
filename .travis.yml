@@ -20,7 +20,7 @@ after_script:
   - git add .
   - git commit -m "update"
   - git push --force --quiet "https://${BLOG_GITHUB}@${GH_REF}" master:master
-  - ruby comment.rb ${GITMENT}
+#  - ruby comment.rb ${GITMENT}
 
 branches:
   only:

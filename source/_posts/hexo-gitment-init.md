@@ -1,12 +1,14 @@
 ---
 title: hexo-gitment-init
 date: 2018-02-24 14:33:54
-updated: 2018-02-24 15:04:28
+updated: 2018-02-24 15:30:16
 categories: 杂谈
 tags: [hexo,bolg,gitment,ruby]
 ---
 
 ## 自动初始化gitment评论
+
+**暂时不采用，见不足。**
 
 #### 需求
 
@@ -93,7 +95,10 @@ tags: [hexo,bolg,gitment,ruby]
 
 ##### 不足
 
-会初始化多余的评论，例如目录页，没做过滤
+1. 会初始化多余的评论，例如目录页，没做过滤
+2. 编译时间长
+3. 相同issues可以创建多次，而且官方没提供删除接口
+4. 概率性出现验证失败
 
 ##### 错误解决
 
