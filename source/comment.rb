@@ -1,5 +1,5 @@
 username = "xuanfong1" # GitHub 用户名
-new_token = "27f372f919042696750e35948f9aa25f8124561d"  # GitHub Token
+new_token = ARGV.first  # GitHub Token
 repo_name = "xuanfong1.github.io" # 存放 issues
 sitemap_url = "http://bolg.iexxk.com/sitemap.xml" # sitemap
 kind = "gitment" # "Gitalk" or "gitment"
