@@ -1,5 +1,5 @@
 ---
-title: Docker集群之安装Swarm
+title: Docker安装Registry
 date: 2018-01-24 16:17:37
 updated: 2018-01-28 21:46:05
 categories: Docker
