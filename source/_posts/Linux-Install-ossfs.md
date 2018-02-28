@@ -30,6 +30,15 @@ ossfs 能让您在Linux/Mac OS X 系统中把Aliyun OSS bucket 挂载到本地�
 
 6. 挂载`ossfs ossfs-xuan /ossfs -ourl=oss-cn-shenzhen-internal.aliyuncs.com`
 
+#### 额外的命令
+
+```bash
+#允许linux其他用户对改oss文件系统进行操作
+ossfs ossfs-xuan /ossfs -ourl=oss-cn-shenzhen-internal.aliyuncs.com -o allow_other
+#卸载挂载oss目录
+umount /ossfs
+```
+
 #### 错误
 
 `InvalidBucketName`错误可以看出BucketName重复了

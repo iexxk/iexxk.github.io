@@ -1,7 +1,7 @@
 ---
 title: Docker安装Registry
 date: 2018-01-24 16:17:37
-updated: 2018-01-28 21:46:05
+updated: 2018-02-26 14:31:49
 categories: Docker
 tags: [集群,Swarm,Docker,registry]
 ---
