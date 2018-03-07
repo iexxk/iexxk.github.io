@@ -1,0 +1,93 @@
+---
+title: centos7 安装 GlusterFS
+date: 2018-03-07 15:45:22
+updated: 2018-03-07 15:45:22
+categories: Linux
+tags: [Linux,GlusterFS]
+---
+
+#### 介绍
+
+**[Gluster](https://www.gluster.org/)**是一个大尺度文件系统。
+
+##### 主要功能
+
+###### 简单卷
+
+1. distribute volume 分布式卷，两台主机的磁盘融合一个磁盘
+2. stripe volume 条带卷，一个文件分成数据块存储到不同的地方
+3. replica volume 复制卷，一个文件分别保存到两台主机
+
+###### 复合卷
+
+1+2，1+3，2+3，1+2+3
+
+#### 安装
+
+准备工作：
+
+三台局域网主机（[centos7 修改主机名 ](http://jingyan.baidu.com/article/29697b915a5376ab20de3cc2.html)）
+
+| hostname | ip        | 备注 |
+| -------- | --------- | ---- |
+| xuanps   | 10.14.0.1 |      |
+| worker   | 10.14.0.4 |      |
+| home     | 10.14.0.5 |      |
+
+三台都需要安装GlusterFS
+
+```bash
+#搜索glusterfs可安装的版本
+yum search centos-release-gluster
+#安装最新长期稳定版本(Long Term Stable)的gluster软件
+yum -y install centos-release-gluster
+#安装glusterfs-server
+yum --enablerepo=centos-gluster*-test install glusterfs-server
+glusterfs -V #测试
+systemctl enable glusterd #开机启动
+systemctl start glusterd #启动
+systemctl status glusterd #查看是否正常运行
+#修改hosts不然不能通过主机名连接到对方
+vim /etc/hosts
+#----------三台都要添加如下设置--------------------------
+10.14.0.1 xuanps
+10.14.0.4 worker
+10.14.0.5 home
+#------------------------------------------------------
+#从xuanps上执行下面两条，其他主机不用执行
+gluster peer probe worker
+gluster peer probe home
+#三台都执行该命令是否都是connected
+gluster peer status
+#查看挂载卷信息
+gluster volume info
+#创建挂在卷，force忽略在root目录创建挂在卷的警告
+gluster volume create volume-name replica 3 worker:/xuan/docker/gluster-volume/test home:/xuan/docker/gluster-volume/test xuanps:/xuan/docker/gluster-volume/test force
+#启动
+gluster volume start volume-name
+#启动nfs同步，测试需验证，这里要不要开启
+gluster volume set volume-name nfs.disable off
+#挂载本地目录到glusterfs卷（volume-name），在本地目录添加的会自动同步到其他挂载卷
+#eg在本机mnt添加文件，其他volume-name目录也会添加
+mount -t glusterfs worker:/volume-name /mnt/
+```
+
+
+
+
+
+
+
+
+
+
+
+#### 参考
+
+官网：[https://www.gluster.org/](https://www.gluster.org/)
+
+[文档](http://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/)
+
+[centos官方安装手册](https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart)
+
+[基于 GlusterFS 实现 Docker 集群的分布式存储](https://www.ibm.com/developerworks/cn/opensource/os-cn-glusterfs-docker-volume/index.html)
