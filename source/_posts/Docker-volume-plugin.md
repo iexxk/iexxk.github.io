@@ -1,7 +1,7 @@
 ---
 title: Docker-volume-plugin
 date: 2018-03-04 22:30:39
-updated: 2018-03-12 00:40:10
+updated: 2018-03-12 10:13:23
 categories: Docker
 tags: [Docker,volume]
 ---
@@ -10,9 +10,9 @@ tags: [Docker,volume]
 
 前提，首先安装好GlusterFS分布式文件系统，可以参考[centos7 安装 GlusterFS]()
 
-#### [sapk/docker-volume-gluster](https://github.com/sapk/docker-volume-gluster)安装
+#### [sapk/docker-volume-gluster](https://github.com/sapk/docker-volume-gluster)安装(弃)
 
-不足：无法删除volume
+不足：无法删除volume，且无法复用
 
 ```bash
 #安装插件，三台主机都安装（保险起见）
