@@ -1,7 +1,8 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2018-01-28 21:41:27categories: Docker
+updated: 2018-03-11 17:47:54
+categories: Docker
 tags: [docker,docker-compose]
 ---
 #### 常用命令
@@ -61,7 +62,8 @@ sudo systemctl restart docker
 #等效于添加daemon.json文件
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://*****.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://*****.mirror.aliyuncs.com"],
+  "hots":["unix:///var/run/docker.sock"]
 }
 EOF
 ```
@@ -70,7 +72,7 @@ EOF
 
 ###### 方法1
 
-在daemo.json添加`"hots":["tcp://0.0.0.0:2375","unix:///var/run/docker.sock"]`
+在daemo.json添加`"hosts":["tcp://0.0.0.0:2375","unix:///var/run/docker.sock"]`
 
 hosts 分tcp,uninx,fd三种模式，第一中时tcp指定网络连接方式，0.0.0.0:2375是指所有网络都可以连接，不安全，因此一般会加上stl证书形式，这里我用的局域网，所有没有加证书，第二种uninx时指本地可以自由连接docker，第三种，理解不是很清楚，不发表见解
 

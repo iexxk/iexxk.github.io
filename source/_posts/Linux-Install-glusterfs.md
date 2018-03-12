@@ -1,7 +1,7 @@
 ---
 title: centos7 安装 GlusterFS
 date: 2018-03-07 15:45:22
-updated: 2018-03-07 15:45:22
+updated: 2018-03-11 19:05:29
 categories: Linux
 tags: [Linux,GlusterFS]
 ---
@@ -21,6 +21,29 @@ tags: [Linux,GlusterFS]
 ###### 复合卷
 
 1+2，1+3，2+3，1+2+3
+
+#### 总结常用命令
+
+```bash
+gluster peer status     #查看集群各主机连接状态
+gluster volume list    #查看挂载卷信息
+gluster volume list #查看卷列表
+#创建挂在卷，force忽略在root目录创建挂在卷的警告
+gluster volume create swarm-volume replica 3 worker:/xuan/docker/gluster-volume home:/xuan/docker/gluster-volume xuanps:/xuan/docker/gluster-volume force
+gluster volume start swarm-volume #启动
+gluster volume stop swarm-volume #停止
+gluster volume delete swarm-volume #删除 ，了文件还会保留
+#挂载本地目录到glusterfs卷（swarm-volume），在本地目录添加的会自动同步到其他挂载卷
+#eg在本机mnt添加文件，其他volume-name目录也会添加mount [-参数] [设备名称] [挂载点]
+mount -t glusterfs worker:/swarm-volume /mnt/
+umount worker:/swarm-volume  #卸载了就不会同步了
+#重置，删除所有数据
+systemctl stop glusterd
+rm -rf /var/lib/glusterd/
+systemctl start glusterd
+#删除节点
+gluster peer detach home
+```
 
 #### 安装
 
@@ -71,16 +94,6 @@ gluster volume set volume-name nfs.disable off
 #eg在本机mnt添加文件，其他volume-name目录也会添加
 mount -t glusterfs worker:/volume-name /mnt/
 ```
-
-
-
-
-
-
-
-
-
-
 
 #### 参考
 
