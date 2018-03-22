@@ -1,7 +1,8 @@
 ---
 title: idea常用插件管理
 date: 2018-01-03 10:51:28
-updated: 2018-01-28 21:41:27categories: 工具
+updated: 2018-03-21 15:36:10
+categories: 工具
 tags: [idea,Plugins]
 ---
 
@@ -10,6 +11,14 @@ tags: [idea,Plugins]
 热部署插件
 
 [激活](https://my.jrebel.com/account/how-to-activate)：Help->JRebel->Activate
+
+[激活2](https://github.com/ilanyu/ReverseProxy/releases)
+
+选择Connect to License Server 输入：
+
+服务器iphttp://127.0.0.1:8888/zsc
+
+随便写zsc@123.com
 
 #### MyBatis plugin
 
@@ -21,9 +30,11 @@ sql语句跳转生成
 
 #### Lombok
 
-
+日志插件
 
 #### checkstyle
+
+代码样式
 
 
 

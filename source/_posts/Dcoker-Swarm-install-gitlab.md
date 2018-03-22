@@ -1,7 +1,8 @@
 ---
 title: dcoker swarm安装gitlab
 date: 2017-12-11 14:54:37
-updated: 2018-01-28 21:41:27categories: Docker
+updated: 2018-03-13 10:38:11
+categories: Docker
 tags: [docker swarm,gitlab]
 ---
 
@@ -84,7 +85,7 @@ services:
     - DB_HOST=postgresql
     - DB_PORT=5432
     - DB_USER=gitlab
-    - DB_PASS=mimais163
+    - DB_PASS=******
     - DB_NAME=gitlabhq_production
 
     - REDIS_HOST=redis
@@ -104,7 +105,7 @@ services:
     - GITLAB_SECRETS_SECRET_KEY_BASE=cFdsD8xSKVCShL76hpWP3NdjTCm3XbtV7d3BXB9XZNHclq8n743s3vFTkMg3DppJ
     - GITLAB_SECRETS_OTP_KEY_BASE=P8rH42vPgg5pZ34Nt8t3pwnCBcPXNkjqV8kTxBlQCkFkSCXGhXvDRSGm2bBx593q
 
-    - GITLAB_ROOT_PASSWORD=mimais163
+    - GITLAB_ROOT_PASSWORD=******
     - GITLAB_ROOT_EMAIL=xuan.fong1@163.com
 
     - GITLAB_NOTIFY_ON_BROKEN_BUILDS=true
