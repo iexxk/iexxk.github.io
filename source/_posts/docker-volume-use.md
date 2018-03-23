@@ -1,7 +1,7 @@
 ---
 title: docker-volume-use
 date: 2018-03-12 10:58:46
-updated: 2018-03-12 10:58:46
+updated: 2018-03-12 12:31:34
 categories: Docker
 tags: [docker,swarm,gluterfs]
 ---
