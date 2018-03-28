@@ -65,6 +65,16 @@ tags: [Java,springboot]
         static-locations: <原来的静态文件配置>,file:/Users/xuanleung/Pictures/
    ```
 
+4. 文件上传大小限制(-1不限制)（128KB）
+
+   ```yaml
+   spring: 
+     servlet:
+       multipart:
+         max-file-size: -1
+         max-request-size: -1
+   ```
+
    ​
 
 

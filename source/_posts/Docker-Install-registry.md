@@ -78,12 +78,12 @@ tags: [集群,Swarm,Docker,registry]
    {
      //这句是仓库加速地址，以前的
      "registry-mirrors": ["your aliyun 加速地址"],
-     //添加这句
-     "insecure-registries":["127.0.0.1:14005"]
+     //添加这句,只有通过这个ip访问才不报错，如果有其他ip访问，也要加进来，不然就不用那个ip访问
+     "insecure-registries":["112.74.51.136:14005"]
    }
    ```
 
-   然后重启`systemctl restart docker`
+   然后`sudo systemctl daemon-reload`重启`systemctl restart docker`
 
    ###### 幻觉：失败了一次，重启又可以了？
 

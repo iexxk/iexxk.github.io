@@ -1,7 +1,7 @@
 ---
 title: docker-volume-use
 date: 2018-03-12 10:58:46
-updated: 2018-03-12 12:31:34
+updated: 2018-03-24 01:05:41
 categories: Docker
 tags: [docker,swarm,gluterfs]
 ---
@@ -54,3 +54,7 @@ echo "home:/v-portainer /volume/v-portainer glusterfs defaults 0 1" >> /etc/fsta
 docker stack deploy -c docker-compose.yml gitlab
 ```
 
+##### 问题总结
+
+1. 使用之后，存储数据受网络印象，导致部分应用因为长时间连接不上而导致，不能启动，因此搁置
+2. 如果出现节点disconnect，在disconnect节点执行`systemctl restart glusterd`重启
