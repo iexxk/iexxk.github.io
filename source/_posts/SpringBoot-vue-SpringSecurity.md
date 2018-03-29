@@ -1,7 +1,7 @@
 ---
 title: SpringBoot前后端分离架构
 date: 2018-03-28 10:32:34
-updated: 2018-03-28 10:32:34
+updated: 2018-03-28 19:56:55
 categories: Java
 tags: [Java,SpringBoot,SpringSecurity,vue]
 ---
