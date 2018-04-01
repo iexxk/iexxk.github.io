@@ -163,3 +163,5 @@ chmod +x "$HOME/bin/docker-machine.exe"
 
    ` echo 1 > /proc/sys/net/bridge/bridge-nf-call-ip6tables`
 
+2. 问题：构建镜像不能用`-`减号命名镜像的名字，使用docker-statck 部署找不到镜像
+

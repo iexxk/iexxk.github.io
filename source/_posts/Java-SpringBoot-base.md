@@ -10,7 +10,7 @@ tags: [Java,Springboot]
 
 ### 注解
 
-
+`@CrossOrigin` 跨域处理
 
 ### json处理
 

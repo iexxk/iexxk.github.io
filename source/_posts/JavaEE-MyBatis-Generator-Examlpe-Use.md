@@ -1,7 +1,7 @@
 ---
 title: Mybatis 使用
 date: 2017-12-14 16:26:28
-updated: 2018-03-28 18:31:50
+updated: 2018-01-28 21:41:27
 categories: JavaEE
 tags: [java,Mybatis]
 ---
@@ -101,3 +101,14 @@ select * from TBL_TEST WHERE ( NAME like ? ) or( SEX like ? ) and Class='1班';
 #### 问题
 
 1. `Mapper method 'com.xxx' has an unsupported return type: class com.xxx.User`问题原因是mapper 中insert只能返回int，因此修改返回类型即可
+
+2. `nested exception is org.apache.ibatis.builder.BuilderException: Error invoking SqlProvider method (com.xhzg.xhzg.mapper.Provider.queryflowerByParam). Cannot invoke a method that holds named argument(@Param) using a specifying parameterObject. In this case, please specify a 'java.util.Map' object.`错误解决：指定@param
+
+   ```java
+   //provider知道@param  
+   public String queryflowerByParam(@Param("classid") int classid) {}
+   @SelectProvider(type = Provider.class,method = "queryflowerByParam")
+   List<FlowerInfoEntiy> selectFlowerinfo(@Param("classid") int classid);
+   ```
+
+   ​

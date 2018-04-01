@@ -5,6 +5,8 @@
 search:
   path: search.xml
   field: post
+  format: html
+  limit: 10000
 
 # Site
 title: e想行空

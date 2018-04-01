@@ -10,9 +10,11 @@ tags: [idea,Plugins]
 
 热部署插件
 
-[激活](https://my.jrebel.com/account/how-to-activate)：Help->JRebel->Activate
+[激活](https://my.jrebel.com/account/how-to-activate)：Help->JRebel->Activate 废弃
 
-[激活2](https://github.com/ilanyu/ReverseProxy/releases)
+[激活2](https://github.com/ilanyu/ReverseProxy/releases)  废弃
+
+[激活三](https://zeroturnaround.com/software/jrebel/trial/)
 
 选择Connect to License Server 输入：
 
