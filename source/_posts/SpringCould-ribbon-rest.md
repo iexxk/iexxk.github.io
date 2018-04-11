@@ -1,7 +1,7 @@
 ---
 title: SpringCould 服务提供者与消费者
 date: 2018-04-11 21:00:20
-updated: 2018-04-12 01:52:02
+updated: 2018-04-11 21:00:20
 categories: Spring
 tags: [Springboot,SpringCould,ribbon,rest]
 ---
@@ -109,5 +109,9 @@ ribbonClient8093-->eurekaService8091: 注册
 ribbonClient8093-->eurekaClient8099/8098: 通过ribbon负载均衡调用服务8099/8098
 ```
 
+#### 参考
 
+>  [史上最简单的SpringCloud教程 | 第二篇: 服务消费者（rest+ribbon）](https://blog.csdn.net/forezp/article/details/69788938)
+>
+> [使用Spring Cloud与Docker实战微服务](http://book.itmuch.com/2%20Spring%20Cloud/2.3.1%20Ribbon.html)
 
