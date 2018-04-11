@@ -1,8 +1,8 @@
 ---
-title: Java-SpringBoot-base
+title: SpringBoot-base
 date: 2018-03-28 18:51:50
-updated: 2018-03-29 17:59:04
-categories: JavaEE
+updated: 2018-04-12 02:22:05
+categories: Spring
 tags: [Java,Springboot]
 ---
 
