@@ -114,5 +114,33 @@ tags: [面试,java]
    }
    ```
 
-6. ​
+6. 集合`Collections`
+
+   * `List `有序可重复对象,`Arraylist`存读效率高(数组存储方式)，`LinkedList`大数据插入删除效率高(双向循环链表)，`Vector`同步（现场安全），`Arraylist`非同步
+
+
+   * `Map` 键值对，key不可重复，`HashMap`非线程安全，`Hashtable`线程安全(`ConcurrentHashMap`升级版)，`HashSet`元素唯一
+
+     ```java
+     List<Integer> list = new ArrayList<>();
+     list.add(1);list.add(2);list.add(3);
+     List<Integer> list2 = new ArrayList<>();
+     list2.add(2);list2.add(3);list2.add(4);
+     list.addAll(list2);  //并集(123234)
+     list.retainAll(list2);  //交集(23)
+     list.removeAll(list2);  //差集(1)
+     ```
+
+   * `Set `不允许重复
+
+   Q1:list找出重复元素，java8(Stream),hashmap,去重(set),然后转换list，差集得出重复元素
+
+   Q2:list排序重写`Comparator定制排序`
+
+7. 多线程
+
+   ​
+
+8. 线程安全
+
 
