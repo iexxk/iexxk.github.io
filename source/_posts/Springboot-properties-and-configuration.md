@@ -32,10 +32,9 @@ tags: [Java,springboot]
 
    ```Java
     @Value("${diy.parmars}")
-    private String imgUrl;
+    private String imgUrl;​
    ```
 
-   ​
 
 #### 常见配置
 
