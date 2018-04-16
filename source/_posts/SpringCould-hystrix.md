@@ -74,4 +74,20 @@ Feign是自带断路器的
    }
    ```
 
-   ​
+3. 在`application`配置文件添加该配置启用熔断器
+
+   ```Yaml
+   feign:
+     hystrix:
+       enabled: true
+   ```
+
+4. 依次启动注册中心，该服务(8094),然后访问http://127.0.0.1:8094/sayhi?name=32，启动测试见上面的第四步骤
+
+   区别：服务提供者挂了一个不会交替返回正确错误信息，只要还有一个服务正常就返回正确信息，直到所有服务提供者挂了才返回错误信息。
+
+##### 参考
+
+> [用 Feign Hystrix 进行服务集成](https://aisensiy.github.io/2017/10/16/feign-hystrix/)
+>
+> [forezp/SpringCloudLearning](https://github.com/forezp/SpringCloudLearning)
