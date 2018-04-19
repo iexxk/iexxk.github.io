@@ -7,6 +7,8 @@ install:
   - npm install hexo-generator-searchdb --save
   - npm install hexo-generator-sitemap --save
   - npm install hexo-generator-baidu-sitemap --save
+  - npm install hexo-filter-flowchart --save
+  - npm install hexo-filter-sequence --save
 #  - gem install faraday activesupport sitemap-parser
 
 script:

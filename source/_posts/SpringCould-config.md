@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2018-04-19 02:19:20
+updated: 2018-04-20 00:07:55
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -104,3 +104,59 @@ tags: [SpringCould,config]
 
 4. 访问http://127.0.0.1:8097/hi进行测试
 
+
+#### 配置中心高可用
+
+##### config server
+
+1. 添加依赖`compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')`
+
+2. 在`Application`启动类添加注解`@EnableEurekaClient`
+
+3. 在`Application.yml`配置文件增加
+
+   ```yaml
+   eureka:
+     client:
+       service-url:
+         defaultZone: http://127.0.0.1:8091/eureka/ #注意要加eureka，不然找不到
+   ```
+
+##### config client
+
+1. 添加依赖`compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')`
+
+2. 在`Application`启动类添加注解`@EnableEurekaClient`
+
+3. 在`bootstrap.yml`配置文件修改如下
+
+   ```yaml
+   server:
+     port: 8097
+   spring:
+     application:
+       name: config-client
+     cloud:
+       config:
+         label: master #指明远程仓库的分支
+         profile: dev #dev(开放)、test(测试)、pro(正式)
+   #      uri: http://127.0.0.1:8096/  #配置中心地址  ,用eureka就不是ip地址了
+         discovery:
+           enabled: true
+           service-id: config-server  #这里用服务名
+
+   eureka:
+     client:
+       service-url:
+         defaultZone: http://127.0.0.1:8091/eureka/ #注意要加eureka，不然找不到
+   ```
+
+   所以多个config-server运行，通过负载均衡就可以达到高可用
+
+   ##### 测试
+
+   依次运行服务注册中心、配置中心服务、读配置中心的客户端服务
+
+   访问http://127.0.0.1:8097/hi进行测试
+
+   ​
