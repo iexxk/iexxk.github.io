@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2018-04-20 00:07:55
+updated: 2018-04-20 00:38:52
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -159,4 +159,20 @@ tags: [SpringCould,config]
 
    访问http://127.0.0.1:8097/hi进行测试
 
+   ### 图示
+
+   ```mermaid
+   graph LR
+   A[git仓库] -->B(config server)
+   A[git仓库] -->B1(config server)
+   A[git仓库] -->B2(config server)
+   B --> C{负载均衡}
+   B1 --> C{负载均衡}
+   B2 --> C{负载均衡}
+   C --> D[service A]
+   C --> E[service B]
+   F[eureka service]
+   ```
+
    ​
+
