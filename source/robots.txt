@@ -11,5 +11,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://bolg.iexxk.com/sitemap.xml
-Sitemap: https://bolg.iexxk.com/baidusitemap.xml
+Sitemap: https://blog.iexxk.com/sitemap.xml
+Sitemap: https://blog.iexxk.com/baidusitemap.xml
