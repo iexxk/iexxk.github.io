@@ -1,7 +1,7 @@
 ---
 title: Ble蓝牙开发之一认识
 date: 2016-08-18 16:49:00
-updated: 2018-01-28 21:41:27categories: Android
+updated: 2018-04-25 20:47:32categories: Android
 tags: [Ble,基础]
 ---
 
