@@ -1,7 +1,7 @@
 ---
 title: DB-redis-base
 date: 2018-04-04 22:03:37
-updated: 2018-04-04 22:03:37
+updated: 2018-04-06 01:08:39
 categories: 数据库
 tags: [nosql,redis]
 ---
