@@ -1,7 +1,7 @@
 ---
 title: DB-oracle-install
 date: 2018-04-20 12:02:11
-updated: 2018-04-23 15:04:06
+updated: 2018-04-20 12:02:11
 categories: 数据库
 tags: [oracle,sql]
 ---

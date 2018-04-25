@@ -1,7 +1,7 @@
 ---
 title: DB-redis-install
 date: 2018-04-04 17:02:11
-updated: 2018-04-04 17:25:46
+updated: 2018-04-04 17:02:11
 categories: 数据库
 tags: [redis,nosql]
 ---

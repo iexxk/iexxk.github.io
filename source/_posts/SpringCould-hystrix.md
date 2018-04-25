@@ -1,7 +1,7 @@
 ---
 title: SpringCould-hystrix
 date: 2018-04-13 00:12:23
-updated: 2018-04-16 23:46:58
+updated: 2018-04-13 00:12:23
 categories: Spring
 tags: [SpringCould,hystrix]
 ---
