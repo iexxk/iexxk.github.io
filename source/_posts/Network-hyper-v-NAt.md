@@ -1,7 +1,7 @@
 ---
 title: Network-hyper-v-NAt
 date: 2018-04-19 22:05:50
-updated: 2018-04-19 22:41:23
+updated: 2018-04-25 20:47:32
 categories: 网络
 tags: [Network,static,NAT,hyper-v]
 ---
