@@ -1,7 +1,7 @@
 ---
 title: SpringCould 服务提供者与消费者
 date: 2018-04-11 21:00:20
-updated: 2018-04-12 02:18:46
+updated: 2018-04-25 20:47:32
 categories: Spring
 tags: [Springboot,SpringCould,ribbon,rest]
 ---

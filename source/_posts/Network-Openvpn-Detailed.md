@@ -1,7 +1,7 @@
 ---
 title: OpenVpn配置详解
 date: 2017-11-22 14:13:37
-updated: 2018-01-28 21:41:27categories: 网络
+updated: 2018-04-25 20:47:32categories: 网络
 tags: [OpenVpn,网络,路由]
 ---
 

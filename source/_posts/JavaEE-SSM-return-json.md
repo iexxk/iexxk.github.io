@@ -1,7 +1,7 @@
 ---
 title: SSM实战之返回json
 date: 2017-06-07 19:14:28
-updated: 2018-01-28 21:41:27categories: JavaEE
+updated: 2018-04-25 20:47:32categories: JavaEE
 tags: [idea,gradle,SpringMVC,json,jackson,annotation-driven]
 ---
 
