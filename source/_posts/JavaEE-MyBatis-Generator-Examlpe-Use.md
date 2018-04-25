@@ -1,7 +1,7 @@
 ---
 title: Mybatis 使用
 date: 2017-12-14 16:26:28
-updated: 2018-03-30 13:56:16
+updated: 2018-04-25 20:47:32
 categories: JavaEE
 tags: [java,Mybatis]
 ---

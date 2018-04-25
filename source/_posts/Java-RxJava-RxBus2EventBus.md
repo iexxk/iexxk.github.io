@@ -1,7 +1,7 @@
 ---
 title: RxJava之RxBus替代EventBus
 date: 2016-09-28 11:32:22
-updated: 2018-01-28 21:41:27categories: RxJava
+updated: 2018-04-25 20:47:32categories: RxJava
 tags: [RxJava,总线,EventBus,RxBus]
 ---
 ### 参考

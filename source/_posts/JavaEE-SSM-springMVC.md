@@ -1,7 +1,7 @@
 ---
 title: idea+gradle+ssm框架之springMVC配置
 date: 2017-04-29 23:06:28
-updated: 2018-01-28 21:41:27categories: JavaEE
+updated: 2018-04-25 20:47:32categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,ssm框架]
 ---
 

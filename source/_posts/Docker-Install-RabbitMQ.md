@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-RabbitMQ
 date: 2018-04-10 12:10:51
-updated: 2018-04-10 22:00:35
+updated: 2018-04-25 20:47:32
 categories: Docker
 tags: [Docker swarm,RabbitMQ]
 ---
