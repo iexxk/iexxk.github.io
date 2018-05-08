@@ -1,7 +1,7 @@
 ---
 title: GooleMap之自动缩放以显示所有标记
 date: 2016-09-02 10:45:56
-updated: 2018-04-25 20:47:32categories: Android
+updated: 2018-01-28 21:41:27categories: Android
 tags: [GoogleMap,LatLngBounds]
 ---
 ## [官方描述](https://developers.google.com/maps/documentation/android-api/views?hl=zh-cn)

@@ -1,7 +1,7 @@
 ---
 title: hexo-gitment-init
 date: 2018-02-24 14:33:54
-updated: 2018-04-25 20:47:32
+updated: 2018-04-25 20:41:28
 categories: 杂谈
 tags: [hexo,bolg,gitment,ruby]
 ---

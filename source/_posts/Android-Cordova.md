@@ -1,7 +1,7 @@
 ---
 title: Android-Cordova
 date: 2018-04-24 10:51:59
-updated: 2018-04-26 18:30:52
+updated: 2018-04-27 19:17:18
 categories: Android
 tags: [Android,Cordova]
 ---
@@ -176,8 +176,81 @@ tags: [Android,Cordova]
    }
    ```
 
-5.  直接在as里面运行Android项目，如果用`cordova run android`运行会覆盖修改掉的东西
+5. 直接在as里面运行Android项目，如果用`run android`运行会覆盖修改掉的东西
 
+
+### [`config.xml`](http://cordova.apache.org/docs/en/latest/config_ref/index.html)文件详解
+
+在新建的cordova项目跟目录下的`config.xml`将被复制到各个平台配置文件下，不会被更改，Android的是`app/platforms/android/res/xml/config.xml`
+
+下面个详细介绍下里面的配置
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="通用包名" android-packageName="Android包名" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+      <!--插件-->
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <!--应用名称-->
+    <name>e想行空</name>
+    <!--应用图标，更改后卸载重装生效-->
+    <icon src="res/icon/logo.png" />
+    <!--应用描述-->
+    <description>
+        e想天开,天马行空！
+    </description>
+    <!--作者email，网站-->
+    <author email="exxk.lx@gmail.com" href="http://www.blog.iexxk.com">
+        e想行空
+    </author>
+    <!--加载h5的资源，默认index.html是本地资源-->
+    <content src="http://www.blog.iexxk.com" />
+    <!--允许哪些域可以和组件通信-->
+    <access origin="http://www.blog.iexxk.com/*" />
+    <!--允许哪些域通过webview打开-->
+    <allow-navigation href="http://www.blog.iexxk.com/*" />
+    <!--允许哪些域可以被打开-->
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market:*" />
+    <preference name="loglevel" value="DEBUG" />
+</widget>
+```
+
+### app签名
+
+1. 在项目跟目录新建一个`build.json`
+
+   ```json
+   {
+       "android": {
+           "debug": {
+               "keystore": "./android.keystore",
+               "storePassword": "android",
+               "alias": "mykey1",
+               "password" : "password",
+               "keystoreType": ""
+           },
+           "release": {
+               "keystore": "./android.keystore",
+               "storePassword": "",
+               "alias": "mykey2",
+               "password" : "password",
+               "keystoreType": ""
+           }
+       }
+   }
+   ```
+
+2. 复制`android.keystore`到项目跟目录
+
+3. 执行`cordova build --release android`然后生成`platforms\android\app\build\outputs\apk\release\app-release.apk`
 
 ### 文档资源
 
@@ -199,3 +272,4 @@ tags: [Android,Cordova]
    ```
 
    解决执行`cordova platform rm android`和`cordova platform remove android`然后安装`cordova platform add android@6.2.0`
+

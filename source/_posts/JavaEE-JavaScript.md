@@ -1,7 +1,7 @@
 ---
 title: JS-快速入门
 date: 2017-03-06 11:47:27
-updated: 2018-04-25 20:47:32categories: JavaEE
+updated: 2018-01-28 21:41:27categories: JavaEE
 tags: [js,基础,入门,语法]
 ---
 ### 快速入门

@@ -1,7 +1,7 @@
 ---
 title: Docker swarm搭建总结
 date: 2017-12-05 16:12:37
-updated: 2018-04-25 20:47:32categories: Docker
+updated: 2018-04-25 20:41:28categories: Docker
 tags: [集群,Swarm,Docker]
 ---
 

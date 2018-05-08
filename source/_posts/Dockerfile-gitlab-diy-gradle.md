@@ -1,7 +1,7 @@
 ---
 title: gitlab-runner镜像自定义
 date: 2018-01-20 19:26:38
-updated: 2018-04-25 20:47:32categories: Docker
+updated: 2018-04-25 20:41:28categories: Docker
 tags: [Docker,gitlab,runner,Dockerfile]
 ---
 ## gitlab-runner镜像自定义

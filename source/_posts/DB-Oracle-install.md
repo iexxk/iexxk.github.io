@@ -1,7 +1,7 @@
 ---
 title: DB-oracle-install
 date: 2018-04-20 12:02:11
-updated: 2018-04-25 20:47:32
+updated: 2018-05-03 16:27:39
 categories: 数据库
 tags: [oracle,sql]
 ---
@@ -32,6 +32,8 @@ connect as sysdba: true
 ```
 
 运行完成后，注意这里第一次运行要初始化，注意看日志，等待它完成
+
+到处dmp文件：`exp manager/manager buffer=64000 file=/test.dmp full=y`
 
 #### 配置
 
