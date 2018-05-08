@@ -1,7 +1,7 @@
 ---
 title: greenDAO3.1框架（四）添加全局初始化及基本使用
 date: 2016-08-31 10:50:45
-updated: 2018-04-25 20:41:28categories: greenDAO
+updated: 2018-04-25 20:47:32categories: greenDAO
 tags: [greenDAO,ORM,application,path]
 ---
 ### 全局初始化greenDAO设置

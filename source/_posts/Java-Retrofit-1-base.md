@@ -1,7 +1,7 @@
 ---
 title: Retrofit学习之一介绍
 date: 2016-08-25 12:52:21
-updated: 2018-01-28 21:41:27categories: Retrofit
+updated: 2018-04-25 20:47:32categories: Retrofit
 tags: [网络框架,Retrofit]
 ---
 # 认识

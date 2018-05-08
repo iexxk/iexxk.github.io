@@ -1,7 +1,7 @@
 ---
 title: Java基础之抽象类
 date: 2017-02-10 15:20:17
-updated: 2018-01-28 21:41:27categories: Java
+updated: 2018-04-25 20:47:32categories: Java
 tags: [继承,抽象,abstract,父类]
 ---
 # 抽象类

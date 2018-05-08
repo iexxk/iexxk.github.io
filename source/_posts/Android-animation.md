@@ -1,7 +1,7 @@
 ---
 title: android动画
 date: 2016-12-13 17:13:46
-updated: 2018-04-25 20:41:28categories: Android
+updated: 2018-04-25 20:47:32categories: Android
 tags: [动画,TranslateAnimation]
 ---
 >* 平移动画 

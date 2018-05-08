@@ -1,7 +1,7 @@
 ---
 title: Android-Cordova
 date: 2018-04-24 10:51:59
-updated: 2018-04-27 19:17:18
+updated: 2018-04-24 10:51:59
 categories: Android
 tags: [Android,Cordova]
 ---
