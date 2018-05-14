@@ -1,7 +1,7 @@
 ---
 title: Tools-Gradle-Base
 date: 2018-05-10 16:58:41
-updated: 2018-05-10 18:13:52
+updated: 2018-05-11 18:04:57
 categories: Tools
 tags: [Gradle]
 ---
@@ -17,7 +17,7 @@ tags: [Gradle]
 
 1. 进入一个Gradle项目,或者拉取一个` git clone git@github.com:gradle/gradle-build-scan-quickstart.git`
 
-#### Gradle build scans使用
+### Gradle build scans使用
 
 > Build Scans是用于开发和维护Gradle构建的重要工具。它为你提供了构建的详细信息，并为你识别构建环境、依赖或性能上存在的问题，同时可以帮你更全面地理解并提升构建过程，也便于与他人的合作。
 
@@ -42,3 +42,82 @@ tags: [Gradle]
    ```
 
 3. 执行`gradle build -Dscan`运行得到链接，然后访问即可
+
+### Creating New Gradle Builds
+
+##### 初始化gradle 项目
+
+```powershell
+mkdir gradle-demo #创建项目目录
+cd gradle-demo #进入项目目录
+gradle init #初始化为gradle项目
+#生成如下目录文件
+.
+├── build.gradle   #项目配置脚本
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar  #wrapper可执行jar
+│       └── gradle-wrapper.properties  #wrapper 配置文件
+├── gradlew  # unix systems（linux）系统下的脚本
+├── gradlew.bat  # window 下的脚本
+└── settings.gradle  #配置那些项目参与构建脚本
+```
+
+##### 创建task任务名叫`copy`
+
+```groovy
+task copy(type: Copy, group: "Custom", description: "复制src目录到dest目录") {
+    from "src"   //前提需要有src目录
+    into "dest"  //不需要创建，会自动创建
+}
+```
+
+命令行执行`./gradlew copy`代表执行task里的copy任务
+
+##### Gradle 应用插件
+
+[插件仓库](https://plugins.gradle.org/)
+
+这里以base插件，base插件功能主要是打包为zip文件
+
+```groovy
+plugins {   //这个代码快必须放顶部
+	id "base"
+}
+task copy(type: Copy, group: "Custom", description: "复制src目录到dest目录") {
+    from "src"
+    into "dest"
+}
+task zip(type: Zip, group: "Util", description: "压缩src目录文件") {
+	from "src"
+}
+```
+
+执行`./gradlew zip`,然后在目录  `.\build\distributions`下就可以看到`gradle-demo.zip`文件了
+
+##### 常用命令
+
+```powershell
+./gradlew tasks #查看可用的task任务
+./gradlew zip --scan  #结合scan执行zip，分析执行信息
+./gradlew properties #查看可用的配置属性，类似环境变量(配置属性)的
+```
+
+在`build.gradle`可以更改`properties`变量的值，但是不能新增，例如修改项目描述和版本号
+
+```groovy
+//放在build.gradle文件中，但是不能放在plugins前面，因为plugins这个必须在顶部
+description = "该项目为测试学习用"
+version = "1.0"
+```
+
+
+
+## 手册
+
+[Gradle 命令手册](https://docs.gradle.org/4.7/userguide/command_line_interface.html)
+
+### 注意事项
+
+不能在gradle项目的子目录执行`gradle init`
+
