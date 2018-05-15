@@ -1,7 +1,7 @@
 ---
 title: DB-MySQL-Summary
 date: 2018-04-05 20:40:41
-updated: 2018-04-25 20:47:32
+updated: 2018-05-15 18:58:42
 categories: 数据库
 tags: [mysql]
 ---
@@ -38,6 +38,39 @@ show variables like '%max_connections%';
 
 
 
+
+
+mysql配置my.cnf，添加挂在卷`      - /dockerdata/manager/mysqldata/config:/etc/mysql/conf.d`
+
+然后在挂在卷创建配置文件，添加配置`my.cnf` 文件名字随便
+
+```properties
+[mysql]
+# 设置mysql客户端默认字符集
+default-character-set=utf8
+[mysqld]
+skip-name-resolve
+#设置3306端口
+port = 3306
+# 设置mysql的安装目录
+basedir=/usr/local/mysql
+# 设置mysql数据库的数据的存放目录
+datadir=/usr/local/mysql/data
+# 允许最大连接数
+max_connections=200
+# 服务端使用的字符集默认为8比特编码的latin1字符集
+character-set-server=utf8
+# 创建新表时将使用的默认存储引擎
+default-storage-engine=INNODB
+lower_case_table_names=1
+max_allowed_packet=16M
+sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+```
+
+
+
+
+
 #### 常见错误
 
 1. `Too many connections`症状，不断重启运行springboot并访问，出现如下错误
@@ -53,11 +86,27 @@ show variables like '%max_connections%';
 
    解决：快速解决重启mysql释放`Threads_connected`连接数，或者等待一会儿，也会慢慢释放连接数,另一种更改`max_connections`最大连接数启动mysql添加参数`--ulimit nofile=65536:65536`
 
-   ​
-
    参考：
 
    [Docker容器中MySQL最大连接数被限制为214的解决方案](https://www.yanning.wang/archives/559.html)
 
    [[Increasing mysql max_connections to 1024 in a docker container](https://stackoverflow.com/questions/39054410/increasing-mysql-max-connections-to-1024-in-a-docker-container)]
+
+2. 错误
+
+   ```JAVA
+   [Err] 1055 - Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'information_schema.PROFILING.SEQ' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   ```
+
+   解决：
+
+   删除配置文件`sql_mode=ONLY_FULL_GROUP_BY`这个属性值
+
+   ```mysql
+   mysql>SELECT @@sql_mode;
+   mysql>SELECT @@GLOBAL.sql_mode;
+   ```
+   参考：https://www.zhihu.com/question/37942423
+
+3. navicat客户端，连接mysql 8.0以上报错,提示授权啥的错误
 
