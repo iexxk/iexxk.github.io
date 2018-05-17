@@ -87,3 +87,13 @@ plugins {
 
 ```
 
+
+
+报错：
+
+```
+Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/curator/RetryPolicy
+	at com.alibaba.dubbo.remoting.zookeeper.curator.CuratorZookeeperTransporter.connect(CuratorZookeeperTransporter.java:26)
+```
+
+解决：添加依赖`compile group: 'org.apache.curator', name: 'curator-framework', version: '4.0.1'`
