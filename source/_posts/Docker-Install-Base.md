@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2018-04-25 20:47:32
+updated: 2018-05-23 23:36:02
 categories: Docker
 tags: [docker,docker-compose]
 ---
@@ -63,7 +63,7 @@ sudo systemctl restart docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["https://*****.mirror.aliyuncs.com"],
-  "hots":["unix:///var/run/docker.sock"]
+  "hosts":["unix:///var/run/docker.sock"]
 }
 EOF
 ```

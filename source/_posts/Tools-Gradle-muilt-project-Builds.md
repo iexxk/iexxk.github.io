@@ -347,4 +347,12 @@ tags: [Gradle,Tools]
 
 6. 抽离子项目共有配置到父项目用`configure`
 
-   ​
+7. 常用命令
+
+   ```groovy
+   gradle :eurekaserver:build //执行子项目eurekaserver构建build命令
+   ```
+
+   
+
+   
