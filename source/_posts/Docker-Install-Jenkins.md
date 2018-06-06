@@ -80,5 +80,98 @@ https://github.com/boxboat/jenkins-demo
    srw-rw----. 1 root docker 0 5月  15 16:36 /var/run/docker.sock
    ```
 
-https://github.com/jenkinsci/docker/issues/263
+   `--group-add=$(stat -c %g /var/run/docker.sock)`
+
+   `sudo usermod -a -G docker jenkins`
+
+   解决方案
+
+   ##### 方案一
+
+   改变socke所属的用户组
+
+   用root用户进入jenkins容器
+
+   执行`chown :jenkins /var/run/docker.sock`
+
+   ```powershell
+   -------------宿主机------------------------------
+   [root@worker ~]# ls -la /var/run/docker.sock
+   srw-rw----. 1 root docker 0 6月   6 16:58 /var/run/docker.sock
+   执行后
+   [root@worker ~]# ls -la /var/run/docker.sock
+   srw-rw----. 1 root 1000 0 6月   6 16:58 /var/run/docker.sock
+   ------------------jenkins容器---------------------
+   srw-rw---- 1 root 994 0 Jun  6 08:58 var/run/docker.sock
+   执行后
+   srw-rw---- 1 root jenkins 0 Jun  6 08:58 var/run/docker.sock
+   ```
+
+   `cat /etc/group`查看用户组id
+
+   自我理解：
+
+   这里通过挂载卷的形式共享/var/run/docker.sock套接字，但是默认套接字属于root docker组，这里docker的组id为994，但是容器内没有994的组，所以直接显示994，最后执行这个`chown :jenkins /var/run/docker.sock`之后把组更改为乐jenkins组，但是默认宿主机是没有jenkins组，所以直接显示jenkins的id 1000，这里直接修改为jenkins用户组，虽然可以解决权限问题，不知道会不会影响其他的使用该sock套接字（**隐患**）
+
+   完善思路：
+
+   新建个jenkins组
+
+   添加docker用户到jenkins组
+
+   但是发现
+
+   宿主机`id docker` 没有docker用户
+
+   且docker组没有任何用户，因此可以放心更改组，所以要不要新建组待考虑
+
+   ```shell
+   cat /etc/group #查看组信息
+   cgred:x:995:
+   docker:x:994:jenkins
+   #组名:口令(默认空/*):组标识号(gid):组内用户列表
+   ```
+
+   ##### 方案二
+
+   自我新思路
+
+   宿主机创建个jenkins用户组指定id1000
+
+   宿主机执行`useradd -u 1000 jenkins`
+
+   然后执行`sudo usermod -a -G docker jenkins`
+
+   失败，没有权限
+
+   ##### 方案三(未实验)
+
+   root用户可以访问docker,需要重写dockerfile
+
+   ```
+   FROM <base-image>
+   USER root
+   ```
+
+   隐患：不知到用root用户登陆会不会影响jenkins的一些功能
+
+   ##### 方案四(未实验)
+
+   修改`groupadd -g 994 docker`，找不到命令
+
+   然后执行`usermod -a -G docker jenkins`
+
+   此法每次重启容器都会丢失配置，虽然可以通过挂载目录形式保存设置，太麻烦。
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   https://github.com/jenkinsci/docker/issues/263
 
