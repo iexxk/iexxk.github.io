@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-Jenkins
 date: 2018-05-21 19:04:52
-updated: 2018-06-07 01:40:00
+updated: 2018-06-10 16:05:15
 categories: Docker
 tags: [Docker,Jenkins]
 ---
@@ -14,7 +14,7 @@ github文档：[jenkinsci/docker](https://github.com/jenkinsci/docker/blob/maste
 
 Docker hub：[jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/)
 
-[绿色主题版](https://jenkins.io/doc/book/blueocean/getting-started/):[jenkinsci/blueocean](https://hub.docker.com/r/jenkinsci/blueocean/)
+[蓝色主题版](https://jenkins.io/doc/book/blueocean/getting-started/):[jenkinsci/blueocean](https://hub.docker.com/r/jenkinsci/blueocean/)
 
 
 
@@ -163,15 +163,13 @@ https://github.com/boxboat/jenkins-demo
 
    此法每次重启容器都会丢失配置，虽然可以通过挂载目录形式保存设置，太麻烦。
 
-   
+3. Jenkins 第一次打开，一直显示启动中
 
-   
+   解决：
 
-   
+   修改jenkins_home/updates/default.json
 
-   
-
-   
+   把 "connectionCheckUrl":"http://www.google.com/" 改为 "connectionCheckUrl":"http://www.baidu.com/"
 
    https://github.com/jenkinsci/docker/issues/263
 

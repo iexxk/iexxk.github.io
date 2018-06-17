@@ -1,9 +1,10 @@
 ---
 title: JavaEE-shiro
 date: 2018-05-20 08:54:50
-updated: 2018-05-20 20:43:11
+updated: 2018-05-20 08:54:50
 categories: 
 tags: []
+typora-copy-images-to: image
 ---
 
 ## 简介
@@ -76,7 +77,29 @@ b-->c[Realm/数据源]
    }
    ```
 
-#### dubbo+shiro
+#### shiro名词概念解释
+
+* subject ：当前操作的用户
+* SecurityManager ：shiro框架核心，内部组件管理
+* realm : 连接桥梁，用于和用户数据，权限数据连接（来源文件、数据库）
+
+xml配置
+
+```xml
+<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    <property name="realms" ref="customRealm"/>
+    <property name="cacheManager" ref="cacheManager"/>
+    <property name="sessionManager" ref="sessionManager"/>
+</bean>
+```
+
+数据库表设计：
+
+![1529049788944](F:\xuan\nutstore\xuanfong1.github.io\source\_posts\image\1529049788944.png)
+
+### 参考
+
+[Shiro权限控制框架入门](https://www.zifangsky.cn/770.html)
 
 
 
