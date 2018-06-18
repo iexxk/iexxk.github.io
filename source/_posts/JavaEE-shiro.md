@@ -1,10 +1,9 @@
 ---
 title: JavaEE-shiro
 date: 2018-05-20 08:54:50
-updated: 2018-05-20 08:54:50
-categories: 
-tags: []
-typora-copy-images-to: image
+updated: 2018-06-18 14:59:40
+categories: javaEE
+tags: [javaEE]
 ---
 
 ## 简介
@@ -95,7 +94,9 @@ xml配置
 
 数据库表设计：
 
-![1529049788944](F:\xuan\nutstore\xuanfong1.github.io\source\_posts\image\1529049788944.png)
+![](http://ohdtoul5i.bkt.clouddn.com/1529049788944.png)
+
+Cc
 
 ### 参考
 
