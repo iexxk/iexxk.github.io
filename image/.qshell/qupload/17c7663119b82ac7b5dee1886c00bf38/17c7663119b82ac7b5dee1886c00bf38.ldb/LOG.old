@@ -1,0 +1,8 @@
+=============== Jun 18, 2018 (CST) ===============
+12:06:52.943938 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:06:52.944353 db@open opening
+12:06:52.944461 journal@recovery F·1
+12:06:52.945092 journal@recovery recovering @1
+12:06:52.951761 memdb@flush created L0@2 N·35 S·1KiB "/Us..ore,v1":"/Us..png,v35"
+12:06:52.953978 db@janitor F·3 G·0
+12:06:52.954035 db@open done T·9.636314ms

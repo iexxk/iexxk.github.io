@@ -12,6 +12,9 @@ install:
   - npm install valine --save
 #  - gem install faraday activesupport sitemap-parser
 
+before_script:
+  - node imgUpdate.nodejs
+
 script:
   - hexo cl
   - hexo g
