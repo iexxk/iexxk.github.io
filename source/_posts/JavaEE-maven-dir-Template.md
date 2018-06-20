@@ -1,7 +1,8 @@
 ---
 title: idea ssm 目录结构
 date: 2017-05-04 17:16:28
-updated: 2018-04-25 20:47:32categories: JavaEE
+updated: 2018-01-28 21:41:27
+categories: JavaEE
 tags: [JavaEE,idea,maven]
 
 ---
@@ -37,6 +38,20 @@ tags: [JavaEE,idea,maven]
 | LICENSE.md          | 项目license                                |         |
 | NOTICE.md           | Notices and attributions required by libraries that the project depends on |         |
 | README.md           | 项目readme                                 |         |
+
+##### 子项目打包
+
+`clean package -pl module_name -am `
+
+-am --also-make 同时构建所列模块的依赖模块； 
+
+-amd -also-make-dependents 同时构建依赖于所列模块的模块；
+
+ -pl --projects <arg> 构建制定的模块，模块间用逗号分隔；
+
+ -rf -resume-from <arg> 从指定的模块恢复反应堆。 
+
+
 
 ##### 参考：
 

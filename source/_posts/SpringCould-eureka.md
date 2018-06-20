@@ -79,9 +79,55 @@ eureka:
 defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka
 ```
 
+### [健康检查](https://spring.io/guides/gs/actuator-service/)
+
+```groovy
+   compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+  //上面的包包含下面的依赖,因此springcould不需要添加该依赖
+ compile("org.springframework.boot:spring-boot-starter-actuator")
+```
+
+常用链接
+
+```
+$ curl localhost:8080/actuator/health
+{"status":"UP"}
+$ curl localhost:8080/actuator
+{"_links":{"self":{"href":"http://127.0.0.1:14031/actuator","templated":false},"health":{"href":"http://127.0.0.1:14031/actuator/health","templated":false},"info":{"href":"http://127.0.0.1:14031/actuator/info","templated":false}}}
+```
+
+dockerfile
+
+```
+HEALTHCHECK  --interval=5m --timeout=3s \
+  CMD wget --quiet --tries=1 --spider http://127.0.0.1:14031/actuator/health || exit 1
+ # --quiet  安静模式
+ # --tries=1  重试次数
+ # --spider  不下载任何资料
+ 
+ wget --quiet --tries=1 --spider http://127.0.0.1:14031/actuator/health
+  
+```
 
 
 
+[Wget命令参数及使用](http://blog.51cto.com/snaile/1600281)
+
+
+
+
+
+问题：
+
+```
+EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
+```
+
+原因据说是
+
+注册中心不是高可用的原因
+
+出处：https://www.cnblogs.com/xiaojf/p/7919088.html
 
 
 

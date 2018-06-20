@@ -1,7 +1,8 @@
 ---
 title: Docker swarm搭建总结
 date: 2017-12-05 16:12:37
-updated: 2018-04-25 20:47:32categories: Docker
+updated: 2018-06-20 18:25:18
+categories: Docker
 tags: [集群,Swarm,Docker]
 ---
 
@@ -41,9 +42,7 @@ graph LR
 A[本地目录] --> |指向| B[containner目录]
 ```
 
-
-
-## 方案选型与测试
+##### 方案选型与测试
 
 方案有
 
@@ -64,6 +63,31 @@ A[本地目录] --> |指向| B[containner目录]
 - 动态路由
 
   [一条命令取代etcd+flannel，全网贯通无需端口映射](http://dockone.io/article/466)
+
+####  [启动顺序](https://docs.docker.com/compose/startup-order/)
+
+[[vishnubob]/**wait-for-it
+
+#### entrypoint vs cmd
+
+entrypoint 必须执行服务话
+
+cmd 命令型，可执行
+
+总结：
+
+1. 如果用[wait-for](https://github.com/eficode/wait-for)支持alpine,使用sh，[wait-for-it](https://github.com/vishnubob/wait-for-it)使用bash
+2. dockercompose会覆盖dockerfile里面的cmd命令
+3. 通过挂载形式把脚本放进去执行，或者通过dockerfile 构建时构建进去
+4. 在容器内进行测试时，发现不能跟/actuator/health，会连接超时，
+5. 直接执行时,如果服务没启动也会超时，但是可以跟可以跟参数`-t`设置为0不超时，会一直等待
+
+```yaml
+#不能加/actuator/health，请求超时，不能用wait-for-it.sh  ,不支持alpine ，经测试感觉怪，还使用 depends_on
+    command: ["./wait-for.sh", "config-server:14030", "--", "java","-jar","app.jar"]
+    depends_on:
+     - config-server
+```
 
 
 

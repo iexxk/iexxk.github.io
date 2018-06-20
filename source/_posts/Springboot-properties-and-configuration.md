@@ -1,7 +1,7 @@
 ---
 title: Springboot配置文件
 date: 2018-03-22 13:07:49
-updated: 2018-04-25 20:47:32
+updated: 2018-06-20 09:28:04
 categories: Spring
 tags: [Java,springboot]
 ---
@@ -74,7 +74,42 @@ tags: [Java,springboot]
          max-request-size: -1
    ```
 
-   ​
+
+#### `application.yml`与`bootstrap.yml`区别
+
+加载顺序`bootstrap.yml `->`application.yml`
+
+`bootstrap.yml`常用于一些系统级别参数，不被更改
+
+`application.yml` 应用级别，可以被更改，通过config service服务
+
+`bootstrap.yml`常用于应用程序引导阶段例如
+
+* spring config server配置
+* application.name配置
+
+使用config server时，`bootstrap.yml`常用配置
+
+```yaml
+spring:
+  application:
+    name: service-a
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      fail-fast: true
+      username: user
+      password: ${CONFIG_SERVER_PASSWORD:password}
+      retry:
+        initial-interval: 2000
+        max-interval: 10000
+        multiplier: 2
+        max-attempts: 10
+```
+
+在不考虑加载顺序，两个配置是可以通用的
+
+
 
 
 
@@ -84,7 +119,9 @@ tags: [Java,springboot]
 
    解决：在配置文件连接数据库地方添加`url: jdbc:mysql://<ip>:<端口>/<数据库名字>?useUnicode=true&characterEncoding=utf-8`
 
-2. ​
+2. `application.yml`添加注释报错，提示找不到`Failed to load property source from location 'classpath:/application.yml'`
+
+   解决：检查文件编码格式，不是`utf-8`修改为`utf-8`
 
 
 
