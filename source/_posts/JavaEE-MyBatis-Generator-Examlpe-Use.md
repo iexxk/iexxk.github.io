@@ -1,10 +1,106 @@
 ---
 title: Mybatis 使用
 date: 2017-12-14 16:26:28
-updated: 2018-04-25 20:47:32
+updated: 2018-03-30 13:56:16
 categories: JavaEE
 tags: [java,Mybatis]
+typora-copy-images-to: image\src_dir
 ---
+
+## 自动生成代码
+
+### maven形式
+
+1. 在`pom.xml`添加依赖
+
+   ```xml
+   <dependencies>
+   	...
+       <!--Mybatis Mapper代码生成用-->
+       <dependency>
+           <groupId>org.mybatis.generator</groupId>
+           <artifactId>mybatis-generator-core</artifactId>
+           <version>1.3.6</version>
+       </dependency>
+       ...
+   </dependencies>
+   ```
+
+2. 在`pom.xml`添加插件
+
+   ```xml
+   <plugins>
+       <!--mybatis生成代码插件-->
+       <plugin>
+           <groupId>org.mybatis.generator</groupId>
+           <artifactId>mybatis-generator-maven-plugin</artifactId>
+           <version>1.3.6</version>
+           <!--指定配置文件路径-->
+           <configuration>
+           <overwrite>true</overwrite>
+           <configurationFile>path/generactorConfig.xml</configurationFile>
+           </configuration>
+       </plugin>
+   </plugins>
+   ```
+
+3. 配置`generactorConfig.xml`文件,改配置来源[Mybatis系列—Mybatis插件使用（自动生成Mapper，分页）](https://juejin.im/entry/5aabc4036fb9a028e11fb726)
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8" ?>
+   <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+   <generatorConfiguration>
+       <!-- 指定oracle/mysql的驱动包的路径 千万别放中文路径下 -->
+       <classPathEntry location="C://Users//Administrator//.DataGrip2018.1//config//jdbc-drivers//MySQL Connector//J//5.1.46//mysql-connector-java-5.1.46.jar"/>
+       <!-- 配置数据源和生成的代码所存放的位置 -->
+       <context id="testTable" targetRuntime="MyBatis3Simple">
+           <!--设置生成的Java文件的编码格式-->
+           <property name="javaFileEncoding" value="UTF-8"></property>
+           <!--格式化java代码-->
+           <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"></property>
+           <!--格式化xml代码-->
+           <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"></property>
+           <!--javaBean 实现序列化接口-->
+           <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+           <!--javaBean生成toString() 方法-->
+           <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+           <commentGenerator>
+               <!--生成代码时，是否生成注释  true：不  false：是-->
+               <property name="suppressAllComments" value="true"></property>
+           </commentGenerator>
+           <!--数据库配置-->
+           <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.204.182:3306/manage?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;serverTimezone=UTC" userId="root" password="lfadmin"></jdbcConnection>
+           <!--
+               java类型处理器
+                 用于处理DB中的类型到Java中的类型，默认使用JavaTypeResolverDefaultImpl；
+                  注意一点，默认会先尝试使用Integer，Long，Short等来对应DECIMAL和 NUMERIC数据类型；
+              -->
+           <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+               <property name="forceBigDecimals" value="false"></property>
+           </javaTypeResolver>
+   
+           <!--生成实体-->
+           <javaModelGenerator targetPackage="com.willson.facade.pojo.plot" targetProject="../facade/src/main/java">
+               <property name="enableSubPackages" value="true"/>
+           </javaModelGenerator>
+           <!--生成mapper.xml文件-->
+           <sqlMapGenerator targetPackage="plot"  targetProject="src/main/resources/mapper">
+               <property name="enableSubPackages" value="true"></property>
+           </sqlMapGenerator>
+           <!--生成dao接口-->
+           <javaClientGenerator type="XMLMAPPER" targetPackage="com.willson.service.mapper.plot" targetProject="src/main/java">
+               <property name="enableSubPackages" value="true"></property>
+           </javaClientGenerator>
+           <!--为哪些表生成代码 tableName=表名字  domainObjectName 生成实体类名字-->
+           <table tableName="tb_plot_herbaceous_plant" domainObjectName="herbaceousPlant" />
+   
+       </context>
+   </generatorConfiguration>
+   ```
+
+4. 最后在右侧`maven projects->plugins->mybatis-generator:generate`运行就会生成了
+
+   ![](http://ohdtoul5i.bkt.clouddn.com/1530182957362.png)
 
 ##注解式
 
