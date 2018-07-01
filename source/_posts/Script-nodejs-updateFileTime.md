@@ -1,7 +1,7 @@
 ---
 title: 自动更新文章的修改时间
 date: 2018-01-29 18:37:50
-updated: 2018-07-01 11:00:20
+updated: 2018-07-01 12:22:48
 categories: script
 tags: [script,npm,nodejs,file,hexo]
 ---
@@ -219,9 +219,17 @@ function writeFileTime(file,fs){
 		for (var i = imgpaths.length - 1; i >= 0; i--) {
 			var imgpath=imgpaths[i];
 			console.log(imgpath);
-			if (imgpath.indexOf("xuanfong1.github.io\\source\\_posts\\image")!=-1||imgpath.indexOf("xuanfong1.github.io/source/_posts/image")!=-1) {
+			if (imgpath.indexOf("xuanfong1.github.io\\source\\_posts\\image")!=-1) {
 				console.log(file,"处理:"+imgpath);
 				var filenametemp= imgpath.split('\\').pop();
+				var filename=filenametemp.slice(0,filenametemp.length-1);
+				var result=data.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")");
+				fs.writeFileSync(file, result, 'utf8');
+				console.log("成功替换："+imgpath.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")"));
+			}
+			if (imgpath.indexOf("xuanfong1.github.io/source/_posts/image")!=-1) {
+				console.log(file,"处理:"+imgpath);
+				var filenametemp= imgpath.split('/').pop();
 				var filename=filenametemp.slice(0,filenametemp.length-1);
 				var result=data.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")");
 				fs.writeFileSync(file, result, 'utf8');
@@ -328,6 +336,16 @@ function writeFileTime(file,fs){
 				if (imgpath.indexOf("xuanfong1.github.io\\source\\_posts\\image")!=-1 || imgpath.indexOf("xuanfong1.github.io/source/_posts/image")!=-1) {
 					console.log(file,"处理:"+imgpath);
 					var filenametemp= imgpath.split('\\').pop();
+					var filename=filenametemp.slice(0,filenametemp.length-1);
+					var result=data.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")");
+					fs.writeFile(file, result, 'utf8',function(err) { //写入新的文件内容
+						if (err) return console.log("写文件错误：",err);
+						console.log("成功替换："+imgpath.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")"));
+					});
+				}
+				if (imgpath.indexOf(imgpath.indexOf("xuanfong1.github.io/source/_posts/image")!=-1) {
+					console.log(file,"处理:"+imgpath);
+					var filenametemp= imgpath.split('/').pop();
 					var filename=filenametemp.slice(0,filenametemp.length-1);
 					var result=data.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")");
 					fs.writeFile(file, result, 'utf8',function(err) { //写入新的文件内容
