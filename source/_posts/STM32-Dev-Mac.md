@@ -119,10 +119,24 @@ typora-copy-images-to: ./image/src_dir
 
 ## 使用CLion进行项目编译运行
 
+操作记录：[mac下stm32CubeMX+CLion+openocd开发环境](https://jingyan.baidu.com/article/c910274ba01ca5cd361d2d07.html)
+
 1. 使用STM32CubeMX重新初始化项目，选择`SW4STM32`
 2. 
 
 
+
+#### 问题
+
+debug提示如下错误：
+
+```verilog
+Cannot load symbol file: "/Users/xuanleung/IdeaProjects/f401re_demo/cmake-build-debug/f401re_demo.elf": not in executable format: File format not recognized
+```
+
+解决：取消勾选
+
+![](http://ohdtoul5i.bkt.clouddn.com/image-20180702225403646.png)
 
 #### 参考
 
