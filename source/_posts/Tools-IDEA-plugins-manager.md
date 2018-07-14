@@ -1,7 +1,7 @@
 ---
 title: idea常用插件管理
 date: 2018-01-03 10:51:28
-updated: 2018-04-25 20:47:32
+updated: 2018-07-09 16:11:10
 categories: 工具
 tags: [idea,Plugins]
 ---
@@ -21,6 +21,10 @@ tags: [idea,Plugins]
 服务器iphttp://127.0.0.1:8888/zsc
 
 随便写zsc@123.com
+
+https://jingyan.baidu.com/article/14bd256e9152a5bb6d2612ee.html
+
+https://gitee.com/gsls200808/JrebelLicenseServerforJava
 
 #### MyBatis plugin
 

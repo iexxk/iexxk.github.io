@@ -60,3 +60,26 @@ DNS1="8.8.8.8"
 ```
 
 执行`service network restart`重启网络
+
+
+
+#### 端口映射（需管理员权限）
+
+![](http://ohdtoul5i.bkt.clouddn.com/1531476067353.png)
+
+```powershell
+#查询端口映射情况
+netsh interface portproxy show v4tov4
+#添加端口映射
+netsh interface portproxy add v4tov4 listenport=外网端口 listenaddress=主IP connectaddress=私网IP connectport=私网IP端口
+#eg
+netsh interface portproxy add v4tov4 listenport=14014 listenaddress=192.168.1.158 connectaddress=192.168.204.182 connectport=14014
+#删除一个端口映射
+netsh interface portproxy delete v4tov4 listenaddress=主IP listenport=外网端口
+#eg
+netsh interface portproxy delete v4tov4 listenaddress=192.168.1.158 listenport=14014
+```
+
+![1531475386029](F:\xuan\nutstore\xuanfong1.github.io\source\_posts\image\src_dir\1531475386029.png)
+
+参考[Hyper-V 共享式网络链接 端口映射](https://my.oschina.net/alongite/blog/1537054)
