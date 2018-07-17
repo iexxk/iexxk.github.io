@@ -1,12 +1,23 @@
 ---
 title: Java-Ftp
 date: 2018-07-14 14:08:35
-updated: 2018-07-14 14:44:11
+updated: 2018-07-17 19:36:22
 categories: Java
 tags: [Java,Ftp]
 ---
 
 #### 问题：
+
+##### 问题1： 文件损坏
+
+```java
+//该格式会转码导致部分数据丢失
+ftp.setFileType(FTP.ASCII_FILE_TYPE);  
+//该格式不会丢失数据
+ftp.setFileType(FTP.BINARY_FILE_TYPE);
+```
+
+##### 问题2：上传失败
 
 发现在虚拟机运行代码时发现通过FTP上传文件总是失败返回`500 Illegal PORT command`
 

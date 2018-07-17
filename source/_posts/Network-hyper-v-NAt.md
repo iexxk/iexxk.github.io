@@ -1,7 +1,7 @@
 ---
 title: Network-hyper-v-NAt
 date: 2018-04-19 22:05:50
-updated: 2018-04-25 20:47:32
+updated: 2018-07-17 10:51:37
 categories: 网络
 tags: [Network,static,NAT,hyper-v]
 ---
@@ -83,3 +83,18 @@ netsh interface portproxy delete v4tov4 listenaddress=192.168.1.158 listenport=1
 ![](http://ohdtoul5i.bkt.clouddn.com/1531475386029.png)
 
 参考[Hyper-V 共享式网络链接 端口映射](https://my.oschina.net/alongite/blog/1537054)
+
+
+
+### 问题
+
+1. 端口偶发性映射失效，重启失效
+
+   解决：目前删除重新添加，也可以添加个脚本，待寻找更好的方法
+
+   参考：
+
+   [netsh interface portproxy 偶发性失效](https://bbs.csdn.net/topics/391076935)
+
+   [netsh portproxy not working after reboot](https://social.technet.microsoft.com/Forums/en-US/24494291-21a0-492e-b596-97bd5ac042d1/netsh-portproxy-not-working-after-reboot?forum=w7itpronetworking)
+

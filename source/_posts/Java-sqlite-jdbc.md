@@ -1,7 +1,7 @@
 ---
 title: Java-sqlite-jdbc
 date: 2018-07-13 16:29:56
-updated: 2018-07-13 16:53:14
+updated: 2018-07-17 15:34:31
 categories: Java
 tags: [Java,Sqlite]
 ---
@@ -96,4 +96,58 @@ public List queryList(String sql) throws SQLException {
 #### 注意事项
 
 1. `ResultSet`连续查询会覆盖之前的，无论是不是新的`ResultSet`都是共享一个，因此读完数据保存到map马上关闭
+
 2. ` connection.createStatement()`这个对象也不能共享全局，会出现数据库未关闭的错误
+
+3. 问题，该驱动目前好像不支持alpine系统，因此用docker打包式，基础镜像用alpine会加载不了驱动
+
+   ```verilog
+   [WARN]: Failed to load native library:sqlite-3.15.1-6f7bc1af-1dba-4675-84c7-aaf90017dff0-libsqlitejdbc.so. osinfo: Linux/x86_64
+   [WARN]: java.lang.UnsatisfiedLinkError: /tmp/sqlite-3.15.1-6f7bc1af-1dba-4675-84c7-aaf90017dff0-libsqlitejdbc.so: Error relocating /tmp/sqlite-3.15.1-6f7bc1af-1dba-4675-84c7-aaf90017dff0-libsqlitejdbc.so: __isnan: symbol not found
+   ```
+
+   解决：替换基础镜像，这里用`java:8-jre`他的基础系统是`debian `
+
+   参考: [Failed to load native library:sqlite-3.15.1](https://github.com/itzg/dockerfiles/issues/133)
+
+   解决：居然是版本问题，换成`3.8.11.2`可以读取
+
+### 测试
+
+利用docker镜像测试jdbc驱动包
+
+准备测试代码`SQLiteJDBC.java`
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Opened database successfully");
+  }
+}
+```
+
+然后准备好db测试数据库文件、`SQLiteJDBC.java`测试代码文件、[sqlit-jdbc驱动包](https://bitbucket.org/xerial/sqlite-jdbc/downloads/):[sqlite-jdbc-3.8.11.2.jar](https://bitbucket.org/xerial/sqlite-jdbc/downloads/sqlite-jdbc-3.8.11.2.jar) 这几个文件都放在同一个目录，然后切合到该目录执行以下命令
+
+```bash
+#编译生成class文件
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp java:8-jdk-alpine javac SQLiteJDBC.java
+#运行class文件
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp java:8-jdk-alpine java -classpath ".:sqlite-jdbc-3.8.11.2.jar" SQLiteJDBC
+```
+
+`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp <java镜像名字> <java命令>`该命令意思是当前挂载当前路径到myapp目录，`--rm` 是一次性，用完即毁
+
+   
+
