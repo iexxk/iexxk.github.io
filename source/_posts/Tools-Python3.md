@@ -52,7 +52,7 @@ tags: [Python]
 
 上面已经登陆成功了，下面直接用cookie进行爬数据会被重定向，还需要添加请求头，以及翻页参数
 
-![aaccb5e0-b870-481f-951a-7c80151ccac7](F:\xuan\nutstore\xuanfong1.github.io\source\_posts\image\src_dir\aaccb5e0-b870-481f-951a-7c80151ccac7.gif)
+![](http://ohdtoul5i.bkt.clouddn.com/aaccb5e0-b870-481f-951a-7c80151ccac7.gif)
 
 
 
