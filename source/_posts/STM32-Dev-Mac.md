@@ -1,7 +1,7 @@
 ---
 title: STM32-Dev-Mac
 date: 2018-06-18 18:53:17
-updated: 2018-07-02 23:21:27
+updated: 2018-07-22 08:58:09
 categories: STM32
 tags: [STM32,Mac,CLion]
 typora-copy-images-to: ./image/src_dir
@@ -148,6 +148,6 @@ Cannot load symbol file: "/Users/xuanleung/IdeaProjects/f401re_demo/cmake-build-
 
 http://blog.meekdai.com/MacOS-Eclipse-ARM-GCC-STM32.html
 
-[STM32 Nucleo-64 boards文档](https://www.st.com/content/ccc/resource/technical/document/user_manual/98/2e/fa/4b/e0/82/43/b7/DM00105823.pdf/files/DM00105823.pdf/jcr:content/translations/en.DM00105823.pdf)
+[STM32 Nucle o-64 boards文档](https://www.st.com/content/ccc/resource/technical/document/user_manual/98/2e/fa/4b/e0/82/43/b7/DM00105823.pdf/files/DM00105823.pdf/jcr:content/translations/en.DM00105823.pdf)
 
 [Nucleo-64板载ST-LINK/ V2-1调试器 之对外界编程](http://www.stmcu.org/module/forum/thread-609184-1-1.html)
