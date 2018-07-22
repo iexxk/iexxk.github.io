@@ -33,7 +33,7 @@ tags: [STM32,NUCLEO]
 
 3. 设置led输出引脚：在pinout引脚设置界面去掉PA5，修改PC13为`GPIO_Output`输出，并打上`LED`用户标签
 
-   ![QQ20180722-105903](/Users/xuanleung/nustore/xuanfong1.github.io/source/_posts/image/src_dir/QQ20180722-105903.png)
+   ![](http://ohdtoul5i.bkt.clouddn.com/QQ20180722-105903.png)
 
 4. 修改时钟引脚设置，由于自己的板子用的高速时钟(HSE)和低速时钟(LSE)都用的外部时钟，所以这里切换时钟模式都为外部(Crystal)
 
