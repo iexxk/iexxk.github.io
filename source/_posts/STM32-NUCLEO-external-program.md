@@ -43,7 +43,7 @@ tags: [STM32,NUCLEO]
 
 5. 修改时钟配置，修改晶振频率和自己板子一致，并且换成外部，然后设置倍数，如果倍数设置高于频率，会提示红报错，选择可用最高倍数即可，该板子只能选`X9`
 
-   ![QQ20180722-110120](/Users/xuanleung/nustore/xuanfong1.github.io/source/_posts/image/src_dir/QQ20180722-110120.png)
+   ![](http://ohdtoul5i.bkt.clouddn.com/QQ20180722-110120.png)
 
 6. 最后生成makerfile类型工程
 
