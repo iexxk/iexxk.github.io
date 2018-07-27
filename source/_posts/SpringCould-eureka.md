@@ -1,7 +1,7 @@
 ---
 title: SpringCould-eureka
 date: 2018-04-11 09:59:55
-updated: 2018-06-20 09:17:38
+updated: 2018-07-25 13:53:02
 categories: Spring
 tags: [SpringBoot,SpringCould,eureka]
 ---
@@ -54,30 +54,46 @@ tags: [SpringBoot,SpringCould,eureka]
 ##### eureka高可用(未实践)
 
 ```yaml
+#多节点固定模式,文件名application-peer1.yml
 spring:
-  profiles: peer1                                 # 指定profile=peer1
+  application:
+    name: ${APPLICATION_NAME:eureka-center}
 server:
-  port: 8761
+  port: ${EUREKA_PORT:14031}
 eureka:
   instance:
-    hostname: peer1                               # 指定当profile=peer1时，主机名
+    hostname: ${EUREKA_HOST:eureka-center-peer1}  #指定该Eureka实例的主机名，需要host映射
+    prefer-ip-address: false
   client:
-    serviceUrl:
-      defaultZone: http://peer2:8762/eureka/      # 将自己注册到peer2这个Eureka上面去
+    serviceUrl:  #高可用
+      defaultZone:  ${EUREKA_CENTER_REG:http://eureka-center-peer2:14032/eureka/}
 ###----------------第二个eureka注册中心互相注册即可-----------------------------------------  
+#多节点固定模式,文件名application-peer2.yml
 spring:
-  profiles: peer2
+  application:
+    name: ${APPLICATION_NAME:eureka-center}
 server:
-  port: 8762
+  port: ${EUREKA_PORT:14032}
 eureka:
   instance:
-    hostname: peer2
+    hostname: ${EUREKA_HOST:eureka-center-peer2}  #指定该Eureka实例的主机名，需要host映射
+    prefer-ip-address: false
   client:
-    serviceUrl:
-      defaultZone: http://peer1:8761/eureka/
-###----------各个微服务端（客户的）只需修改成如下------------
-defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka
+    serviceUrl:  #高可用
+      defaultZone:  ${EUREKA_CENTER_REG:http://eureka-center-peer1:14031/eureka/}
 ```
+
+启动:
+
+`java -jar app.jar --spring.profiles.active=peer1`
+
+`java -jar app.jar --spring.profiles.active=peer2`
+
+注意：
+
+1. 高可用启动，application.name一定要一致
+2. 一定要指定端口号
+3. 不能禁用自我注册，注意配置文件加载顺序及覆盖顺序
 
 ### [健康检查](https://spring.io/guides/gs/actuator-service/)
 

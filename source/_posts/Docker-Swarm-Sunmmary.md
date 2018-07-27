@@ -1,7 +1,7 @@
 ---
 title: Docker swarm搭建总结
 date: 2017-12-05 16:12:37
-updated: 2018-06-20 18:25:18
+updated: 2018-07-26 09:12:00
 categories: Docker
 tags: [集群,Swarm,Docker]
 ---
@@ -89,5 +89,11 @@ cmd 命令型，可执行
      - config-server
 ```
 
+### 镜像升级
 
+portainer升级命令
+
+`docker service update --image portainer/portainer:latest portainer_portainer`
+
+然后重启portainer服务
 
