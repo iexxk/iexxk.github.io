@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-official
 date: 2018-07-27 13:43:28
-updated: 2018-07-27 13:55:46
+updated: 2018-07-31 10:02:28
 categories: Docker
 tags: [Docker,Gitlab]
 ---
@@ -54,6 +54,13 @@ nginx['listen_port'] = 80
 #这里要设置ssh端口，不然ssh不能使用
 gitlab_rails['gitlab_shell_ssh_port'] = 14020
 gitlab_rails['initial_root_password'] = File.read('/run/secrets/gitlab_root_password')
+gitlab_rails['time_zone'] = 'Asia/Shanghai'
+#cron时间表达式每天三点
+gitlab_rails['backup_cron'] = '0 0 3 * * ?'
+# 默认备份目录/var/opt/gitlab/backups
+# gitlab_rails['backup_path'] = '/var/opt/gitlab/backups'
+# limit backup lifetime to 7 days - 604800 seconds
+gitlab_rails['backup_keep_time'] = 604800
 ```
 
 portainer->secrets->name: `gitlab_root_password`
@@ -63,6 +70,12 @@ MySuperSecretAndSecurePass0rd!
 ```
 
 登陆时用户名为`root`，密码为`gitlab_root_password`的内容
+
+### 备份
+
+```sh
+docker exec -t <your container name> gitlab-rake gitlab:backup:create
+```
 
 
 
