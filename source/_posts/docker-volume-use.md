@@ -1,12 +1,30 @@
 ---
 title: docker-volume-use
 date: 2018-03-12 10:58:46
-updated: 2018-04-25 20:47:32
+updated: 2018-08-07 09:57:55
 categories: Docker
 tags: [docker,swarm,gluterfs]
 ---
 
 ## docker 挂载卷应用
+
+### 基础知识
+
+> 官网说明[Use bind mounts](https://docs.docker.com/storage/bind-mounts/)
+>
+> 官网compose文件：[Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
+
+bind 挂载，就是宿主机路径对应容器路径，该挂载需要先创建目录，简称`/path:/path`
+
+volume挂载，不需要提前创建目录，他是以volume形式，简称`volume-name:/path`
+
+其中`z`和`Z`的使用,eg:`/path:/path:z`
+
+`z`小写的是可以容器共享
+
+`Z`大写的是私有，容器不可共享
+
+`ro`只读挂载
 
 #### 思路
 

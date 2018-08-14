@@ -1,7 +1,7 @@
 ---
 title: Docker-Alpine-Timezone-Encoding
 date: 2018-07-16 13:44:05
-updated: 2018-07-17 11:30:21
+updated: 2018-08-13 12:10:21
 categories: Docker
 tags: [Docker,Alpine,Timezone,Encoding]
 ---
@@ -16,10 +16,18 @@ alpine镜像默认时区是`UTC`,执行命令`date`可以进行查看时区，�
 
 解决apline时区问题只需安装`tzdata`然后设置下就可以了,在alpine执行
 
+添加字体的化安装`ttf-dejavu`解决
+
+
+```verilog
+java.lang.NullPointerException: null
+at sun.awt.FontConfiguration.getVersion(FontConfiguration.java:1264)
+```
+
 ```sh
 date #查看时区UTC
-apk update
-apk add tzdata 
+apk update 
+apk add tzdata ttf-dejavu
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 
 echo "Asia/Shanghai" > /etc/timezone
 date #执行命令date可以进行查看时区
@@ -37,7 +45,7 @@ date #执行命令date可以进行查看时区
 ```dockerfile
 # 生成镜像name:java:8-jre-alpine-cst
 FROM java:8-jre-alpine
-RUN  apk add --no-cache tzdata \
+RUN  apk add --no-cache tzdata ttf-dejavu \
 	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone
 ```

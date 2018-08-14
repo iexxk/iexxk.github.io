@@ -1,7 +1,7 @@
 ---
 title: Java-Ftp
 date: 2018-07-14 14:08:35
-updated: 2018-07-17 19:36:22
+updated: 2018-08-07 09:49:03
 categories: Java
 tags: [Java,Ftp]
 ---
@@ -215,6 +215,31 @@ public class FtpUtil {
         return false;
     }
 }
+```
+
+
+
+##### 问题3：docker部署，无权限问题
+
+原因：由于使用ftp登陆时默认跟目录`/`其实时用户ftp home目录，因此设置home目录因该是挂载卷的子目录，不然同级回提示没权限，如果新配置记得删除passwd的文件或删除，不然配置修改无效
+
+正确的配置文件如下
+
+```yaml
+  ftpd-server:
+    restart: on-failure
+    image: stilliard/pure-ftpd:hardened
+    volumes:
+      - /dockerdata/v-manager-test-ygl/ftpdata:/home/ftpusers
+      - /dockerdata/v-manager-test-ygl/ftpconfig:/etc/pure-ftpd/passwd
+    ports:
+       - "14821:21"
+       - "30000-30009:30000-30009"
+    environment:
+      PUBLICHOST: "192.168.1.230"
+      FTP_USER_NAME: "ftpuser"
+      FTP_USER_PASS: "ftpuser"
+      FTP_USER_HOME: "/home/ftpusers/ftpuser"
 ```
 
 
