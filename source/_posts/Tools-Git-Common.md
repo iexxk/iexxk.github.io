@@ -1,7 +1,9 @@
 ---
-title: Git常用操作
+git rm -r --cached .
+git add .
+git commit -m 'We really don't want Git to track this anymore!'title: Git常用操作
 date: 2018-08-07 14:34:06
-updated: 2018-08-07 14:34:06
+updated: 2018-08-21 16:57:15
 categories: 工具
 tags: [git]
 ---
@@ -24,6 +26,18 @@ revert 之后你的本地代码会回滚到指定的历史版本,这时你再 gi
 
 ```sh
 git revert c011eb3c20ba6fb38cc94fe5a8dda366a3990c61
+```
+
+
+
+## 清除已提交内容，解决.gitignore无效
+
+添加.gitignore执行如下
+
+```bash
+git rm -r --cached .
+git add .
+git commit -m 'clear track'
 ```
 
 
