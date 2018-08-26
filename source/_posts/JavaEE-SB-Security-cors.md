@@ -1,7 +1,7 @@
 ---
 title: Spring Boot Security cors跨域解决
 date: 2018-03-30 15:42:12
-updated: 2018-04-25 20:47:32
+updated: 2018-08-24 16:35:40
 categories: JavaEE
 tags: [springboot,cors,SpringSecurity]
 ---
@@ -36,6 +36,22 @@ public class CorsConfig implements WebMvcConfigurer{
         http.cors().and()....
     }
 ```
+
+
+
+
+
+### 跨域测试
+
+chrome console输入
+
+```bash
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://192.168.1.230:14083/app/geography/painting/',true);
+xhr.send();
+```
+
+在network查看结果
 
 
 

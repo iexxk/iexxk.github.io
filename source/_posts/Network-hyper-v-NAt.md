@@ -1,7 +1,7 @@
 ---
 title: Network-hyper-v-NAt
 date: 2018-04-19 22:05:50
-updated: 2018-07-17 10:51:37
+updated: 2018-08-25 21:43:58
 categories: 网络
 tags: [Network,static,NAT,hyper-v]
 ---
@@ -98,3 +98,8 @@ netsh interface portproxy delete v4tov4 listenaddress=192.168.1.158 listenport=1
 
    [netsh portproxy not working after reboot](https://social.technet.microsoft.com/Forums/en-US/24494291-21a0-492e-b596-97bd5ac042d1/netsh-portproxy-not-working-after-reboot?forum=w7itpronetworking)
 
+2. 网络配置实现，使用`ip a s`查看可以一个网卡下有两个ip
+
+   原因：存在相同名字的网卡配置文件，但后缀不一样，主要是由于备份原来文件导致的，例如`.back`等，
+
+   解决：千万不要在当前目录进行备份，且不要用后缀模式
