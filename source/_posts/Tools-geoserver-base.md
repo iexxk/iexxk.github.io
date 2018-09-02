@@ -1,7 +1,7 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-08-20 16:45:21
+updated: 2018-08-31 14:31:41
 categories: 工具
 tags: [geoserver]
 ---
@@ -74,3 +74,50 @@ services:
 1. geoserver添加图层预览时提示`java.lang.OutOfMemoryError: GC overhead limit exceeded`该错误
 
    解决把`-Xmx`设置更大，如果是虚拟机最小内存必须设置4g
+
+2. 跨域问题和天津插件
+
+   ```dockerfile
+   FROM kartoza/geoserver:latest
+   #安装mysql插件
+   ADD gt-jdbc-mysql-19.2.jar $CATALINA_HOME/webapps/geoserver/WEB-INF/lib/
+   ADD mysql-connector-java-5.1.46.jar $CATALINA_HOME/webapps/geoserver/WEB-INF/lib/
+   #解决跨域问题
+   ADD web.xml $CATALINA_HOME/webapps/geoserver/WEB-INF/
+   ADD java-property-utils-1.9.jar $CATALINA_HOME/webapps/geoserver/WEB-INF/lib/
+   ADD cors-filter-1.7.jar $CATALINA_HOME/webapps/geoserver/WEB-INF/lib/
+   ```
+
+   `web.xml`添加如下
+
+   ```
+   <filter>  
+       <filter-name>CORS</filter-name>  
+       <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>  
+       <init-param>  
+        <param-name>cors.allowOrigin</param-name>  
+           <param-value>*</param-value>  
+       </init-param>  
+       <init-param>  
+        <param-name>cors.supportedMethods</param-name>  
+           <param-value>GET, POST, HEAD, PUT, DELETE</param-value>  
+       </init-param>  
+       <init-param>  
+        <param-name>cors.supportedHeaders</param-name>  
+           <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified</param-value>  
+       </init-param>  
+       <init-param>  
+           <param-name>cors.exposedHeaders</param-name>  
+           <param-value>Set-Cookie</param-value>  
+       </init-param>  
+       <init-param>  
+           <param-name>cors.supportsCredentials</param-name>  
+           <param-value>true</param-value>  
+       </init-param>  
+   </filter>  
+   <filter-mapping>  
+       <filter-name>CORS</filter-name>  
+       <url-pattern>/*</url-pattern>  
+   </filter-mapping>
+   
+   ```

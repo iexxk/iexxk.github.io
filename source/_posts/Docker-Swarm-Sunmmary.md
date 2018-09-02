@@ -1,7 +1,7 @@
 ---
 title: Docker swarm搭建总结
 date: 2017-12-05 16:12:37
-updated: 2018-07-26 09:12:00
+updated: 2018-08-28 09:27:54
 categories: Docker
 tags: [集群,Swarm,Docker]
 ---
@@ -96,4 +96,27 @@ portainer升级命令
 `docker service update --image portainer/portainer:latest portainer_portainer`
 
 然后重启portainer服务
+
+##### `docker service upadte` 命令参数详解
+
+* `--force` 强制更新重启服务，无论是否配置或镜像改变都更新
+
+* `--image <image:tag>` 制定更新的镜像
+
+* `--with-registry-auth` 私有仓库需要携带该参数，否则提示
+
+  ```verilog
+  image 192.168.1.230:14005/manage/test/ygl/app:latest could not be accessed on a registry to record
+  its digest. Each node will access 192.168.1.230:14005/manage/test/ygl/app:latest independently,
+  possibly leading to different nodes running different
+  ```
+
+
+
+
+
+```bash
+# 登陆仓库
+docker login 192.168.1.230:14005 -u admin -p password
+```
 

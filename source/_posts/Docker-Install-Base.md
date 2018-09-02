@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2018-05-23 23:36:02
+updated: 2018-08-28 11:47:56
 categories: Docker
 tags: [docker,docker-compose]
 ---
@@ -164,4 +164,118 @@ chmod +x "$HOME/bin/docker-machine.exe"
    ` echo 1 > /proc/sys/net/bridge/bridge-nf-call-ip6tables`
 
 2. 问题：构建镜像不能用`-`减号命名镜像的名字，使用docker-statck 部署找不到镜像
+
+3. 问题: 执行`sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo`
+
+   ```bash
+   [root@lfadmin ~]# sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+   已加载插件：fastestmirror, langpacks
+   adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
+   grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
+   Could not fetch/save url https://download.docker.com/linux/centos/docker-ce.repo to file /etc/yum.repos.d/docker-ce.repo: [Errno 12] Timeout on https://download.docker.com/linux/centos/docker-ce.repo: (28, 'Resolving timed out after 30541 milliseconds')
+   ```
+
+   解决：
+
+   `vim /etc/yum.repos.d/docker-ce.repo`
+
+   ```properties
+   [docker-ce-stable]
+   name=Docker CE Stable - $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/$basearch/stable
+   enabled=1
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-stable-debuginfo]
+   name=Docker CE Stable - Debuginfo $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/debug-$basearch/stable
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-stable-source]
+   name=Docker CE Stable - Sources
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/source/stable
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-edge]
+   name=Docker CE Edge - $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/$basearch/edge
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-edge-debuginfo]
+   name=Docker CE Edge - Debuginfo $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/debug-$basearch/edge
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-edge-source]
+   name=Docker CE Edge - Sources
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/source/edge
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-test]
+   name=Docker CE Test - $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/$basearch/test
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-test-debuginfo]
+   name=Docker CE Test - Debuginfo $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/debug-$basearch/test
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-test-source]
+   name=Docker CE Test - Sources
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/source/test
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-nightly]
+   name=Docker CE Nightly - $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/$basearch/nightly
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-nightly-debuginfo]
+   name=Docker CE Nightly - Debuginfo $basearch
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/debug-$basearch/nightly
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+    
+   [docker-ce-nightly-source]
+   name=Docker CE Nightly - Sources
+   baseurl=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/7/source/nightly
+   enabled=0
+   gpgcheck=1
+   gpgkey=https://mirrors.ustc.edu.cn/docker-ce/linux/centos/gpg
+   ```
+
+4. 问题：`sudo yum install docker-ce`提示如下
+
+   ```
+   Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+   ```
+
+   解决：
+
+   ```
+   yum provides '*/applydeltarpm'
+   yum install deltarpm
+   ```
+
 

@@ -1,7 +1,7 @@
 ---
 title: DB-MySQL-Summary
 date: 2018-04-05 20:40:41
-updated: 2018-05-15 18:58:42
+updated: 2018-08-29 19:05:53
 categories: 数据库
 tags: [mysql]
 ---
@@ -67,7 +67,24 @@ max_allowed_packet=16M
 sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 ```
 
+## 备份与恢复
 
+```bash
+#备份数据库 manage geoserver两个
+mysqldump -uroot -plfadmin --databases manage geoserver > ~/manageandgeoserver20180829.sql
+# 恢复
+mysql -uroot -plfadmin <manageandgeoserver20180829.sql
+# 检查校验,进入mysql命令行
+mysql -u root -p
+# 显示所有数据库
+mysql>  show databases;
+# 使用 manage数据库
+mysql> use manage;
+# 显示所有用表
+mysql> show tables;
+```
+
+参考 [MySql数据库备份与恢复——使用mysqldump 导入与导出方法总结](https://blog.csdn.net/helloxiaozhe/article/details/77680255)
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: Docker安装Registry
 date: 2018-01-24 16:17:37
-updated: 2018-04-25 20:47:32
+updated: 2018-08-29 12:47:45
 categories: Docker
 tags: [集群,Swarm,Docker,registry]
 ---
@@ -86,6 +86,67 @@ tags: [集群,Swarm,Docker,registry]
    然后`sudo systemctl daemon-reload`重启`systemctl restart docker`
 
    ###### 幻觉：失败了一次，重启又可以了？
+
+### docker registry 证书配置 
+
+部署配置
+
+```
+  registry:
+    restart: always
+    image: "registry:2.6.2"
+    ports:
+      - 14005:5000
+    environment:
+      - REGISTRY_AUTH=htpasswd #授权模式
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd #密码的地址
+      - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
+    volumes:
+      - /dockerdata/v-registry/auth:/auth #密码存储的挂载卷
+      - /dockerdata/v-registry/registry:/var/lib/registry #本地仓库挂载的卷
+      - /dockerdata/v-registry/certs:/certs #https
+```
+
+ 在`/dockerdata/v-registry/`生成证书,注意在hostname设置时，不要忽略www
+
+```bash
+[root@environment-test1 v-registry]# sudo mkdir -p certs && sudo openssl req -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key -x509 -days 365 -out certs/domain.crt
+Generating a 4096 bit RSA private key
+...........................................................++
+..++
+writing new private key to 'certs/domain.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:CN
+State or Province Name (full name) []:
+Locality Name (eg, city) [Default City]:
+Organization Name (eg, company) [Default Company Ltd]:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server's hostname) []:www.3sreform.com
+Email Address []:
+```
+
+再各个使用仓库的宿主机创建目录`mkdir -p /etc/docker/certs.d/www.3sreform.com:14005 `
+
+然后把生成的证书放到该目录下并改名为`ca.crt`
+
+最后重启docker
+
+`sudo systemctl daemon-reload`和`sudo systemctl restart docker`
+
+最后用`docker login www.3sreform.com:14005 -u admin -p <密码>`测试
+
+最后push是，镜像开头必须是`www.3sreform.com`
+
+
 
 #### 参考
 
