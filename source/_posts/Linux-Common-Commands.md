@@ -1,7 +1,8 @@
 ---
 title: linux常用命令
 date: 2016-09-05 15:25:52
-updated: 2018-04-25 20:47:32categories: Linux
+updated: 2018-09-04 15:35:45
+categories: Linux
 tags: [linux,命令,后台]
 ---
 # 端口
@@ -18,3 +19,8 @@ firewall-cmd --zone=public --add-port=3306/tcp
 ```bash
 firewall-cmd --zone=public --remove-port=3306/tcp
 ```
+
+#### 系统开机启动项
+
+`/etc/rc.local`
+

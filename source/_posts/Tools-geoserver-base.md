@@ -1,7 +1,7 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-08-31 14:31:41
+updated: 2018-09-04 15:13:03
 categories: 工具
 tags: [geoserver]
 ---
@@ -67,6 +67,13 @@ services:
 
    点击`Layer Preview` 选择图层进行预览
 
+### 字体安装
+
+1. 查看支持的中文字体命令`fc-list :lang=zh`
+2. 命令没有找到需要安装字体管理器`yum -y install fontconfig`
+3. 字体目录`/usr/share/fontconfig`和`/usr/share/fonts`
+4. 将window下或者下载字体文件ttc、ttf文件复制到fonts目录
+
 
 
 ## 问题
@@ -75,7 +82,7 @@ services:
 
    解决把`-Xmx`设置更大，如果是虚拟机最小内存必须设置4g
 
-2. 跨域问题和天津插件
+2. 跨域问题和添加插件
 
    ```dockerfile
    FROM kartoza/geoserver:latest
@@ -86,6 +93,8 @@ services:
    ADD web.xml $CATALINA_HOME/webapps/geoserver/WEB-INF/
    ADD java-property-utils-1.9.jar $CATALINA_HOME/webapps/geoserver/WEB-INF/lib/
    ADD cors-filter-1.7.jar $CATALINA_HOME/webapps/geoserver/WEB-INF/lib/
+   #添加中文字体
+   ADD chinese /usr/share/fonts/chinese/
    ```
 
    `web.xml`添加如下
@@ -121,3 +130,4 @@ services:
    </filter-mapping>
    
    ```
+
