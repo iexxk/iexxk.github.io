@@ -1,7 +1,7 @@
 ---
 title: Docker-make-ffmpeg-nginx
 date: 2018-08-22 10:13:38
-updated: 2018-08-22 19:18:17
+updated: 2018-09-13 10:02:05
 categories: Docker
 tags: [Docker,nginx,ffmpeg]
 ---
@@ -74,6 +74,14 @@ RUN  apk add --no-cache tzdata nginx-mod-rtmp ffmpeg supervisor \
 ENTRYPOINT ["/usr/bin/supervisord"]
 CMD ["-c", "/conf/supervisord.conf"] 
 ```
+
+
+
+#### 解决nginx重启端口占用
+
+修改`supervisord.conf`中的`command= nginx`为
+
+`command= nginx -g "daemon off;"`
 
 
 

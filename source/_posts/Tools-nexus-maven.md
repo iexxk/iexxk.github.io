@@ -1,7 +1,7 @@
 ---
 title: Tools-nexus-maven
 date: 2018-09-06 08:42:44
-updated: 2018-09-06 16:27:44
+updated: 2018-09-12 11:27:07
 categories: 工具
 tags: [nexus3,maven]
 ---
@@ -222,6 +222,8 @@ mvn deploy:deploy-file -Dfile=spring-boot-starter-redis-0.0.1-SNAPSHOT.jar -Dgro
 mvn deploy:deploy-file -Dfile=dubbo-2.8.4.jar -DgroupId=com.alibaba -DartifactId=dubbo -Dversion=2.8.4 -Dpackaging=jar -DrepositoryId=nexus-releases -Durl=http://192.168.1.213:18081/repository/maven-releases/
 
 mvn deploy:deploy-file -Dfile=fastdfs-1.24.jar -DgroupId=org.csource -DartifactId=fastdfs -Dversion=1.24 -Dpackaging=jar -DrepositoryId=nexus-releases -Durl=http://192.168.1.213:18081/repository/maven-releases/
+
+mvn deploy:deploy-file -Dfile=examples-1.0.jar -DgroupId=com.haikang -DartifactId=examples -Dversion=1.0 -Dpackaging=jar -DrepositoryId=nexus-releases -Durl=http://192.168.1.230:18081/repository/maven-releases/
 ```
 
 本地安装jar包到本地maven仓库
@@ -237,3 +239,4 @@ mvn install:install-file -Dfile=fastdfs-1.24.jar -DgroupId=org.csource -Dartifac
 ### 问题
 
 1. 下载了找不到包，解决，删除项目重新导入，重新maven依赖
+2. 刚上传或添加了新的jar到私库，无法下载，解决，删除本地仓库的该包目录

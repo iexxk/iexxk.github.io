@@ -1,7 +1,7 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-09-04 15:13:03
+updated: 2018-09-11 19:21:12
 categories: 工具
 tags: [geoserver]
 ---
@@ -130,4 +130,37 @@ services:
    </filter-mapping>
    
    ```
+
+# FWTools 切图
+
+### tif切图
+
+1. 下载[FWTools-linux-2.0.6.tar.gz](http://fwtools.loskot.net/FWTools-linux-2.0.6.tar.gz),复制文件到`cp FWTools-linux-2.0.6.tar.gz ~/`,然后解压文件`tar -zxvf FWTools-linux-2.0.6.tar.gz`
+2. 使用wsl沙河系统安装，执行`sudo apt update`然后安装`sudo apt install python`安装默认的2.x版本
+3. 修改安装脚本`vim install.sh`修改最后一行`/bin/python`为`/usr/bin/python`
+4. 安装`sudo apt install python-gdal`插件
+5. 测试，执行`gdal_retile.py -v -r bilinear -levels 10 -ps 256 256 -co "TILED=YES" -co COMPRESS=LZW -targetDir /mnt/c/Users/xuan/Desktop/tse/ /mnt/c/Users/xuan/Desktop/kongjiang.tif`
+
+### shp转mysql
+
+1. 安装`sudo apt install gdal-bin`
+2. 执行`ogr2ogr -f "GeoJSON" china.json 保护动物.shp`先把shp文件转为json，检查json文件编码是否为utf-8
+3. 再把json导入数据库`ogr2ogr -f "MySQL" MySQL:"yglgeoserver,user=root,host=192.168.1.230,password=lfadmin" -lco engine=INNODB china.json`，不直接将shp导入数据库是因为编码问题，导致导入报错
+
+### 编写批量导入数据shell脚本
+
+```bash
+#! /bin/bash
+for FILE in *.shp
+do
+	echo "printf file: $FILE..."
+	#${FILE%.*}.json为新的名字，例如文件名（$FILE）为 ss.shp 那么新的名字（${FILE%.*}.json）为ss.json
+	ogr2ogr -f "GeoJSON" "${FILE%.*}.json" "$FILE"
+	ogr2ogr -f "MySQL" MySQL:"yglgeoserver,user=root,host=192.168.1.230,password=lfadmin" -lco engine=INNODB "${FILE%.*}.json"
+
+done
+exit
+```
+
+
 
