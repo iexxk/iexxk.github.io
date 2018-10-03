@@ -1,7 +1,7 @@
 ---
 title: Android-osmdroid
 date: 2018-05-29 15:59:44
-updated: 2018-05-31 11:02:32
+updated: 2018-09-28 20:42:55
 categories: Android
 tags: [osmdroid]
 ---
@@ -36,7 +36,77 @@ github: [osmdroid/osmdroid](https://github.com/osmdroid/osmdroid)
 8. 最后开始点击下载地图册
 9. 得到一个压缩文件，存储备用
 
-##### 离线地图自定义地图源
+##### 离线地图自定义地图源(geoserver)
+
+1. 在[Mobile Atlas Creator](http://mobac.sourceforge.net/)工具目录的`mapsources`目录添加地图源配置文件
+
+2. geoserver地图地图源配置文件`geoserver_maps.xml`
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+     <customWmsMapSource>
+     <name>My Geoserver WMS</name>
+     <minZoom>0</minZoom>
+     <maxZoom>18</maxZoom>
+     <tileType>PNG</tileType>
+     <version>1.1.1</version>
+       <!-- 图层名字hws(工作空间):china_net(图层名字) -->
+     <layers>hws:china_net</layers>
+      <!-- hws替换为自己的工作区间，ip端口替换自己服务器的，其他不变 -->
+     <url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;</url>
+      <!-- 投影坐标系 -->
+     <coordinatesystem>EPSG:4326</coordinatesystem>
+     <aditionalparameters></aditionalparameters>
+     <backgroundColor>#000000</backgroundColor>
+   </customWmsMapSource>
+   ```
+
+3. 多图层配置
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <customMultiLayerMapSource>
+      <name>geoserver ygl ch</name>
+      <tileType>png</tileType>
+      <backgroundColor>#000000</backgroundColor>
+      <!-- 从底部（第一个）到顶部（最后一个）的每个图层的不透明度值列表。值0.0完全透明或不可见，而值1.0完全不透明。通常第一层应使用1.0 = 100％不透明度 -->
+      <layersAlpha>1.0 0.5</layersAlpha>
+      <layers>
+   		 <customWmsMapSource>
+   		  <name>ch</name>
+   		  <minZoom>0</minZoom>
+   		  <maxZoom>18</maxZoom>
+   		  <tileType>PNG</tileType>
+   		  <version>1.1.1</version>
+   			<!-- 图层名字hws(工作空间):china_net(图层名字) -->
+   		  <layers>hws:china_net</layers>
+   		   <!-- hws替换为自己的工作区间，ip端口替换自己服务器的，其他不变 -->
+   		  <url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;</url>
+   		   <!-- 投影坐标系 -->
+   		  <coordinatesystem>EPSG:4326</coordinatesystem>
+   		  <aditionalparameters></aditionalparameters>
+   		  <!-- <backgroundColor>#000000</backgroundColor> -->
+   		</customWmsMapSource>
+   		<customWmsMapSource>
+   		  <name>ygl</name>
+   		  <minZoom>0</minZoom>
+   		  <maxZoom>18</maxZoom>
+   		  <tileType>PNG</tileType>
+   		  <version>1.1.1</version>
+   			<!-- 图层名字hws(工作空间):china_net(图层名字) -->
+   		  <layers>hws:yinggeling18</layers>
+   		   <!-- hws替换为自己的工作区间，ip端口替换自己服务器的，其他不变 -->
+   		  <url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;</url>
+   		   <!-- 投影坐标系 -->
+   		  <coordinatesystem>EPSG:4326</coordinatesystem>
+   		  <aditionalparameters></aditionalparameters>
+   		  <!-- <backgroundColor>#000000</backgroundColor> -->
+   		</customWmsMapSource>
+      </layers>
+   </customMultiLayerMapSource>
+   ```
+
+##### 离线地图自定义地图源(google地图)
 
 1. 在[Mobile Atlas Creator](http://mobac.sourceforge.net/)工具目录的`mapsources`目录添加地图源配置文件
 
@@ -143,13 +213,10 @@ github: [osmdroid/osmdroid](https://github.com/osmdroid/osmdroid)
    }
    ```
 
-   
 
-   
+##### 参考
 
-   
-
-
+[How to use Custom map in MOBAC?](https://gis.stackexchange.com/questions/72898/how-to-use-custom-map-in-mobac)
 
 
 

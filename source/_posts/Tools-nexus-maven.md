@@ -1,7 +1,7 @@
 ---
 title: Tools-nexus-maven
 date: 2018-09-06 08:42:44
-updated: 2018-09-12 11:27:07
+updated: 2018-09-29 20:12:21
 categories: 工具
 tags: [nexus3,maven]
 ---
@@ -38,6 +38,31 @@ tags: [nexus3,maven]
    ```
 
 3. 测试访问`http://192.168.1.213:18081/`然后输入admin和admin123进行登陆即可
+
+### 配置yum代理
+
+远程原remote url: http://maven.aliyun.com/nexus/content/groups/public
+
+新建一个**type:yum(proxy)**
+
+在新建一个组**yum(group)**,添加刚刚的代理地址,同理，可以添加elpe,docker等其他仓库代理
+
+复制生成的地址http://192.168.1.230:18081/repository/yum-public/配置在`nexus.repo`
+
+执行`vim /etc/yum.repos.d/nexus.repo`
+
+```properties
+[nexusrepo]
+name=Nexus Repository
+baseurl=http://192.168.1.230:18081/repository/yum-public/$releasever/os/$basearch/
+enabled=1
+gpgcheck=0
+priority=1
+```
+
+`yum clean all`
+
+`rm -rf  /etc/yum.repos.d/C*`
 
 ### win10下[maven安装](https://maven.apache.org/download.cgi)
 
