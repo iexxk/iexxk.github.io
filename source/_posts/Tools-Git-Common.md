@@ -1,9 +1,7 @@
 ---
-git rm -r --cached .
-git add .
-git commit -m 'We really don't want Git to track this anymore!'title: Git常用操作
+title: Git常用操作
 date: 2018-08-07 14:34:06
-updated: 2018-08-21 16:57:15
+updated: 2018-10-12 23:09:51
 categories: 工具
 tags: [git]
 ---
