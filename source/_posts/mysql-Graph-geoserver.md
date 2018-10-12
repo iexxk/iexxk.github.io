@@ -1,7 +1,7 @@
 ---
 title: mysql-Graph-geoserver
 date: 2018-10-11 11:35:07
-updated: 2018-10-12 23:02:46
+updated: 2018-10-12 23:18:27
 categories: 杂谈
 tags: [mysql,geometry,geoserver]
 ---
@@ -12,7 +12,7 @@ tags: [mysql,geometry,geoserver]
 
 注意事项：第一个点和最后一个点必须相同，因此矩形至少是5个点
 
-![](http://ohdtoul5i.bkt.clouddn.com/%5CUsers%5Cxuan%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1539238451033.png)
+![](http://ohdtoul5i.bkt.clouddn.com/%255CUsers%255Cxuan%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1539238451033.png)
 
 ```mysql
 --添加面
