@@ -1,7 +1,7 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-09-11 19:21:12
+updated: 2018-10-11 11:24:45
 categories: 工具
 tags: [geoserver]
 ---
@@ -161,6 +161,25 @@ do
 done
 exit
 ```
+
+#### 问题
+
+1. 批量转换时提示`Warning 1: Feature id not preserved`
+
+   **原因**:是因为json数据中含有id，且id字段的值重复，导致识别为相同数据例如
+
+   ```json
+   {
+   "type": "FeatureCollection",
+   "name": "鹦哥岭橡胶天然林样地",
+   "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+   "features": [
+   { "type": "Feature", "properties": { "Id": 0, "坐标点": "aa", "编号": null, "树种": null, "胸径": null, "树高": null, "东西": null, "南北": null, "序号": 3, "X坐标": 109.33121961000001, "Y坐标": 18.9831775639 }, "geometry": { "type": "Point", "coordinates": [ 109.331219609524425, 18.983177563938192 ] } },
+   { "type": "Feature", "properties": { "Id": 0, "坐标点": "ab", "编号": null, "树种": null, "胸径": null, "树高": null, "东西": null, "南北": null, "序号": 3, "X坐标": 109.331143725, "Y坐标": 18.983130045799999 }, "geometry": { "type": "Point", "coordinates": [ 109.331143724995911, 18.983130045772864 ] } }
+   ]}
+   ```
+
+   **解决**:用文本工具批量删除或替换掉id字段，会自动生产id，如果有这字段就不会自动生成
 
 
 
