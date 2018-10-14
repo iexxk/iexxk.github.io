@@ -1,7 +1,7 @@
 ---
 title: Tools-nexus-maven
 date: 2018-09-06 08:42:44
-updated: 2018-09-29 20:12:21
+updated: 2018-10-13 11:24:07
 categories: 工具
 tags: [nexus3,maven]
 ---
@@ -63,6 +63,38 @@ priority=1
 `yum clean all`
 
 `rm -rf  /etc/yum.repos.d/C*`
+
+##### 注意
+
+epel源需要单独配置，直接用public不识别
+
+执行`vim /etc/yum.repos.d/nexus-epel.repo`
+
+```properties
+[nexus-epel-debuginfo]
+name = Extra Packages for Enterprise Linux 7 - $basearch - Debug
+baseurl = http://192.168.1.230:18081/repository/yum-epel/7/$basearch/debug
+failovermethod = priority
+enabled = 0
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck = 0
+
+[nexus-epel-source]
+name = Extra Packages for Enterprise Linux 7 - $basearch - Source
+baseurl = http://192.168.1.230:18081/repository/yum-epel/7/SRPMS
+failovermethod = priority
+enabled = 0
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+gpgcheck = 0
+
+[nexus-epel]
+baseurl = http://192.168.1.230:18081/repository/yum-epel/7/$basearch
+failovermethod = priority
+gpgcheck = 0
+name = EPEL YUM repo
+```
+
+
 
 ### win10下[maven安装](https://maven.apache.org/download.cgi)
 
