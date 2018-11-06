@@ -1,7 +1,7 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-10-11 11:24:45
+updated: 2018-11-05 13:55:30
 categories: 工具
 tags: [geoserver]
 ---
@@ -183,3 +183,18 @@ exit
 
 
 
+### geoserver
+
+[所有版本](https://build.geoserver.org/geoserver/)
+
+[idea运行](https://docs.geoserver.org/latest/en/developer/quickstart/intellij.html) 从[github](https://github.com/geoserver/geoserver)的src目录
+
+
+
+https://github.com/NASAWorldWind/WorldWindJava
+
+geoserver 安装[dds/bls](https://docs.geoserver.org/stable/en/user/community/dds/index.html)扩展
+
+
+
+高层数据https://www.jianshu.com/p/d68fffeb8e33未实验

@@ -1,12 +1,48 @@
 ---
 title: Docker-Ceph
 date: 2018-09-30 15:13:34
-updated: 2018-10-14 18:26:09
+updated: 2018-10-15 13:53:49
 categories: Docker
 tags: [Ceph]
 ---
 
 # docker 统一存储之ceph
+
+## 知识
+
+#### [ceph核心服务](http://docs.ceph.com/docs/master/start/intro/)
+
+1. MonItor(`mon`)  监视器
+
+   维护集群状态的映射，包括监视器映射，管理器映射，OSD映射和CRUSH映射。这些映射是Ceph守护进程相互协调所需的关键集群状态。监视器还负责管理守护进程和客户端之间的身份验证。冗余和高可用性通常至少需要三个监视器。
+
+2. Managers(`mgr`)  管理器
+
+   守护程序（ceph-mgr）负责跟踪运行时指标和Ceph集群的当前状态，包括存储利用率，当前性能指标和系统负载。 Ceph Manager守护进程还托管基于python的插件来管理和公开Ceph集群信息，包括基于Web的Ceph Manager Dashboard和REST API。高可用性通常至少需要两个管理器。
+
+3. OSDs(`osd_ceph_disk`) 对象存储守护进程
+
+   存储数据，处理数据复制，恢复，重新平衡，并通过检查其他Ceph OSD守护进程来获取心跳，为Ceph监视器和管理器提供一些监视信息。冗余和高可用性通常至少需要3个Ceph OSD。
+
+4. MDSs(`mds`) Ceph元数据服务器
+
+   代表Ceph文件系统存储元数据（即，Ceph块设备和Ceph对象存储不使用MDS）。 Ceph元数据服务器允许POSIX文件系统用户执行基本命令（如ls，find等），而不会给Ceph存储集群带来巨大负担。
+
+
+
+#### 问题
+
+1. 断电关机重启问题，如果是安装在容器里，面临自动挂载和卸载问题
+
+   如果挂载了关机时，容器先关闭，导致卸载出问题，一直关不了机
+
+   开机时重新挂载，看不到数据问题
+
+2. 集群部署，osd服务的` privileged: true`特权模式不支持，导致不能操作mount相关
+
+3. 采用`docker plugin install rexray/rbd`插件模式挂载，服务的挂载目录不能更改，且外部需要安装ceph基本组件（考虑是否部分服务安装主机上，可解决123问题）
+
+
 
 ### 安装
 

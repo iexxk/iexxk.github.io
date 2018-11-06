@@ -1,7 +1,7 @@
 ---
 title: Java-video
 date: 2018-08-24 11:16:50
-updated: 2018-09-13 17:15:47
+updated: 2018-11-01 14:20:56
 categories: Java
 tags: [Java,ffmpeg]
 ---
@@ -29,7 +29,7 @@ tags: [Java,ffmpeg]
 
 ```bash
 # 7544 为 RTSP端口，摄像头独立直播流配置
-ffmpeg -rtsp_transport tcp -i rtsp://admin:12345@192.168.1.194:7544  -vcodec copy -acodec aac -ar 44100 -strict -2 -ac 1 -f flv -s 1280x720 -q 10 -f flv rtmp://127.0.0.1:1935/hls/video1
+ffmpeg -rtsp_transport tcp -i rtsp://admin:12345@192.0.0.63:554/h264/ch1/main/av_stream  -vcodec copy -acodec aac -ar 44100 -strict -2 -ac 1 -f flv -s 704x576 -q 10 -f flv rtmp://127.0.0.1:1935/hls/video1
 ```
 
 
@@ -115,3 +115,54 @@ ffmpeg -rtsp_transport tcp -i "rtsp://admin:12345@192.168.1.195:5555/Streaming/t
          }
 ```
 
+
+
+
+
+
+
+
+
+#### [海康录像机RTSP取流路径](http://haikang.faqrobot.cn/servlet/WXShow?action=sac&wxcId=63&sysNum=145716889796196&FromUserName=oNNCAjviKiFIfdX5IhEPUmQzP8Vg&sId=236075&subId=218733)
+
+2012年之前的设备支持老的取流格式，之后的设备新老取流格式都支持。
+
+【老URL，小于64路的NVR或混合录像机的IP通道从33开始；大于等于64路的NVR的IP通道从1开始】
+
+
+
+`rtsp://username:password@<ipaddress>/<videotype>/ch<number>/<streamtype>`
+
+**详细描述：**
+
+**![blob.png](http://haikang.faqrobot.cn/upload/web/145716889796196/20170808/71391502161074550.png)**
+
+ **举例说明：**
+
+DS-9016HF-ST的IP通道01主码流：
+
+rtsp://admin:12345@172.6.22.106:554/h264/ch33/main/av_stream
+
+DS-9016HF-ST的模拟通道01子码流：
+
+rtsp://admin:12345@172.6.22.106:554/h264/ch1/sub/av_stream
+
+【新URL，通道号全部按顺序从1开始】
+
+**详细描述：**
+
+`rtsp://username:password@<address>:<port>/Streaming/Channels/<id>(?parm1=value1&parm2-=value2…)`
+
+![blob.png](http://haikang.faqrobot.cn/upload/web/145716889796196/20170808/86951502161663245.png)
+
+**举例说明：**
+
+DS-9632N-ST的IP通道01主码流，：
+
+rtsp://admin:12345@172.6.22.234:554/Streaming/Channels/101
+
+DS-9632N-ST的IP通道01子码流：
+
+rtsp://admin:12345@172.6.22.234:554/Streaming/Channels/102
+
+ 

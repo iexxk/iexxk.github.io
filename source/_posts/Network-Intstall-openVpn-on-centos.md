@@ -1,7 +1,8 @@
 ---
 title: centos7.4安装openVpn
 date: 2017-10-12 14:13:37
-updated: 2018-04-25 20:47:32categories: 网络
+updated: 2018-10-18 21:06:51
+categories: 网络
 tags: [centos,openVpn]
 ---
 
@@ -114,6 +115,64 @@ systemctl restart openvpn-client@client_vm
 #开机启动
 systemctl enable openvpn-client@client_vm
 ```
+
+#### openvpn 服务端的局域网远程访问
+
+#### 准备工作，安装iptables
+
+It is possible to go back to a more classic iptables setup. First, stop and mask the firewalld service:
+
+```
+systemctl stop firewalld
+systemctl mask firewalld
+```
+
+Then, install the iptables-services package:
+
+```
+yum install iptables-services
+```
+
+Enable the service at boot-time:
+
+```
+systemctl enable iptables
+```
+
+Managing the service
+
+```
+systemctl [stop|start|restart] iptables
+```
+
+Saving your firewall rules can be done as follows:
+
+```
+service iptables save
+```
+
+添加路由
+
+```bash
+iptables -t nat -A POSTROUTING -s 10.14.208.0/24 -j SNAT --to-source  192.168.1.230
+service iptables save
+```
+
+`vim /etc/openvpn/server.conf ` 添加
+
+```properties
+push "route 192.168.1.0 255.255.255.0"
+```
+
+
+
+[iptables规则的查看和清除](http://cakin24.iteye.com/blog/2339362)
+
+[iptables 添加，删除，查看，修改](http://blog.51yip.com/linux/1404.html)
+
+[How can i use iptables on centos 7?](https://stackoverflow.com/questions/24756240/how-can-i-use-iptables-on-centos-7)
+
+[使用openvpn实现访问远程网络](https://www.cnblogs.com/huangweimin/articles/7638943.html)
 
 #### 参考
 

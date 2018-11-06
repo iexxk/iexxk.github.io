@@ -1,7 +1,7 @@
 ---
 title: Docker swarm搭建总结
 date: 2017-12-05 16:12:37
-updated: 2018-08-28 09:27:54
+updated: 2018-10-15 11:02:41
 categories: Docker
 tags: [集群,Swarm,Docker]
 ---
@@ -119,4 +119,14 @@ portainer升级命令
 # 登陆仓库
 docker login 192.168.1.230:14005 -u admin -p password
 ```
+
+
+
+### 节点升级
+
+`docker node update --role manager node` 
+
+该命令只会更改角色，部分权限并没有立即更新，因此执行服务操作时有可能提示该错误`Error response from daemon: rpc error: code = DeadlineExceeded desc = context deadline exceeded`
+
+立即生效更新节点为manger 执行`docker node promote node`
 
