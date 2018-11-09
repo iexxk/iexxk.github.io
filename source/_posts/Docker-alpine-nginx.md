@@ -1,7 +1,7 @@
 ---
 title: Docker-alpine-nginx
 date: 2018-08-22 09:49:33
-updated: 2018-09-13 09:22:49
+updated: 2018-11-06 11:20:19
 categories: Docker
 tags: [Docker,nginx,alpine]
 
@@ -91,3 +91,32 @@ http {
 
 
 
+### nginx 代理
+
+参考  [简明 Nginx Location Url 配置笔记](https://www.jianshu.com/p/e154c2ef002f)
+
+
+
+* 正则匹配(`~`),URL包含`weather`都会走代理
+
+  ```nginx
+  location ~ /weather/ {
+         proxy_pass  http://apicloud.mob.com;
+      }
+  ```
+
+* 前缀匹配(`^~`),前缀是`/v1/weather/`开头的才走代理
+
+  ```nginx
+  location ^~ /v1/weather/ {
+         proxy_pass  http://apicloud.mob.com;
+      }
+  ```
+
+* 精确匹配(`=`),URL是`/demo` 多了少了都不行，才能进代理
+
+  ```nginx
+  location = /demo/ {
+         proxy_pass  http://apicloud.mob.com;
+      }
+  ```
