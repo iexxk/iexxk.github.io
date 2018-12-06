@@ -1,7 +1,7 @@
 ---
 title: Java-Ftp
 date: 2018-07-14 14:08:35
-updated: 2018-08-07 09:49:03
+updated: 2018-11-28 18:27:42
 categories: Java
 tags: [Java,Ftp]
 ---
@@ -243,4 +243,6 @@ public class FtpUtil {
 ```
 
 
+
+#### 问题4：ftp 被动模式依赖iptable服务
 

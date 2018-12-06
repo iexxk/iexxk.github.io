@@ -1,7 +1,7 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-11-05 13:55:30
+updated: 2018-12-06 16:13:55
 categories: 工具
 tags: [geoserver]
 ---
@@ -153,10 +153,12 @@ services:
 #! /bin/bash
 for FILE in *.shp
 do
-	echo "printf file: $FILE..."
-	#${FILE%.*}.json为新的名字，例如文件名（$FILE）为 ss.shp 那么新的名字（${FILE%.*}.json）为ss.json
-	ogr2ogr -f "GeoJSON" "${FILE%.*}.json" "$FILE"
-	ogr2ogr -f "MySQL" MySQL:"yglgeoserver,user=root,host=192.168.1.230,password=lfadmin" -lco engine=INNODB "${FILE%.*}.json"
+        echo "printf file: $FILE..."
+        #${FILE%.*}.json为新的名字，例如文件名（$FILE）为 ss.shp 那么新的名字（${FILE%.*}.json）为ss.json
+        ogr2ogr -f "GeoJSON" "${FILE%.*}.json" "$FILE"
+        #批量替换id为shpId字段，i为忽略大小写，见问题1
+        sed -i 's/"Id"/"shpId"/i' "${FILE%.*}.json"
+        ogr2ogr -f "MySQL" MySQL:"wzsgeoserver,user=root,host=192.168.1.230,password=lfadmin" -lco engine=INNODB "${FILE%.*}.json"
 
 done
 exit
@@ -171,15 +173,21 @@ exit
    ```json
    {
    "type": "FeatureCollection",
-   "name": "鹦哥岭橡胶天然林样地",
+   "name": "橡胶天然林样地",
    "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
    "features": [
-   { "type": "Feature", "properties": { "Id": 0, "坐标点": "aa", "编号": null, "树种": null, "胸径": null, "树高": null, "东西": null, "南北": null, "序号": 3, "X坐标": 109.33121961000001, "Y坐标": 18.9831775639 }, "geometry": { "type": "Point", "coordinates": [ 109.331219609524425, 18.983177563938192 ] } },
-   { "type": "Feature", "properties": { "Id": 0, "坐标点": "ab", "编号": null, "树种": null, "胸径": null, "树高": null, "东西": null, "南北": null, "序号": 3, "X坐标": 109.331143725, "Y坐标": 18.983130045799999 }, "geometry": { "type": "Point", "coordinates": [ 109.331143724995911, 18.983130045772864 ] } }
+   { "type": "Feature", "properties": { "Id": 0, "坐标点": "aa", "编号": null, "树种": null, "胸径": null, "树高": null, "东西": null, "南北": null, "序号": 3, "X坐标": 109.33121961000001, "Y坐标": 18.9831775639 }, "geometry": { "type": "Point", "coordinates": [ 107.331219609524425, 18.973177563938192 ] } },
+   { "type": "Feature", "properties": { "Id": 0, "坐标点": "ab", "编号": null, "树种": null, "胸径": null, "树高": null, "东西": null, "南北": null, "序号": 3, "X坐标": 109.331143725, "Y坐标": 18.983130045799999 }, "geometry": { "type": "Point", "coordinates": [ 109.331143724995911, 18.973130045772864 ] } }
    ]}
    ```
 
    **解决**:用文本工具批量删除或替换掉id字段，会自动生产id，如果有这字段就不会自动生成
+
+### she 转 kml
+
+```bash
+ogr2ogr -f KML output.kml input.shp 
+```
 
 
 

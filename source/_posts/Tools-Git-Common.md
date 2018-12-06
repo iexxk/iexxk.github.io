@@ -1,7 +1,7 @@
 ---
 title: Git常用操作
 date: 2018-08-07 14:34:06
-updated: 2018-10-12 23:09:51
+updated: 2018-11-16 19:05:07
 categories: 工具
 tags: [git]
 ---
@@ -36,6 +36,14 @@ git revert c011eb3c20ba6fb38cc94fe5a8dda366a3990c61
 git rm -r --cached .
 git add .
 git commit -m 'clear track'
+```
+
+
+
+### 部署合并远程分支
+
+```bash
+
 ```
 
 

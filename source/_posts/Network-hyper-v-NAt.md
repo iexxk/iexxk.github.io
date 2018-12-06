@@ -1,7 +1,7 @@
 ---
 title: Network-hyper-v-NAt
 date: 2018-04-19 22:05:50
-updated: 2018-10-25 14:41:00
+updated: 2018-12-03 16:38:14
 categories: 网络
 tags: [Network,static,NAT,hyper-v]
 ---
@@ -116,3 +116,10 @@ GATEWAYDEV=em3
    原因：存在相同名字的网卡配置文件，但后缀不一样，主要是由于备份原来文件导致的，例如`.back`等，
 
    解决：千万不要在当前目录进行备份，且不要用后缀模式
+
+3. 设置静态网络时，出现双ip问题
+
+   原因：未知
+
+   解决：在网络配置文件添加`NM_CONTROLLED=no`然后重启
+

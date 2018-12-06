@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2018-08-28 11:47:56
+updated: 2018-11-29 18:01:57
 categories: Docker
 tags: [docker,docker-compose]
 ---
@@ -273,9 +273,14 @@ chmod +x "$HOME/bin/docker-machine.exe"
 
    解决：
 
-   ```
+   ```bash
    yum provides '*/applydeltarpm'
    yum install deltarpm
    ```
+
+5. 问题`docker structure needs cleaning`
+
+   解决：`docker system prune -a`
+
 
 
