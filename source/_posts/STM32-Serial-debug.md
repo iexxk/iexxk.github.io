@@ -1,7 +1,7 @@
 ---
 title: STM32-Serial-debug
 date: 2018-07-29 11:14:20
-updated: 2018-07-29 11:14:20
+updated: 2018-12-12 10:47:58
 categories: STM32
 tags: [STM32,NUCLEO,mbed]
 ---

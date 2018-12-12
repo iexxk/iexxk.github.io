@@ -1,7 +1,7 @@
 ---
 title: Docker-alpine-nginx
 date: 2018-08-22 09:49:33
-updated: 2018-09-13 09:22:49
+updated: 2018-12-12 10:47:58
 categories: Docker
 tags: [Docker,nginx,alpine]
 

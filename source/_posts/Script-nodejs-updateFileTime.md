@@ -1,7 +1,7 @@
 ---
 title: 自动更新文章的修改时间
 date: 2018-01-29 18:37:50
-updated: 2018-07-01 11:00:20
+updated: 2018-12-12 14:28:30
 categories: script
 tags: [script,npm,nodejs,file,hexo]
 ---

@@ -1,7 +1,7 @@
 ---
 title: Hyper-v虚拟机网络测试
 date: 2017-11-28 11:32:37
-updated: 2018-01-28 21:41:27categories: Docker
+updated: 2018-12-12 10:47:58categories: Docker
 tags: [网络,boot2docker,Hyper-v]
 ---
 ### 环境准备

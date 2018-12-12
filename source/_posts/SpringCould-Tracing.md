@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Tracing
 date: 2018-04-22 22:08:49
-updated: 2018-04-25 20:47:32
+updated: 2018-12-12 10:47:58
 categories: Spring
 tags: [SpringCould,Tracing,Sleuth]
 ---

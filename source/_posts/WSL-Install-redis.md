@@ -1,7 +1,7 @@
 ---
 title: WSL安装redis
 date: 2017-07-18 18:34:28
-updated: 2018-01-28 21:41:27categories: WSL
+updated: 2018-12-12 10:47:58categories: WSL
 tags: [gcc,ubuntu,redis,WSL]
 ---
 

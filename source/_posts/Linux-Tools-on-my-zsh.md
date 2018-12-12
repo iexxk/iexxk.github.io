@@ -1,7 +1,7 @@
 ---
 title: Linux-Tools-on-my-zsh
 date: 2018-04-30 09:42:41
-updated: 2018-04-30 09:42:41
+updated: 2018-12-12 10:47:58
 categories: Linux
 tags: [Linux,zsh]
 ---

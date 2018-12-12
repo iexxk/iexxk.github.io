@@ -1,7 +1,7 @@
 ---
 title: greenDAO3.1框架（一）认识
 date: 2016-08-27 10:33:45
-updated: 2018-01-28 21:41:27categories: greenDAO
+updated: 2018-12-12 10:47:58categories: greenDAO
 tags: [greenDAO,ORM]
 ---
 # 主流的ORM框架

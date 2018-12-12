@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-Jenkins
 date: 2018-05-21 19:04:52
-updated: 2018-06-07 01:40:00
+updated: 2018-12-12 10:47:58
 categories: Docker
 tags: [Docker,Jenkins]
 ---

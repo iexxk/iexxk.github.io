@@ -1,7 +1,7 @@
 ---
 title: Linux-mount
 date: 2018-10-17 11:17:09
-updated: 2018-10-17 11:40:43
+updated: 2018-12-12 10:47:58
 categories: Linux
 tags: [Linux,mount]
 ---

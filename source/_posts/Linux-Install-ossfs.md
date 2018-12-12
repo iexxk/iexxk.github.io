@@ -1,7 +1,7 @@
 ---
 title: Linux-Install-ossfs
 date: 2018-02-26 15:03:47
-updated: 2018-02-28 17:41:45
+updated: 2018-12-12 10:47:58
 categories: Linux
 tags: [oss,ossfs,centos]
 ---

@@ -1,7 +1,7 @@
 ---
 title: Docker-Alpine-Timezone-Encoding
 date: 2018-07-16 13:44:05
-updated: 2018-07-16 13:44:05
+updated: 2018-12-12 10:47:58
 categories: Docker
 tags: [Docker,Alpine,Timezone,Encoding]
 ---

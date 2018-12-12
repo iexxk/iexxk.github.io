@@ -1,7 +1,7 @@
 ---
 title: JavaEE-MyBatis
 date: 2018-10-16 16:33:07
-updated: 2018-10-16 16:33:07
+updated: 2018-12-12 10:47:58
 categories: JavaEE
 tags: [JavaEE,MyBatis]
 ---

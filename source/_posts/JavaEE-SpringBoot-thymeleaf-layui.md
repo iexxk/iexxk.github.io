@@ -1,7 +1,7 @@
 ---
 title: JavaEE-SpringBoot-thymeleaf-layui
 date: 2018-03-29 09:04:55
-updated: 2018-03-29 09:51:04
+updated: 2018-12-12 10:47:58
 categories: JavaEE
 tags: [SpringBoot,Java,thymeleaf,layui]
 ---

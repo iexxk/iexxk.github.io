@@ -1,7 +1,7 @@
 ---
 title: DB-StoredProcedure
 date: 2018-04-07 21:44:21
-updated: 2018-04-07 22:56:48
+updated: 2018-12-12 10:47:58
 categories: 数据库
 tags: [mysql,DB]
 ---

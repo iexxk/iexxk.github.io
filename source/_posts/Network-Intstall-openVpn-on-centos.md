@@ -1,7 +1,7 @@
 ---
 title: centos7.4安装openVpn
 date: 2017-10-12 14:13:37
-updated: 2018-01-28 21:41:27
+updated: 2018-12-12 10:47:58
 categories: 网络
 tags: [centos,openVpn]
 ---

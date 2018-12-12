@@ -1,7 +1,7 @@
 ---
 title: STM32-NUCLEO-external-program
 date: 2018-07-22 10:45:12
-updated: 2018-07-22 10:45:12
+updated: 2018-12-12 15:44:54
 categories: STM32
 tags: [STM32,NUCLEO]
 ---

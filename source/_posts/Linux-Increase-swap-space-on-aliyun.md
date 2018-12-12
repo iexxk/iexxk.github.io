@@ -1,7 +1,7 @@
 ---
 title: 阿里云服务器增加交换空间
 date: 2017-09-17 16:56:37
-updated: 2018-01-28 21:41:27categories: Linux
+updated: 2018-12-12 10:47:58categories: Linux
 tags: [centos,阿里云,交换空间]
 ---
 ```shell

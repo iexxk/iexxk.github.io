@@ -1,7 +1,7 @@
 ---
 title: Retrofit学习之三离线缓存
 date: 2016-08-26 14:25:44
-updated: 2018-01-28 21:41:27categories: Retrofit
+updated: 2018-12-12 10:47:58categories: Retrofit
 tags: [网络框架,Retrofit,缓存]
 ---
 ## 创建拦截器（Interceptor）

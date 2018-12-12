@@ -1,7 +1,7 @@
 ---
 title: Mybatis 使用
 date: 2017-12-14 16:26:28
-updated: 2018-03-30 13:56:16
+updated: 2018-12-12 14:28:30
 categories: JavaEE
 tags: [java,Mybatis]
 typora-copy-images-to: image\src_dir

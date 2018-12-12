@@ -1,7 +1,7 @@
 ---
 title: hexo博客添加自定义模板
 date: 2018-01-30 00:07:03
-updated: 2018-01-30 00:23:06
+updated: 2018-12-12 10:47:58
 categories: script
 tags: [script,nodejs,hexo]
 ---

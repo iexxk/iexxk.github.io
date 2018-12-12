@@ -1,7 +1,7 @@
 ---
 title: Docker 应用之owncloud
 date: 2018-02-28 17:27:09
-updated: 2018-02-28 17:53:29
+updated: 2018-12-12 10:47:58
 categories: Docker
 tags: [Docker,ossfs,owncloud]
 ---

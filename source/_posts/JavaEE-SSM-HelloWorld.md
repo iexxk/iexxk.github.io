@@ -1,7 +1,7 @@
 ---
 title: idea+gradle+ssm框架之测试配置
 date: 2017-05-08 21:16:28
-updated: 2018-01-28 21:41:27categories: JavaEE
+updated: 2018-12-12 10:47:58categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,ssm框架]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Dubbo-Gradle-Config
 date: 2018-05-16 23:29:07
-updated: 2018-05-16 23:29:07
+updated: 2018-12-12 10:47:58
 categories: Dubbo
 tags: [Dubbo,Gradle]
 ---

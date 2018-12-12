@@ -1,7 +1,7 @@
 ---
 title: SpringCould-feign服务消费
 date: 2018-04-12 22:46:03
-updated: 2018-04-12 23:42:28
+updated: 2018-12-12 10:47:58
 categories: Spring
 tags: [Springboot,SpringCould,feign]
 ---

@@ -1,7 +1,7 @@
 ---
 title: Android-osmdroid
 date: 2018-05-29 15:59:44
-updated: 2018-05-29 15:59:44
+updated: 2018-12-12 10:47:58
 categories: Android
 tags: [osmdroid]
 ---

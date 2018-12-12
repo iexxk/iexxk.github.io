@@ -1,7 +1,7 @@
 ---
 title: idea常用插件管理
 date: 2018-01-03 10:51:28
-updated: 2018-04-01 11:18:37
+updated: 2018-12-12 10:47:58
 categories: 工具
 tags: [idea,Plugins]
 ---

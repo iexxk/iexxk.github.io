@@ -1,7 +1,7 @@
 ---
 title: Docker-make-ffmpeg-nginx
 date: 2018-08-22 10:13:38
-updated: 2018-08-22 10:13:38
+updated: 2018-12-12 14:28:30
 categories: Docker
 tags: [Docker,nginx,ffmpeg]
 ---

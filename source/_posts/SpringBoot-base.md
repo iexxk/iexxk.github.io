@@ -1,7 +1,7 @@
 ---
 title: SpringBoot-base
 date: 2018-03-28 18:51:50
-updated: 2018-04-12 02:22:05
+updated: 2018-12-12 10:47:58
 categories: Spring
 tags: [Java,Springboot]
 ---

@@ -1,7 +1,7 @@
 ---
 title: android混合开发-环境搭建
 date: 2017-03-08 15:02:45
-updated: 2018-01-28 21:41:27categories: Android
+updated: 2018-12-12 10:47:58categories: Android
 tags: [混合开发、android、cordova]
 ---
 #### 环境搭建

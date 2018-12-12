@@ -1,7 +1,7 @@
 ---
 title: Network-common-problem
 date: 2018-09-20 09:34:27
-updated: 2018-09-20 09:34:27
+updated: 2018-12-12 10:47:58
 categories: 网络
 tags: [Network,linux]
 ---

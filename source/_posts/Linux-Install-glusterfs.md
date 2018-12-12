@@ -1,7 +1,7 @@
 ---
 title: centos7 安装 GlusterFS
 date: 2018-03-07 15:45:22
-updated: 2018-03-11 19:05:29
+updated: 2018-12-12 10:47:58
 categories: Linux
 tags: [Linux,GlusterFS]
 ---
