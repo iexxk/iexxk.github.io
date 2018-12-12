@@ -1,0 +1,7 @@
+=============== Nov 9, 2018 (CST) ===============
+10:38:42.334985 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:38:42.335568 db@open opening
+10:38:42.335678 journal@recovery F·1
+10:38:42.336753 journal@recovery recovering @108
+10:38:42.338279 db@janitor F·5 G·0
+10:38:42.338306 db@open done T·2.71821ms
