@@ -21,7 +21,7 @@ tags: [快速排序,线性时间选择,流水作业调度,0-1背包问题,贪心
 ## 线性时间选择
 ### 问题描述
 如何找出数组A中的第 k 小的元素？ (1<=k<=n)
-![线性时间选择](http://ohdtoul5i.bkt.clouddn.com/timeselect.jpg)
+![线性时间选择](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/timeselect.jpg)
 ### 步骤：
 1. 将n个元素分成5个一组,共ceiling(n/5)组。其中最后1组有n mod 5(余数)个元素。
 2. 用插入排序对每组排序,取其中值。若最后1组有偶数个元素,取较小得中值
@@ -46,7 +46,7 @@ tags: [快速排序,线性时间选择,流水作业调度,0-1背包问题,贪心
 [0018算法笔记——【动态规划】流水作业调度问题与Johnson法则](http://blog.csdn.net/liufeng_king/article/details/8678316)
 
 ## 0-1背包问题
-![问题描述](http://ohdtoul5i.bkt.clouddn.com/250px-Knapsack.svg.png)
+![问题描述](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/250px-Knapsack.svg.png)
 ### 问题描述
 给定一组物品，每种物品都有自己的重量和价格，在限定的总重量内，我们如何选择，才能使得物品的总价格最高。问题的名称来源于如何选择最合适的物品放置于给定背包中。
 
@@ -61,7 +61,7 @@ m(i,j)意为背包容量为j，可选择物品为,i,i+1,……,n时0,1问题的�
 
 
 ## 贪心算法
-![贪心算法](http://ohdtoul5i.bkt.clouddn.com/Greedy_algorithm_36_cents.svg.png)
+![贪心算法](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/Greedy_algorithm_36_cents.svg.png)
 ### 思想
 是一种在每一步选择中都采取在当前状态下最好或最优（即最有利）的选择，从而希望导致结果是最好或最优的算法。
 ### 步骤：
@@ -71,7 +71,7 @@ m(i,j)意为背包容量为j，可选择物品为,i,i+1,……,n时0,1问题的�
 4. 把子问题的解局部最优解合成原来解问题的一个解。
   eg： 0-1背包问题、哈弗曼编码
 ## 二分搜索
-![二分搜索](http://ohdtoul5i.bkt.clouddn.com/Binary_search_into_array.png)
+![二分搜索](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/Binary_search_into_array.png)
 时间复杂度	$O(log(n))$
 最优时间复杂度	$O(1)$
 平均时间复杂度	$O(log(n))$
@@ -88,7 +88,7 @@ m(i,j)意为背包容量为j，可选择物品为,i,i+1,……,n时0,1问题的�
   这个迭代步骤会持续通过两个变量追踪搜索的边界。有些实际应用会在算法的最后放入相等比较，让比较循环更快，但平均而言会多一层迭代
 
 ## 矩阵连乘
-![矩阵乘法](http://ohdtoul5i.bkt.clouddn.com/jx.gif)
+![矩阵乘法](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/jx.gif)
 ###### 问题描述
 给定n个矩阵：A1,A2,...,An，其中Ai与Ai+1是可乘的，i=1，2...，n-1。确定计算矩阵连乘积的计算次序，使得依此次序计算矩阵连乘积需要的数乘次数最少。输入数据为矩阵个数和每个矩阵规模，输出结果为计算矩阵连乘积的计算次序和最少数乘次数。
 
@@ -113,14 +113,14 @@ eg: 快速排序
 
 eg: 背包问题
 ## 合并排序（归并排序）
-![归并排序](http://ohdtoul5i.bkt.clouddn.com/Merge-sort-example-300px.gif)
+![归并排序](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/Merge-sort-example-300px.gif)
 时间复杂度	$O(nlog(n))$
 最优时间复杂度	$O(n)$
 平均时间复杂度	$O(nlog(n))$
 ### 基本思想
 将两个已经排序的序列合并成一个序列的操作。归并排序算法依赖归并操作。
 # 哈弗曼编码
-![哈弗曼编码](http://ohdtoul5i.bkt.clouddn.com/350px-Huffman_tree_2.svg.png)
+![哈弗曼编码](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/350px-Huffman_tree_2.svg.png)
 这个句子“this is an example of a huffman tree”中得到的字母频率来建构霍夫曼树。句中字母的编码和频率如图所示。编码此句子需要135 bit（不包括保存树所用的空间）
 
-![哈弗曼编码](http://ohdtoul5i.bkt.clouddn.com/Huffman_algorithm.gif)
+![哈弗曼编码](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/Huffman_algorithm.gif)

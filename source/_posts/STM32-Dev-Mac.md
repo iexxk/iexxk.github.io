@@ -136,7 +136,7 @@ Cannot load symbol file: "/Users/xuanleung/IdeaProjects/f401re_demo/cmake-build-
 
 解决：取消勾选
 
-![](http://ohdtoul5i.bkt.clouddn.com/image-20180702225403646.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/image-20180702225403646.png)
 
 #### 参考
 

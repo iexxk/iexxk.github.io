@@ -80,7 +80,7 @@ netsh interface portproxy delete v4tov4 listenaddress=主IP listenport=外网端
 netsh interface portproxy delete v4tov4 listenaddress=192.168.1.158 listenport=14014
 ```
 
-![](http://ohdtoul5i.bkt.clouddn.com/1531475386029.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1531475386029.png)
 
 参考[Hyper-V 共享式网络链接 端口映射](https://my.oschina.net/alongite/blog/1537054)
 

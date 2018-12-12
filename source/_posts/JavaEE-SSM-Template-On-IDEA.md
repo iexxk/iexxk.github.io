@@ -1,7 +1,8 @@
 ---
 title: idea+gradle+ssm框架之整合模板
 date: 2017-05-09 08:16:28
-updated: 2018-01-28 21:41:27categories: JavaEE
+updated: 2018-01-28 21:41:27
+categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,ssm框架]
 ---
 
@@ -284,17 +285,17 @@ public class TestController {
 
 ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/tomcat.png)
 
-![目录结构](http://ohdtoul5i.bkt.clouddn.com/dir.png)
+![目录结构](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/dir.png)
 
-![](http://ohdtoul5i.bkt.clouddn.com/spring.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/spring.png)
 
-![](http://ohdtoul5i.bkt.clouddn.com/tomcat2.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/tomcat2.png)
 
-![](http://ohdtoul5i.bkt.clouddn.com/web.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/web.png)
 
-![](http://ohdtoul5i.bkt.clouddn.com/artif.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/artif.png)
 
-![](http://ohdtoul5i.bkt.clouddn.com/sour.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/sour.png)
 
 ### 项目地址：
 
