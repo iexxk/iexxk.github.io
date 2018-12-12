@@ -1,7 +1,7 @@
 ---
 title: Docker-volume-plugin
 date: 2018-03-04 22:30:39
-updated: 2018-04-25 20:47:32
+updated: 2018-03-12 10:13:23
 categories: Docker
 tags: [Docker,volume]
 ---

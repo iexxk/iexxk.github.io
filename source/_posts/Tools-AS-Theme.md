@@ -1,7 +1,7 @@
 ---
 title: android Stduio配置
 date: 2017-03-02 12:04:27
-updated: 2018-04-25 20:47:32categories: 工具
+updated: 2018-01-28 21:41:27categories: 工具
 tags: [环境,配置]
 ---
 ### 配置

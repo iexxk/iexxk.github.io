@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-Update-Migrate
 date: 2018-07-26 08:20:44
-updated: 2018-07-26 17:13:22
+updated: 2018-07-26 08:20:44
 categories: Docker
 tags: [Docker,Gitlab]
 ---

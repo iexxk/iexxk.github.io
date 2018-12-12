@@ -1,7 +1,7 @@
 ---
 title: linux常用命令
 date: 2016-09-05 15:25:52
-updated: 2018-09-04 15:35:45
+updated: 2018-01-28 21:41:27
 categories: Linux
 tags: [linux,命令,后台]
 ---

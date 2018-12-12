@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-Runner
 date: 2018-07-31 18:25:16
-updated: 2018-08-03 17:53:58
+updated: 2018-07-31 18:25:16
 categories: Docker
 tags: [Docker,Gitlab,CI]
 ---

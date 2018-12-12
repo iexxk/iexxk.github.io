@@ -1,7 +1,7 @@
 ---
 title: Docker-Compose-file
 date: 2018-04-28 09:36:44
-updated: 2018-04-28 13:35:38
+updated: 2018-04-28 09:36:44
 categories: Docker
 tags: [Docker,stack,yaml,Compose]
 ---

@@ -1,7 +1,7 @@
 ---
 title: Java-Type
 date: 2018-05-29 14:39:59
-updated: 2018-05-31 11:55:17
+updated: 2018-05-29 14:39:59
 categories: Java
 tags: [Java,Type]
 ---

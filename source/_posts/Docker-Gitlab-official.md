@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-official
 date: 2018-07-27 13:43:28
-updated: 2018-07-31 10:02:28
+updated: 2018-07-27 13:43:28
 categories: Docker
 tags: [Docker,Gitlab]
 ---

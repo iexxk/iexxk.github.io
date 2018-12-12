@@ -1,7 +1,7 @@
 ---
 title: Ble蓝牙开发之四读写数据
 date: 2016-08-25 08:48:44
-updated: 2018-04-25 20:47:32categories: Android
+updated: 2018-01-28 21:41:27categories: Android
 tags: [Ble,读写]
 ---
 # 写数据（发送数据）

@@ -1,7 +1,7 @@
 ---
 title: 微服务之分布式锁
 date: 2018-07-20 17:14:58
-updated: 2018-07-20 18:08:10
+updated: 2018-07-20 17:14:58
 categories: Microservices
 tags: [Microservices,redis,lock,Distributed]
 ---

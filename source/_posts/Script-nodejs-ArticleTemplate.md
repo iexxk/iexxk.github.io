@@ -1,7 +1,7 @@
 ---
 title: hexo博客添加自定义模板
 date: 2018-01-30 00:07:03
-updated: 2018-04-25 20:47:32
+updated: 2018-01-30 00:23:06
 categories: script
 tags: [script,nodejs,hexo]
 ---
@@ -34,7 +34,7 @@ eg: 假设脚本文件名字为new执行`new 标题 java java,nodejs`会生成�
 ---
 title: 标题
 date: 2018-01-30 00:07:03
-updated: 2018-04-25 20:47:32
+updated: 2018-01-30 00:23:06
 categories: java
 tags: [java,nodejs]
 ---
@@ -56,7 +56,7 @@ tags: [java,nodejs]
 ---
 title: WSL使用ssh
 date: 2017-11-22 22:12:28
-updated: 2018-04-25 20:47:32
+updated: 2018-01-30 00:23:06
 categories: WSL
 tags: [ssh,ubuntu,sshd]
 ---

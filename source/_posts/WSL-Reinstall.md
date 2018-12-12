@@ -1,7 +1,7 @@
 ---
 title: WSL重装win10的Ubuntu子系统
 date: 2017-07-18 23:34:28
-updated: 2018-04-25 20:47:32categories: WSL
+updated: 2018-01-28 21:41:27categories: WSL
 tags: [win10,ubuntu,WSL]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Tools-Gradle-Base
 date: 2018-05-10 16:58:41
-updated: 2018-05-11 18:04:57
+updated: 2018-05-10 16:58:41
 categories: Tools
 tags: [Gradle]
 ---

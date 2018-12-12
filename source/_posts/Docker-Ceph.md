@@ -1,7 +1,7 @@
 ---
 title: Docker-Ceph
 date: 2018-09-30 15:13:34
-updated: 2018-10-15 13:53:49
+updated: 2018-09-30 15:13:34
 categories: Docker
 tags: [Ceph]
 ---

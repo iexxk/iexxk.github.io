@@ -1,7 +1,7 @@
 ---
 title: Android service服务
 date: 2016-10-18 10:33:35
-updated: 2018-04-25 20:47:32categories: Android
+updated: 2018-01-28 21:41:27categories: Android
 tags: [startService(),bindService(),IntentService]
 ---
 ##### startService() 

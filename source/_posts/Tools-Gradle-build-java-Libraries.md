@@ -1,7 +1,7 @@
 ---
 title: Gradle构建java库
 date: 2018-05-13 16:41:51
-updated: 2018-05-14 01:14:12
+updated: 2018-05-13 16:41:51
 categories: Tools
 tags: [Gradle,java]
 ---

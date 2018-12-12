@@ -1,7 +1,7 @@
 ---
 title: 微服务之Gitlab搭建
 date: 2018-05-20 21:18:35
-updated: 2018-05-20 22:43:50
+updated: 2018-05-20 21:18:35
 categories: Microservices
 tags: [Microservices,gitlab]
 ---
