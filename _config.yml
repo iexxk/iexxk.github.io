@@ -31,7 +31,8 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+# hexo忽略编译source下该目录
+skip_render: image/*
 
 # Writing
 new_post_name: :title.md # File name of new posts
