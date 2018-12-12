@@ -12,7 +12,7 @@ tags: [git]
 * --hard 源码也会回退到某个版本,commit和index 都回回退到某个版本.(注意,这种方式是改变本地代码仓库源码) 
 * --mixed 会保留源码,只是将git commit和index 信息回退到了某个版本.
 
-![](http://ohdtoul5i.bkt.clouddn.com/1533623741056.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1533623741056.png)
 
 #### 回退`revert`(已push)
 

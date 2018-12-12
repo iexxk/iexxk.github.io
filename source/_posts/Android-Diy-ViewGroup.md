@@ -39,7 +39,7 @@ public class ArcMenu extends ViewGroup {
 ```
 
 `childView.layout(cl, ct, cr, cb)`
-![viewGroup](http://ohdtoul5i.bkt.clouddn.com/viewgroup.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/viewgroup.png)
 
 >* 在xml里面引用
 ```

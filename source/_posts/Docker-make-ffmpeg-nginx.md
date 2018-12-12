@@ -52,7 +52,7 @@ rtmp {
 
 成功输出：
 
-![](http://ohdtoul5i.bkt.clouddn.com/1534905867716.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1534905867716.png)
 
 
 

@@ -282,7 +282,7 @@ public class TestController {
 
 ### 相关配置截图
 
-![服务配置](http://ohdtoul5i.bkt.clouddn.com/tomcat.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/tomcat.png)
 
 ![目录结构](http://ohdtoul5i.bkt.clouddn.com/dir.png)
 

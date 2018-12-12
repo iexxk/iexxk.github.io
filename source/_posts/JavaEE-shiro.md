@@ -94,7 +94,7 @@ xml配置
 
 数据库表设计：
 
-![](http://ohdtoul5i.bkt.clouddn.com/1529049788944.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1529049788944.png)
 
 Cc
 

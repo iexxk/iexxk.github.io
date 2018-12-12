@@ -101,7 +101,7 @@ typora-copy-images-to: image\src_dir
 
 4. 最后在右侧`maven projects->plugins->mybatis-generator:generate`运行就会生成了
 
-   ![](http://ohdtoul5i.bkt.clouddn.com/1530182957362.png)
+   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1530182957362.png)
 
 ##注解式
 

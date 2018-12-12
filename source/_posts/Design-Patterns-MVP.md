@@ -11,4 +11,4 @@ tags: [框架,mvp,rxjava,单元测试]
 [MVP框架 – Ted Mosby的软件架构](http://www.devtf.cn/?p=551)
 [安卓中MVP模式和RxAndroid的具体实现例子](http://blog.csdn.net/qiantujava/article/details/49383645)
 
-![mvp](http://ohdtoul5i.bkt.clouddn.com/mvp.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/mvp.png)

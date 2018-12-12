@@ -223,7 +223,7 @@ function writeFileTime(file,fs){
 				console.log(file,"处理:"+imgpath);
 				var filenametemp= imgpath.split('\\').pop();
 				var filename=filenametemp.slice(0,filenametemp.length-1);
-				var result=data.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")");
+				var result=data.replace(imgpath,"![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/"+filename+")");
 				fs.writeFileSync(file, result, 'utf8');
 				console.log("成功替换："+imgpath.replace(imgpath,"![](http://ohdtoul5i.bkt.clouddn.com/"+filename+")"));
 			}

@@ -11,7 +11,7 @@ tags: [基础,java,面试]
 
 #### 原理
 
-![](http://ohdtoul5i.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20170620152443.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/TIM%E6%88%AA%E5%9B%BE20170620152443.png)
 
 #### 特点
 

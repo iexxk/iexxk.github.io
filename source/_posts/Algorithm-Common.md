@@ -6,7 +6,7 @@ categories: 算法
 tags: [快速排序,线性时间选择,流水作业调度,0-1背包问题,贪心算法,二分搜索,矩阵连乘,最优二叉搜索树,分治法,动态规划,合并排序,哈弗曼编码]
 ---
 ## 快速排序
-![快速排序动画](http://ohdtoul5i.bkt.clouddn.com/Sorting_quicksort_anim.gif)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/Sorting_quicksort_anim.gif)
 ### 思想
 快速排序使用分治法（Divide and conquer）策略来把一个序列（list）分为两个子序列（sub-lists）。
 ### 步骤为：

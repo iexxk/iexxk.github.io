@@ -12,7 +12,7 @@ tags: [mysql,geometry,geoserver]
 
 注意事项：第一个点和最后一个点必须相同，因此矩形至少是5个点
 
-![](http://ohdtoul5i.bkt.clouddn.com/%255CUsers%255Cxuan%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1539238451033.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/%255CUsers%255Cxuan%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1539238451033.png)
 
 ```mysql
 --添加面

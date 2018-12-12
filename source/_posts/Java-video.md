@@ -46,7 +46,7 @@ ffmpeg -rtsp_transport tcp -i rtsp://admin:12345@192.0.0.63:554/h264/ch1/main/av
 
 #### 控制原理
 
-![](http://ohdtoul5i.bkt.clouddn.com/1535084718762.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1535084718762.png)
 
 
 

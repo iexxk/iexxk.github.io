@@ -65,7 +65,7 @@ DNS1="8.8.8.8"
 
 #### 端口映射（需管理员权限）
 
-![](http://ohdtoul5i.bkt.clouddn.com/1531476067353.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1531476067353.png)
 
 ```powershell
 #查询端口映射情况

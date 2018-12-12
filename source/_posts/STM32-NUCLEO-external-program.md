@@ -27,7 +27,7 @@ tags: [STM32,NUCLEO]
    | NRST       | 5                  |        | 目标MCU的RESET |
    | SWO        | 6                  |        | 保留           |
 
-   ![](http://ohdtoul5i.bkt.clouddn.com/DSC_0592.JPG)
+   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/DSC_0592.JPG)
 
 2. 打开STM32CubeMX软件，新建个工程，这里直接选STM32F103RBTx的NUCLEO套版，这里直接在这个套版上基础修改
 

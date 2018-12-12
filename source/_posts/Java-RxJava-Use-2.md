@@ -12,7 +12,7 @@ tags: [Rxjava,操作符]
 
 ### 使用过的操作符
 >* **`concat`** 连接多个Observables(被观察者)
->  ![concat](http://ohdtoul5i.bkt.clouddn.com/concat.png)
+>  ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/concat.png)
 >  最多有9个参数，但是可以嵌套，传的数据必须是相同类型
 >* **`mergeDelayError`** 合并发送
 >  ![mergeDelayError](http://ohdtoul5i.bkt.clouddn.com/MergeDelayError.png)

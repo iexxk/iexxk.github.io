@@ -27,7 +27,7 @@ tags: [Python]
 
 1. 登陆百度，通过浏览器设置-内容管理-cookie，找到百度的BDUSS的内容复制
 
-   ![](http://ohdtoul5i.bkt.clouddn.com/045ca12e-9657-4aa1-a787-fca78bc7ab36.gif)
+   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/045ca12e-9657-4aa1-a787-fca78bc7ab36.gif)
 
 2. 编写脚本`login.py`
 

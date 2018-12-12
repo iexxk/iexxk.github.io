@@ -36,7 +36,7 @@ typora-copy-images-to: ./image/src_dir
 
 * 开发板`NUCLEO-F401RE`跳线如图
 
-  ![](http://ohdtoul5i.bkt.clouddn.com/QQ20180624-125246.png)
+  ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/QQ20180624-125246.png)
 
 #### 项目搭建步骤：
 
