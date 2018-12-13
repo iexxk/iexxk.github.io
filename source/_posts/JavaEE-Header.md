@@ -1,14 +1,10 @@
 ---
 title: JavaEE-Header
 date: 2018-12-12 19:10:27
-updated: 2018-12-12 19:16:47
+updated: 2018-12-13 14:07:29
 categories: JavaEE
 tags: [Header,request]
 ---
-
-
-
-
 
 ### docker+nginx(vue)获取真实ip
 
@@ -34,15 +30,6 @@ tags: [Header,request]
        public RestResult login(@RequestBody User user,HttpServletRequest request) {
                String ip = request.getHeader("X-Real-IP");
                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                   ip = request.getHeader("X-Forwarded-For");
-               }
-               if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                   ip = request.getHeader("Proxy-Client-IP");
-               }
-               if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                   ip = request.getHeader("WL-Proxy-Client-IP");
-               }
-               if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
                    ip = request.getRemoteAddr();
                }
         }       
@@ -58,15 +45,9 @@ tags: [Header,request]
    cache-control: no-cache
    ```
 
+经测试：
 
-
-
-
-
-
-
-
-
+只需2，3设置即可，1设置无效，如果只设置1和3还是不是真实ip，所以变量`remote_addr`不是真实ip（该ip实际从哪里来待确定？），`X-Real-IP`是自定义header头，相当于key，要一致
 
 
 参考
