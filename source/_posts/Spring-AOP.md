@@ -1,7 +1,7 @@
 ---
 title: Spring-AOP
 date: 2018-12-17 17:31:06
-updated: 2018-12-18 17:37:50
+updated: 2018-12-21 23:27:26
 categories: Spring
 tags: [Spring,AOP,log]
 ---
@@ -42,7 +42,7 @@ tags: [Spring,AOP,log]
 
    eg: `@annotation(com.willson.common.annotation.Log)`
 
-#### 滴定仪注解类名字解释
+#### 注解类名字解释
 
 ##### `@Target` :
 
