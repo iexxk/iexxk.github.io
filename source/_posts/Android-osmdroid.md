@@ -1,7 +1,7 @@
 ---
 title: Android-osmdroid
 date: 2018-05-29 15:59:44
-updated: 2018-12-12 10:47:58
+updated: 2018-12-28 17:53:22
 categories: Android
 tags: [osmdroid]
 ---
@@ -66,42 +66,57 @@ github: [osmdroid/osmdroid](https://github.com/osmdroid/osmdroid)
    ```xml
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
    <customMultiLayerMapSource>
-      <name>geoserver ygl ch</name>
+      <name>多图层自定义</name>
       <tileType>png</tileType>
       <backgroundColor>#000000</backgroundColor>
-      <!-- 从底部（第一个）到顶部（最后一个）的每个图层的不透明度值列表。值0.0完全透明或不可见，而值1.0完全不透明。通常第一层应使用1.0 = 100％不透明度 -->
-      <layersAlpha>1.0 0.5</layersAlpha>
+      <!-- 0~1由透明到不透明，1.0是设置对底层的图层，0.5是设置底层上一层图层，以此类推n图层以此设置即可-->
+      <layersAlpha>1.0 1.0 0.5 1.0</layersAlpha>
       <layers>
-   		 <customWmsMapSource>
-   		  <name>ch</name>
-   		  <minZoom>0</minZoom>
-   		  <maxZoom>18</maxZoom>
-   		  <tileType>PNG</tileType>
-   		  <version>1.1.1</version>
-   			<!-- 图层名字hws(工作空间):china_net(图层名字) -->
-   		  <layers>hws:china_net</layers>
-   		   <!-- hws替换为自己的工作区间，ip端口替换自己服务器的，其他不变 -->
-   		  <url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;</url>
-   		   <!-- 投影坐标系 -->
-   		  <coordinatesystem>EPSG:4326</coordinatesystem>
-   		  <aditionalparameters></aditionalparameters>
-   		  <!-- <backgroundColor>#000000</backgroundColor> -->
-   		</customWmsMapSource>
-   		<customWmsMapSource>
-   		  <name>ygl</name>
-   		  <minZoom>0</minZoom>
-   		  <maxZoom>18</maxZoom>
-   		  <tileType>PNG</tileType>
-   		  <version>1.1.1</version>
-   			<!-- 图层名字hws(工作空间):china_net(图层名字) -->
-   		  <layers>hws:yinggeling18</layers>
-   		   <!-- hws替换为自己的工作区间，ip端口替换自己服务器的，其他不变 -->
-   		  <url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;</url>
-   		   <!-- 投影坐标系 -->
-   		  <coordinatesystem>EPSG:4326</coordinatesystem>
-   		  <aditionalparameters></aditionalparameters>
-   		  <!-- <backgroundColor>#000000</backgroundColor> -->
-   		</customWmsMapSource>
+          		<customMapSource> 
+               <name>Google 卫星图</name> 
+               <minZoom>0</minZoom> 
+               <maxZoom>20</maxZoom> 
+               <tileType>PNG</tileType> 
+               <tileUpdate>None</tileUpdate> 
+               <url>http://mt0.google.cn/vt/lyrs=s@124&amp;hl=zh-CN&amp;gl=CN&amp;src=app&amp;x={$x}&amp;s=&amp;y={$y}&amp;z={$z}&amp;s=Galileo</url> 
+               <backgroundColor>#000000</backgroundColor> 
+           </customMapSource> 
+          
+           <customMapSource> 
+               <name>Google 地名图</name> 
+               <minZoom>0</minZoom> 
+               <maxZoom>20</maxZoom> 
+               <tileType>PNG</tileType> 
+               <tileUpdate>None</tileUpdate> 
+              <url>http://mt0.google.cn/vt/imgtp=png32&amp;lyrs=h@207000000&amp;hl=zh-CN&amp;gl=CN&amp;src=app&amp;x={$x}&amp;y={$y}&amp;z={$z}&amp;s=Galil</url> 
+           </customMapSource>
+          
+          	<customWmsMapSource>
+   			<name>林班界</name>
+   			<minZoom>0</minZoom>
+   			<maxZoom>20</maxZoom>
+   			<tileType>PNG</tileType>
+   			<tileUpdate>None</tileUpdate>
+   			<layers>hws:linbanjie</layers>
+   			<url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;transparent=TRUE&amp;</url>
+               <!-- 投影坐标系 -->
+   		    <coordinatesystem>EPSG:4326</coordinatesystem>
+   		    <aditionalparameters></aditionalparameters>    
+   		</customWmsMapSource> 
+          
+    		<customWmsMapSource>
+   			<name>巡护路线</name>
+   			<minZoom>0</minZoom>
+   			<maxZoom>20</maxZoom>
+   			<tileType>PNG</tileType>
+   			<tileUpdate>None</tileUpdate>
+               <!-- 图层名字hws(工作空间):china_net(图层名字) -->
+   			<layers>hws:xunhuluxian</layers>
+              <!-- hws替换为自己的工作区间，ip端口替换自己服务器的，其他不变 -->
+              <!-- 多参数，每个参数用&amp;分开-->
+              <!-- 背景设置透明transparent=TRUE-->
+   			<url>http://192.168.1.230:8082/geoserver/hws/wms?service=WMS&amp;transparent=TRUE&amp;</url>
+   		</customWmsMapSource>   
       </layers>
    </customMultiLayerMapSource>
    ```
@@ -213,6 +228,10 @@ github: [osmdroid/osmdroid](https://github.com/osmdroid/osmdroid)
    }
    ```
 
+#### 常见问题
+
+1. 当mobac配置多图层时，geoserver wms不加`transparent=TRUE&amp;`会有白色背景，设置透明度会导致最底层的地图上覆盖了一层半透明的白色，导致看不起低图
+2. mobac加载geoserver gwc连接，如果图层只有一部分，会导致Google map在图层之外的也加载不出来
 
 ##### 参考
 

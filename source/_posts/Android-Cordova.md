@@ -1,7 +1,7 @@
 ---
 title: Android-Cordova
 date: 2018-04-24 10:51:59
-updated: 2018-12-12 10:47:58
+updated: 2019-01-11 09:56:43
 categories: Android
 tags: [Android,Cordova]
 ---
@@ -47,7 +47,7 @@ tags: [Android,Cordova]
 
    ```properties
    Android Studio project detected
-
+   
    Requirements check results for android:
    Java JDK: installed 1.8.0
    Android SDK: installed true
@@ -58,6 +58,8 @@ tags: [Android,Cordova]
 9. 然后执行`cordova build android`编译项目
 
 10. 然后执行`cordova run android`运行项目，需要连接Android设备，如果是模拟器执行`cordova emulate android`
+
+11. chrome浏览器调试[chrome://inspect/#devices](chrome://inspect/#devices)
 
 ## Cordova 实例
 

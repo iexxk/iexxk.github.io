@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2018-12-12 10:47:58
+updated: 2019-01-24 20:56:10
 categories: Docker
 tags: [docker,docker-compose]
 ---
@@ -35,10 +35,13 @@ sudo docker -H tcp://10.14.0.4:2375 images
 ```sh
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+#或者阿里镜像
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 sudo yum makecache fast
 sudo yum install docker-ce
 systemctl start docker.service
-
+# 开机启动
+systemctl enable docker
 sudo docker run hello-world
 sudo docker version
 yum list docker-ce --showduplicates | sort -r
@@ -281,6 +284,22 @@ chmod +x "$HOME/bin/docker-machine.exe"
 5. 问题`docker structure needs cleaning`
 
    解决：`docker system prune -a`
+
+6. 问题设置daemo.json中hosts远程tcp连接时，不能启动
+
+   解决：`vim /lib/systemd/system/docker.service `
+
+   ```properties
+   ExecStart=/usr/bin/dockerd -H fd://
+   #修改为
+   ExecStart=/usr/bin/dockerd
+   ```
+
+   然后重载配置`systemctl daemon-reload`
+
+   重启docker服务`systemctl restart docker.service`
+
+   原因：冲突和hosts
 
 
 

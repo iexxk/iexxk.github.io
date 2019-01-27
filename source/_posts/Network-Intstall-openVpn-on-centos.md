@@ -1,7 +1,7 @@
 ---
 title: centos7.4安装openVpn
 date: 2017-10-12 14:13:37
-updated: 2018-12-12 10:47:58
+updated: 2019-01-26 16:58:16
 categories: 网络
 tags: [centos,openVpn]
 ---
@@ -165,6 +165,32 @@ push "route 192.168.1.0 255.255.255.0"
 ```
 
 
+
+### 腾讯云openvpn服务器所在内网供openvpn客户端访问
+
+```bash
+# 10.34.0.0为openvpn网段
+sudo iptables -t nat -A POSTROUTING -s 10.34.0.0/24 -o eth0 -j MASQUERADE
+#查看规则
+sudo iptables -nL -t nat
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+MASQUERADE  all  --  0.0.0.0/0            0.0.0.0/0            ADDRTYPE match src-type LOCAL
+MASQUERADE  all  --  172.17.0.0/16        0.0.0.0/0           
+MASQUERADE  all  --  172.18.0.0/16        0.0.0.0/0           
+MASQUERADE  tcp  --  172.18.0.11          172.18.0.11          tcp dpt:3306
+MASQUERADE  all  --  10.34.0.0            0.0.0.0/0  
+#这句是新加的
+MASQUERADE  all  --  10.34.0.0/24         0.0.0.0/0    
+```
+
+
+
+
+
+
+
+[openvpn tun模式下客户端与内网机器通信](https://shiguanghui.iteye.com/blog/2323327)
 
 [iptables规则的查看和清除](http://cakin24.iteye.com/blog/2339362)
 

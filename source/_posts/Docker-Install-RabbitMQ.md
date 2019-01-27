@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-RabbitMQ
 date: 2018-04-10 12:10:51
-updated: 2018-12-12 10:47:58
+updated: 2019-01-24 20:28:07
 categories: Docker
 tags: [Docker swarm,RabbitMQ]
 ---
@@ -92,4 +92,14 @@ public class MqReceiver {
 ```
 
 测试效果：先启动主程序，再点击测试类发送，主程序就可以接收到消息了。（先发送后启动主程序是接受不到的）
+
+
+
+### 常见问题
+
+问题1：`.erlang.cookie must be accessible by owner only `不断重启
+
+解决：删除整个挂载目录，包括`rabbitmq`，然后重建
+
+
 

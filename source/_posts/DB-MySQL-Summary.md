@@ -1,7 +1,7 @@
 ---
 title: DB-MySQL-Summary
 date: 2018-04-05 20:40:41
-updated: 2018-12-12 10:47:58
+updated: 2019-01-25 09:36:41
 categories: 数据库
 tags: [mysql]
 ---
@@ -82,9 +82,205 @@ mysql>  show databases;
 mysql> use manage;
 # 显示所有用表
 mysql> show tables;
+#远程连接
+mysql>  mysql -h172.16.16.8 -P14036 -uroot -p
 ```
 
 参考 [MySql数据库备份与恢复——使用mysqldump 导入与导出方法总结](https://blog.csdn.net/helloxiaozhe/article/details/77680255)
+
+## 主从库
+
+1. 修改主从配置库的配置文件
+
+主库配置：
+
+```properties
+[mysqld]
+init_connect='SET NAMES utf8'
+character-set-server=utf8
+#无效屏蔽
+# 设置mysql数据库的数据的存放目录
+#datadir=/data/app/mysqldata/master/
+#socket=/data/app/mysqldata/master/mysql.sock
+#user=mysql
+#port=3306
+
+#Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+log-bin=mysql-bin
+server-id=1
+binlog-ignore-db=information_schema
+binlog-ignore-db=mysql
+binlog-do-db=shenqics
+#无效屏蔽
+#[mysqld_safe]
+#log-error=/data/app/mysqldata/master/mysqld.log
+#pid-file=/data/app/mysqldata/master/mysqld.pid
+
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+```
+
+从数据库配置：
+
+```properties
+[mysqld]
+init_connect='SET NAMES utf8'
+character-set-server=utf8
+#无效屏蔽
+#datadir=/data/app/mysqldata/slave/
+#socket=/data/app/mysqldata/slave/mysql.sock
+#user=mysql
+#port=3307
+
+#Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+log-bin=mysql-bin
+server-id=2
+binlog-ignore-db=information_schema
+binlog-ignore-db=mysql
+#只会复制shenqics该数据库，其他不会
+replicate-do-db=shenqics
+replicate-ignore-db=mysql
+log-slave-updates
+slave-skip-errors=all
+slave-net-timeout=60
+
+#无效屏蔽
+#[mysqld_safe]
+#log-error=/data/app/mysqldata/slave/mysqld.log
+#pid-file=/data/app/mysqldata/slave/mysqld.pid
+
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+```
+
+2. 启动服务
+
+   ```yaml
+    mysql-master:
+       restart: always
+       image: mysql:5.7.18
+       environment:
+         MYSQL_ROOT_PASSWORD: admin
+       volumes:
+         - /data/v-yinfu/mysql/master/data:/var/lib/mysql
+         - /data/v-yinfu/mysql/master/config:/etc/mysql/conf.d
+       ports:
+         - target: 3306
+           published: 14036
+           protocol: tcp
+           mode: host   
+       deploy:
+         replicas: 1
+         restart_policy:
+           condition: on-failure
+         placement:
+           constraints: [node.hostname == VM_16_8_centos]      
+     mysql-slave:
+       restart: always
+       image: mysql:5.7.18
+       environment:
+         MYSQL_ROOT_PASSWORD: admin
+       volumes:
+         - /data/v-yinfu/mysql/slave/data:/var/lib/mysql
+         - /data/v-yinfu/mysql/slave/config:/etc/mysql/conf.d
+       ports:
+         - target: 3306
+           published: 14037
+           protocol: tcp
+           mode: host   
+       deploy:
+         replicas: 1
+         restart_policy:
+           condition: on-failure
+         placement:
+           constraints: [node.hostname == VM_16_13_centos]     
+   ```
+
+3. 授权
+
+   进入主库容器执行`mysql -uroot -p`
+
+   ```mysql
+   #ip为从库ip，设置为只有从库可以访问
+   GRANT REPLICATION SLAVE ON *.* TO 'app_sync'@'172.16.16.13' IDENTIFIED BY 'password';
+   GRANT ALL ON *.* TO 'app_root'@'%' IDENTIFIED BY 'password';
+   GRANT SELECT ON *.* TO 'app_read'@'%' IDENTIFIED BY 'password';
+   FLUSH PRIVILEGES;
+   ```
+
+4. 然后执行`show master status;`
+
+   ```verilog
+   +------------------+----------+--------------+--------------------------+-------------------+
+   | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB         | Executed_Gtid_Set |
+   +------------------+----------+--------------+--------------------------+-------------------+
+   | mysql-bin.000003 |     1164 | shenqics     | information_schema,mysql |                   |
+   +------------------+----------+--------------+--------------------------+-------------------+
+   1 row in set (0.00 sec)
+   ```
+
+5. 进入从库容器执行`mysql -uroot -p`
+
+   ```mysql
+   stop slave;
+   change master to master_host='172.16.16.8',master_port=14036,master_user='app_sync',master_password='password',master_log_file='mysql-bin.000003', master_log_pos=1164;
+   start slave;
+   show slave status;
+   #授权
+   GRANT SELECT ON *.* TO 'app_read'@'%' IDENTIFIED BY 'password';
+   FLUSH PRIVILEGES;
+   ```
+
+6. 执行`show slave status\G;`检查是否这两个为yes
+
+   ```ver
+   Slave_IO_Running: Connecting
+   Slave_SQL_Running: Yes
+   ```
+
+7. 重新注册
+
+   ```mysql
+   stop slave;
+   change master to master_host='172.16.16.8',master_port=14036,master_user='app_sync',master_password='admin',master_log_file='mysql-bin.000005', master_log_pos=361;
+   start slave;
+   #清除log,执行start slave报错时
+   reset slave;
+   start slave;
+   ```
+
+8. 再次执行第6步检查
+
+
+
+### mysql创建用户命令详解
+
+创建用户
+
+`GRANT 权限 ON 数据库.表名 TO '用户'@'主机' IDENTIFIED BY '密码' `
+
+* 权限：all,select,等
+* 主机：指定ip地址访问、localhost或127.0.0.1（本地访问）、%（任意主机均可访问）
+* 密码：为空时则不需要密码
+
+eg: 
+
+```mysql
+GRANT REPLICATION SLAVE ON *.* TO 'app_sync'@'172.16.16.13' IDENTIFIED BY 'admin';
+#意思是创建一个专门的用户（app_sync）进行从库复制，复制任何库和任何表,密码是admin,可以访问的ip只有来源172.16.16.13（从库ip）
+```
+
+删除用户`drop user test@'172.16.16.13';`
 
 
 
@@ -126,4 +322,14 @@ mysql> show tables;
    参考：https://www.zhihu.com/question/37942423
 
 3. navicat客户端，连接mysql 8.0以上报错,提示授权啥的错误
+
+4. 设置主从模式时，使用用户`'app_sync'@'172.16.16.13'`连接时提示，以及一直`Slave_IO_Running: Connecting`
+
+   ```verilog
+   ERROR 1045 (28000): Access denied for user 'app_sync'@'10.255.0.2' (using password: YES)
+   ```
+
+   解决：部署时设置host模式
+
+   原因：非host模式连接时,访问客户端ip是内部ip不是host的ip
 
