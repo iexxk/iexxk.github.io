@@ -1,14 +1,14 @@
 ---
 title: DB-MongoDB-Summary
 date: 2019-01-25 09:52:17
-updated: 2019-01-25 23:51:22
+updated: 2019-01-30 16:31:29
 categories: 数据库
 tags: [MongoDB]
 ---
 
 ### 原理
 
-![1548385955909](D:\xuan\jianguoyun\我的坚果云\xuanfong1.github.io\source\image\src_dir\mongo.png)
+![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/mongo.png)
 
 #### 分片(shard)
 
