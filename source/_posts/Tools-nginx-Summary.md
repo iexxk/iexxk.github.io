@@ -112,7 +112,8 @@ server {
     listen 80;
     #listen 443 ssl;
     #域名访问地址
-    server_name    outtest.webcs.suresvip.com;
+    # 多个域名 server_name ... iexxk.com www.iexxk.com;
+    server_name    outtest.iexxk.com;
     index  index.htm index.html index.jsp;
     #tomcat webapp目录，或这dobase目录
     root   /data/web/webcs;
