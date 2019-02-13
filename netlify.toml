@@ -1,4 +1,4 @@
 [build]
   base    = "."
-  publish = "build"
-  command = "npm install"
+  publish = "public/"
+  command = "npm install && npm install hexo-generator-searchdb --save && hexo cl && hexo g"
