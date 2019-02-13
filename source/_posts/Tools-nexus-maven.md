@@ -293,6 +293,20 @@ mvn install:install-file -Dfile=dubbo-2.8.4.jar -DgroupId=com.alibaba -Dartifact
 mvn install:install-file -Dfile=fastdfs-1.24.jar -DgroupId=org.csource -DartifactId=fastdfs -Dversion=1.24 -Dpackaging=jar
 ```
 
+### 配置用户和角色
+
+1. 创建roles:
+
+   id: `nx-deploy`
+
+   prlvlleges: `nx-repository-view-*-*-*`
+
+2. 创建用户：
+
+   ID: [develop](develop163)
+
+   roles: `nx-deploy`
+
 ### 问题
 
 1. 下载了找不到包，解决，删除项目重新导入，重新maven依赖
