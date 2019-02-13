@@ -1,4 +1,4 @@
 [build]
   base    = "."
   publish = "public/"
-  command = "npm install && npm install hexo-generator-searchdb --save && npm install hexo-generator-sitemap --save && npm install hexo-generator-baidu-sitemap --save && npm install hexo-filter-flowchart --save && npm install hexo-filter-sequence --save && npm install valine --save && npm install hexo-leancloud-counter-security --save && hexo cl && hexo g"
+  command = "npm install && npm install hexo-generator-searchdb --save && npm install hexo-generator-sitemap --save && npm install hexo-generator-baidu-sitemap --save && npm install hexo-filter-flowchart --save && npm install hexo-filter-sequence --save && npm install valine --save && hexo cl && hexo g"

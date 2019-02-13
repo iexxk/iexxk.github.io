@@ -237,6 +237,18 @@ name = EPEL YUM repo
 3. 设置阿里云优先级，在`maven-public`里面的group把刚刚创建的添加过去并移到maven-central上面
 4. 设置允许发布release,在`maven-release`的hosted里面选择`allow redeploy`
 
+### 创建第三方仓库
+
+1. `create repository->maven2(hosted)`
+
+   `name:3rd_part`
+
+   `hosted:Allow redeploy`
+
+2. 添加`srd_part`到`maven_public`
+
+3. 如果没有`groupId`最好统一为`com.3rdPart`标注为第三方包
+
 ### 发布上传jar包到nexus
 
 语法：
@@ -311,3 +323,4 @@ mvn install:install-file -Dfile=fastdfs-1.24.jar -DgroupId=org.csource -Dartifac
 
 1. 下载了找不到包，解决，删除项目重新导入，重新maven依赖
 2. 刚上传或添加了新的jar到私库，无法下载，解决，删除本地仓库的该包目录
+3. 注意powershell执行命令时需要在等号后面加双引号，不然改用cmd
