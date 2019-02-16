@@ -1,7 +1,7 @@
 ---
 title: nginx常用配置总结
 date: 2019-01-29 23:21:37
-updated: 2019-01-30 16:22:26
+updated: 2019-02-12 15:34:14
 categories: Tools
 tags: [nginx]
 ---

@@ -1,7 +1,7 @@
 ---
 title: centos7.4安装openVpn
 date: 2017-10-12 14:13:37
-updated: 2019-01-26 16:58:16
+updated: 2019-02-16 12:06:12
 categories: 网络
 tags: [centos,openVpn]
 ---
@@ -186,7 +186,9 @@ MASQUERADE  all  --  10.34.0.0/24         0.0.0.0/0
 
 
 
+### 注意事项
 
+iptables不需要启动，也可以做路由转发
 
 
 

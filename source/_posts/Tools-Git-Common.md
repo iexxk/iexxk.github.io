@@ -1,7 +1,7 @@
 ---
 title: Git常用操作
 date: 2018-08-07 14:34:06
-updated: 2018-12-12 14:28:30
+updated: 2019-02-15 11:18:22
 categories: 工具
 tags: [git]
 ---
@@ -90,6 +90,12 @@ git push -u origin --tags
 ```
 
 
+
+### 常见问题
+
+1. idea使用git导入项目时提示`ssh variant 'simple' does not support setting port`
+
+   解决：执行`git config --global ssh.variant ssh`，详细见[fatal: ssh variant 'simple' does not support setting port](https://stackoverflow.com/questions/48417505/fatal-ssh-variant-simple-does-not-support-setting-port)
 
 
 

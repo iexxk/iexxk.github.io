@@ -1,7 +1,8 @@
 ---
 title: github博客之更新完善
 date: 2017-12-07 18:16:37
-updated: 2018-12-12 10:47:58categories: 杂谈
+updated: 2019-02-13 20:42:11
+categories: 杂谈
 tags: [github,hexo,Travis,WSL]
 ---
 
@@ -46,7 +47,8 @@ hexo g && hexo s
 ```properties
   #菜单
   tags: /tags/ || tags
-  updated: 2018-01-28 21:41:27categories: /categories/ || th
+  updated: 2018-01-28 21:41:27
+categories: /categories/ || th
   #样式
   scheme: Pisces
   #评论
@@ -68,3 +70,9 @@ hexo g && hexo s
 
 
 ### [Hexo配置](https://hexo.io/docs/deployment.html)和[next主题配置](http://theme-next.iissnan.com/theme-settings.html#fonts-customization)
+
+
+
+#### 常见问题
+
+leancould开启评论需要在控制台先创建`Counter` Class

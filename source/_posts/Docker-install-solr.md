@@ -1,10 +1,33 @@
 ---
 title: Docker-install-solr
 date: 2019-01-23 20:23:12
-updated: 2019-01-29 10:54:37
+updated: 2019-02-13 23:11:26
 categories: Docker
 tags: [Docker,solr]
 ---
+
+
+
+### solr清除数据
+
+步骤：
+
+1. 登录solr网页
+
+2. 搜索对应的core
+
+3. 点击Documents --> Document Type --> 选择XML类型 
+
+4. 定格编写语句：
+
+   ```
+   <delete><query>*:*</query></delete>
+   <commit/>
+   ```
+
+5. 最后点击Submit  Document
+
+
 
 
 
