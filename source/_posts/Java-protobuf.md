@@ -1,7 +1,7 @@
 ---
 title: Java-protobuf
 date: 2019-02-15 15:39:21
-updated: 2019-02-16 20:57:36
+updated: 2019-02-17 11:46:44
 categories: Java
 tags: [Java,protobuf]
 ---
@@ -143,3 +143,93 @@ tags: [Java,protobuf]
 配置更改一直不生效，一直使用最新的3.6.0版本的protoc工具
 
 ### 插件二[org.xolstice.maven.plugins/protobuf-maven-plugin](https://www.xolstice.org/protobuf-maven-plugin/)
+
+[Maven工程处理Protobuf](https://my.oschina.net/u/573325/blog/1617416)
+
+目录结构：
+
+```powershell
+├─src
+│  ├─main
+│  │  ├─java //proto生成java文件目录
+│  │  │  └─com
+│  │  │      └─surelive
+│  │  │          └─app
+│  │  │              └─server
+│  │  │                  └─protocol
+│  │  │                      ├─request  
+│  │  │                      └─response
+│  │  └─resources 
+│  │      └─proto //proto文件目录
+│  │          ├─request
+│  │          └─response
+│  └─test
+│      └─java
+├─pom.xml
+```
+
+
+
+编写`pom.xml`添加插件
+
+```xml
+<project ...>    
+    ....
+    <dependencies>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <!--识别系统类型-->
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.6.0</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <!-- protobuf 编译组件 -->
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.6.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!--proto源文件目录-->
+                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                    <!--输出目录-->
+                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                    <!--设置是否在生成java文件之前清空outputDirectory的文件，默认值为true，设置为false时也会覆盖同名文件-->
+                    <clearOutputDirectory>true</clearOutputDirectory>
+                    <!--编译命令及版本，${os.detected.classifier}识别版本号，依赖os-maven-plugin插件-->
+                    <protocArtifact>com.google.protobuf:protoc:2.5.0:exe:${os.detected.classifier}</protocArtifact>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+
+使用，点击右侧插件里面的`protobuf->protobuf:compile`或者执行`mvn protobuf:compile`
+
+
+
+##### 注意
+
+1. 不添加输出目录识别不了多级目录（奇怪）
+2. 设置目录`protoSourceRoot`目录是，是以该目录为相对路径，因此代码里面的`import "response/xxx.proto`要加上`response`二级目录，但是如果可以设置protoSourceRoot为两个或二级目录就不需要修改，`clearOutputDirectory`设置true，也不会清理其他目录中其他文件
+

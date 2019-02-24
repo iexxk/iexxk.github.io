@@ -1,7 +1,7 @@
 ---
 title: JavaEE-Tomcat
 date: 2018-05-02 16:48:44
-updated: 2018-05-02 17:00:03
+updated: 2019-02-20 18:00:57
 categories: JavaEE
 tags: [Tomcat,JavaEE]
 ---
@@ -32,4 +32,29 @@ tags: [Tomcat,JavaEE]
 3. 运行tomcat,window下双击打开bin目录下的`startup.bat`启动app.war
 
 4. 访问为`ip:9301/app/`
+
+
+
+
+
+### 常见问题
+
+1. tomcat启动时出现`java.lang.IllegalArgumentException: Illegal character(s) in message header field: Pragma:`
+
+   ```
+   java.lang.IllegalArgumentException: Illegal character(s) in message header field: Pragma:
+   2019-02-20 17:40:47 331 - 	at sun.net.www.protocol.http.HttpURLConnection.checkMessageHeader(HttpURLConnection.java:511)
+   2019-02-20 17:40:47 331 - 	at sun.net.www.protocol.http.HttpURLConnection.isExternalMessageHeaderAllowed(HttpURLConnection.java:481)
+   2019-02-20 17:40:47 331 - 	at sun.net.www.protocol.http.HttpURLConnection.setRequestProperty(HttpURLConnection.java:2895)
+   2019-02-20 17:40:47 331 - 	at sun.net.www.protocol.https.HttpsURLConnectionImpl.setRequestProperty(HttpsURLConnectionImpl.java:325)
+   2019-02-20 17:40:47 331 - 	at mmo.common.utils.HttpUtils.sendPost(HttpUtils.java:28)
+   2019-02-20 17:40:47 331 - 	at com.surelive.app.server.service.QQGroupApiService$1.run(QQGroupApiService.java:169)
+   2019-02-20 17:40:47 331 - 	at com.surelive.app.server.entities.ext.QueueThreadHandle.run(QueueThreadHandle.java:52)
+   2019-02-20 17:40:47 331 - 	at com.surelive.app.server.service.QueueThreadPoolServer$1.run(QueueThreadPoolServer.java:26)
+   2019-02-20 17:40:47 331 - 	at java.lang.Thread.run(Thread.java:748)
+   ```
+
+   解决：执行`env`检查环境变量中是否有`JAVA_HOME`,没有设置好这些环境变量
+
+
 

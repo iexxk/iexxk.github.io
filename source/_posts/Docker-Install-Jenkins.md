@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-Jenkins
 date: 2018-05-21 19:04:52
-updated: 2018-12-12 10:47:58
+updated: 2019-02-18 11:17:11
 categories: Docker
 tags: [Docker,Jenkins]
 ---
@@ -172,4 +172,16 @@ https://github.com/boxboat/jenkins-demo
    把 "connectionCheckUrl":"http://www.google.com/" 改为 "connectionCheckUrl":"http://www.baidu.com/"
 
    https://github.com/jenkinsci/docker/issues/263
+
+
+
+## centos 安装jenkins,需要jdk8
+
+```bash
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins
+sudo service jenkins start/stop/restart
+sudo chkconfig jenkins on
+```
 

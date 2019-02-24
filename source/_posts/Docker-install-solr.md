@@ -1,7 +1,7 @@
 ---
 title: Docker-install-solr
 date: 2019-01-23 20:23:12
-updated: 2019-02-13 23:11:26
+updated: 2019-02-18 18:12:40
 categories: Docker
 tags: [Docker,solr]
 ---
@@ -27,7 +27,7 @@ tags: [Docker,solr]
 
 5. 最后点击Submit  Document
 
-
+### 安装
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: JavaEE-add-maven
 date: 2019-02-13 15:28:13
-updated: 2019-02-14 21:22:02
+updated: 2019-02-17 22:11:37
 categories: JavaEE
 tags: [maven]
 ---
@@ -113,4 +113,12 @@ tags: [maven]
    分析：因为使用声明式的不能直接分析出依赖问题
 
    解决：找到`XMLSchedulingDataProcessorPlugin`该class，复制该类的所有`import`到项目里面的一个随便的java文件，查看是否找不到包（有红线），然后添加缺的包的依赖
+
+
+
+### 知识点
+
+`NoClassDefFoundError`  一般是指没有jar
+
+[ClassNotFoundException和NoClassDefFoundError的区别](https://my.oschina.net/jasonultimate/blog/166932)
 

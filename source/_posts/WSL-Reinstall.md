@@ -1,7 +1,8 @@
 ---
 title: WSL重装win10的Ubuntu子系统
 date: 2017-07-18 23:34:28
-updated: 2018-12-12 10:47:58categories: WSL
+updated: 2019-02-22 16:22:02
+categories: WSL
 tags: [win10,ubuntu,WSL]
 ---
 
@@ -16,6 +17,20 @@ tags: [win10,ubuntu,WSL]
 `lxrun /setdefaultuser`配置子系统用户
 
 `lxrun /update` 更新子系统的包索引
+
+
+
+### [安装brew](http://linuxbrew.sh/)
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+```
+
+
 
 #### 参考
 

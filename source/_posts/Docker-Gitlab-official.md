@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-official
 date: 2018-07-27 13:43:28
-updated: 2018-12-12 10:47:58
+updated: 2019-02-19 23:03:03
 categories: Docker
 tags: [Docker,Gitlab]
 ---
@@ -76,6 +76,42 @@ MySuperSecretAndSecurePass0rd!
 ```sh
 docker exec -t <your container name> gitlab-rake gitlab:backup:create
 ```
+
+### 恢复
+
+`1550500433_2019_02_18_11.6.2_gitlab_backup.tar`文件名分析
+
+`11.6.2`gitlab版本号，备份还原版本号要一致
+
+`1550500433_2019_02_18_11.6.2`备份文件编号
+
+```bash
+# 移动到目录/var/opt/gitlab/backups并修改权限
+chmod 777 1550500433_2019_02_18_11.6.2_gitlab_backup.tar
+#进入容器执行
+gitlab-rake gitlab:backup:restore BACKUP=1550500433_2019_02_18_11.6.2
+#同意几个yes
+```
+
+### 重置管理员密码
+
+进入容器执行
+
+```bash
+gitlab-rails console production
+#进入console,查询用户1的用户名，@符号后面为用户名
+irb(main):004:0> user = User.where(id:1).first
+=> #<User id:1 @root>
+#重置密码为xxxx
+irb(main):005:0> user.password = 'xxxx'
+=> "xxxx"
+#保存设置
+irb(main):006:0> user.save!
+Enqueued ActionMailer::DeliveryJob (Job ID: efc41db4-43bb-4f0f-83ca-7481611c2ff4) to Sidekiq(mailers) with arguments: "DeviseMailer", "password_change", "deliver_now", #<GlobalID:0x00007fea66e486f0 @uri=#<URI::GID gid://gitlab/User/1>>
+=> true
+```
+
+到此用root用户登录即可
 
 
 

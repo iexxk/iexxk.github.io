@@ -1,7 +1,7 @@
 ---
 title: DB-MongoDB-Summary
 date: 2019-01-25 09:52:17
-updated: 2019-01-30 16:31:29
+updated: 2019-02-21 11:06:58
 categories: 数据库
 tags: [MongoDB]
 ---
@@ -315,6 +315,12 @@ mongos> sh.status()
    #### 使能分片数据库（待测）
 
 7. `sh.enableSharding("<database>")`
+
+   err:`sun.reflect.GeneratedMethodAccessor109.invoke(Unknown Source)`
+
+8. 在`admin`执行`db.runCommand({"shardcollection":"app_test.MusicList","key":{"seat":1}})`
+
+9. 在`app_test`执行`db.MusicList.ensureIndex({"seat":1},{background: 1})`
 
 
 
