@@ -1,7 +1,7 @@
 ---
 title: nginx常用配置总结
 date: 2019-01-29 23:21:37
-updated: 2019-02-12 15:34:14
+updated: 2019-03-02 17:02:33
 categories: Tools
 tags: [nginx]
 ---
@@ -147,6 +147,60 @@ server {
         expires 30d;
     }
 }
+```
+
+### 配置ssl/https
+
+```nginx
+upstream res {
+    ip_hash;
+    server 172.16.16.8:14081 max_fails=2 fail_timeout=30s;
+    server 172.16.16.8:14081 max_fails=2 fail_timeout=30s;
+}
+
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name    outtest.res.suresvip.com;
+
+#证书相关配置
+    ssl  on;  #注意这个用on其他所有改nginx配置的网站都会重定向到https,所以改用off不会影响其他的，但是不会自动重定向
+    ssl_certificate /usr/local/nginx/ssl/1_outtest.res.suresvip.com_bundle.crt;
+    ssl_certificate_key /usr/local/nginx/ssl/2_outtest.res.suresvip.com.key;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #按照这个协议配置
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+    ssl_prefer_server_ciphers on;
+
+#注释下面的不然使用https访问会下载文件
+#    index  index.htm index.html index.jsp;
+#    root   /data/web/res1;
+
+    access_log /usr/local/nginx_logs/login.access.log mlnormal;
+
+    location ~ ^/WEB-INF/* {
+        deny all;
+    }
+
+    location ~ .(svn|git|cvs) {
+        deny all;
+    }
+
+    location ~.* {
+        proxy_pass        http://res;
+        proxy_next_upstream http_500 http_502 http_503 http_504 error timeout invalid_header;
+        proxy_redirect    off;
+        proxy_set_header  Host $host;
+        proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        #include /usr/local/nginx/conf/proxy.conf;
+    }
+
+    location ~* \.(gif|jpg|jpeg|png|bmp|swf|js|css)$ {
+        expires 30d;
+    }
+}
+
 ```
 
 
