@@ -1,7 +1,7 @@
 ---
 title: DB-MySQL-Summary
 date: 2018-04-05 20:40:41
-updated: 2019-01-25 09:36:41
+updated: 2019-03-06 21:39:52
 categories: 数据库
 tags: [mysql]
 ---
@@ -332,4 +332,41 @@ GRANT REPLICATION SLAVE ON *.* TO 'app_sync'@'172.16.16.13' IDENTIFIED BY 'admin
    解决：部署时设置host模式
 
    原因：非host模式连接时,访问客户端ip是内部ip不是host的ip
+
+5. 错误
+
+   ```verilog
+   java.sql.SQLException: Incorrect string value: '\xF0\x9F\x90\xB6' for column 'UserNickname' at row 1
+   ```
+
+   解决：
+
+   1. 在mysql配置文件添加后，重启
+
+      ```mysql
+      [client]
+      default-character-set = utf8mb4
+      
+      [mysql]
+      default-character-set = utf8mb4
+      
+      [mysqld]
+      character-set-client-handshake = FALSE
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+      ```
+
+   2. 修改数据表的编码
+
+      `ALTER TABLE TABLE_NAME CONVERT TO CHARACTER SET utf8mb4;`
+
+   3. 修改数据库连接
+
+      `jdbc:mysql://localhost:3306/"+DATABASENAME+"?useunicode=true&characterEncoding=utf8`
+
+      方式一：去掉参数`&characterEncoding=utf8`和`useunicode=true`
+
+      方式二(建议)：添加`autoReconnect=true`
+
+      
 
