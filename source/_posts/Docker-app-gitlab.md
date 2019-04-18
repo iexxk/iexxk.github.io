@@ -1,8 +1,9 @@
 ---
 title: Docker 应用之gitlab
 date: 2018-01-17 23:40:37
-updated: 2018-12-12 10:47:58categories: Docker
-tags: [docker,gitlab,runner,swarm,statck]
+updated: 2019-04-18 17:20:06
+categories: Docker
+tags: [Docker,gitlab,runner,swarm,statck]
 ---
 ## 单机应用gitlab
 

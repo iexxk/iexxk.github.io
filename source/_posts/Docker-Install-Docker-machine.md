@@ -1,8 +1,9 @@
 ---
 title: Docker集群之Docker-machine安装
 date: 2017-10-10 09:25:37
-updated: 2018-12-12 10:47:58categories: Docker
-tags: [集群,Swarm,docker,nginx,overlay,ingress]
+updated: 2019-04-18 17:20:38
+categories: Docker
+tags: [集群,Swarm,Docker,nginx,overlay,ingress]
 ---
 ### Docker-machine单独安装 (废弃)
 

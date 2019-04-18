@@ -1,9 +1,9 @@
 ---
 title: docker-volume-use
 date: 2018-03-12 10:58:46
-updated: 2018-12-12 10:47:58
+updated: 2019-04-18 17:21:52
 categories: Docker
-tags: [docker,swarm,gluterfs]
+tags: [Docker,swarm,gluterfs]
 ---
 
 ## docker 挂载卷应用
