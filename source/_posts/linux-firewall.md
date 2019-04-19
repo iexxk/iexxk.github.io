@@ -1,8 +1,8 @@
 ---
 title: linux-firewall
 date: 2018-11-28 18:26:11
-updated: 2019-01-24 15:19:01
-categories: linux
+updated: 2019-04-19 12:12:41
+categories: Linux
 tags: [linux,iptables]
 ---
 

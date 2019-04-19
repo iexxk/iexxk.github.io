@@ -1,8 +1,8 @@
 ---
 title: redis集群搭建
 date: 2019-01-22 22:06:32
-updated: 2019-01-27 17:09:40
-categories: DB
+updated: 2019-04-19 12:15:55
+categories: 数据库
 tags: [redis]
 ---
 
