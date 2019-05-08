@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2019-04-18 17:20:29
+updated: 2019-04-30 17:03:23
 categories: Docker
 tags: [Docker,docker-compose]
 ---
@@ -300,6 +300,8 @@ chmod +x "$HOME/bin/docker-machine.exe"
    重启docker服务`systemctl restart docker.service`
 
    原因：冲突和hosts
+   
+   
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: centos7.4安装openVpn
 date: 2017-10-12 14:13:37
-updated: 2019-03-12 17:41:10
+updated: 2019-04-30 14:24:51
 categories: 网络
 tags: [centos,openVpn]
 ---
@@ -182,6 +182,31 @@ MASQUERADE  tcp  --  172.18.0.11          172.18.0.11          tcp dpt:3306
 MASQUERADE  all  --  10.34.0.0            0.0.0.0/0  
 #这句是新加的
 MASQUERADE  all  --  10.34.0.0/24         0.0.0.0/0    
+#还需要检查是否开启ipv4转发
+vim /etc/sysctl.conf
+>net.ipv4.ip_forward = 1
+sysctl -p
+```
+
+
+
+### 子网访问总结
+
+#### 服务端子网(服务端是网关)
+
+#### 服务端子网(服务端不是网关)
+
+#### 客户端子网(客户端是网关)
+
+#### 客户端子网(客户端不是网关)
+
+
+
+不是网关统一需要在客户端或服务端设置转发
+
+```
+# 10.34.0.0为openvpn网段
+sudo iptables -t nat -A POSTROUTING -s 10.34.0.0/24 -o eth0 -j MASQUERADE
 #还需要检查是否开启ipv4转发
 vim /etc/sysctl.conf
 >net.ipv4.ip_forward = 1
