@@ -4,7 +4,6 @@ title:
   category: 카테고리
   tag: 태그
   schedule: Schedule
-author: 작성자
 menu:
   home: 홈
   archives: 아카이브
@@ -33,7 +32,9 @@ post:
   views: Views
   comments_count: 댓글
   related_posts: Related Posts
-  copy_button: Copy
+  copy_button: 복사
+  copy_success: Copied
+  copy_failure: Copy failed
   copyright:
     author: Post author
     link: Post link
@@ -87,8 +88,8 @@ reward:
 gitmentbutton: Show comments from Gitment
 accessibility:
   nav_toggle: Toggle navigation bar
-  prev_page: Previous page
-  next_page: Next page
+  prev_page: 이전 페이지
+  next_page: 다음 페이지
 symbols_count_time:
   count: Symbols count in article
   count_total: Symbols count total
