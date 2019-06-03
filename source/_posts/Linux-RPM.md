@@ -1,7 +1,7 @@
 ---
 title: Linux之RPM打包
 date: 2019-05-14 14:26:35
-updated: 2019-05-16 10:28:10
+updated: 2019-06-03 13:51:28
 categories: Linux 
 tags: [RPM]
 ---
@@ -203,9 +203,67 @@ rm -rf $RPM_BUILD_ROOT
 
 6. 最后测试安装`yum install hello-world`会自动依赖
 
+## 下载rpm依赖包
+
+1. 安装`yum ``install` `yum-plugin-downloadonly`
+
+2. 下载依赖包`yum install –downloadonly –downloaddir= <依赖包存储路径> <需要下载依赖包的安装包名>`例如：
+
+   ```bash
+   yum install --downloadonly --downloaddir=/data/rpm  mongodb
+   ```
+
+### 常见问题
+
+1. 错误信息分析，关键信息`cd jdk-8u77-linux-x64-1.0.0`
+
+   ```bash
+   执行(%prep): /bin/sh -e /var/tmp/rpm-tmp.QO57WH
+   + umask 022
+   + cd /root/rpmbuild/BUILD
+   + cd /root/rpmbuild/BUILD
+   + rm -rf jdk-8u77-linux-x64-1.0.0
+   + /usr/bin/gzip -dc /root/rpmbuild/SOURCES/jdk-8u77-linux-x64-1.0.0.tar.gz
+   + /usr/bin/tar -xf -
+   + STATUS=0
+   + '[' 0 -ne 0 ']'
+   + cd jdk-8u77-linux-x64-1.0.0
+   /var/tmp/rpm-tmp.QO57WH: line 35: cd: jdk-8u77-linux-x64-1.0.0: No such file or directory
+   错误：/var/tmp/rpm-tmp.QO57WH (%prep) 退出状态不好
+   ```
+
+   原因，是因为解压之后路径找不到对应目录
+
+   解决：
+
+   1. 方式一手动解压，重新手动压缩
+
+   2. 方式二修改spec文件中的prep，然后查看BUILD里面的实际解压目录`/root/rpmbuild/BUILD/jdk1.8.0_77`然后设置为实际目录即可
+
+      ```properties
+      %prep
+      %setup -n jdk1.8.0_77
+      ```
+
+2. 编译后无法运行提示无架构
+
+   ```bash
+   [root@xuan SRPMS]# yum install jdk-1.8-77.src.rpm
+   已加载插件：fastestmirror
+   正在检查 jdk-1.8-77.src.rpm: jdk-1.8-77.src
+   无法添加软件包 jdk-1.8-77.src.rpm 至操作中。不属于任何可兼容的架构：src
+   错误：无须任何处理
+   ```
+
+   解决：
+
+
 ### 参考
 
 [制作一个简单的rpm包:helloworld](https://wangbin.io/blog/it/yum-rpm-make.html)
 
 [RPM 包制作](https://jin-yang.github.io/post/linux-create-rpm-package.html)
 
+[rpmbuild SPEC文件说明]([http://abcdxyzk.github.io/blog/2014/02/10/rpm-rpmbuild-base/](http://abcdxyzk.github.io/blog/2014/02/10/rpm-rpmbuild-base/))
+
+https://blog.csdn.net/wl_fln/article/details/7263668
