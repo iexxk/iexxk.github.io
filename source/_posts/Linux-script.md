@@ -1,50 +1,39 @@
 ---
-title: linux脚本
-date: 2017-12-29 17:25:52
-updated: 2018-12-12 10:47:58categories: Linux
-tags: [linux,脚本]
+title: Linux-script
+date: 2019-06-04 15:19:29
+updated: 2019-06-04 16:16:20
+categories: Linux
+tags: [script]
 ---
-## shell基础知识
+
+##### 单行语法
 
 ```bash
-#文件名cp.sh
-#!/bin/bash
-exec cp "$@"
+cmd1 && cmd2 #cmd1正确执行cmd2，相反不执行
+cmd1 || cmd2 #cmd1错误执行cmd2，相反不执行
 ```
 
-eg:
+##### 错误重定向不输出
 
-比如对于cp命令来说 cp src dist
-那么\$1就是src \$2就是disc ,而$@就是所有的参数列表，src dist。
-
-执行脚本`cp.sh src dist`=`exec cp src dist`
-
-###### dockerfile中的应用
-
-```dockerfile
-#应用运行前执行的脚本
-ENTRYPOINT ["/cp.sh","第二个脚本内容","....."]
-#启动容器前执行的命令
-CMD ["src", "dist", "第三个参数","......"]
+```bash
+cmd 1>/dev/null 2>&1 #错误不会打印
 ```
 
-等效于shell命令的 `/cp.sh src dist`=`exec cp src dist`
+#### 实战
 
-#### centos7开机脚本
+```bash
+#用户bpf不存在则创建用户，且不输出错误日志,但异常还是存在所以可能会导致整个脚本终止
+id bpf 1>/dev/null 2>&1 || useradd bpf -d /opt/bpf/
+#方式2
+if id bpf1 >/dev/null 2>&1; then echo 11; fi
+#方式3（推荐），不会被推出，因为没有异常，经测试还是被退出
+cat /etc/passwd | cut -f1 -d':' | grep -w "bpf" -c || useradd bpf -d /opt/bpf/
+```
 
-1. 新建开机脚本`vim /root/Dropbox/save/bootstartscript.sh`
+#### 优化
 
-   ```sh
-   #添加开机启动脚本
-   #开机启动dropbox
-   dropbox start -d
-   ```
+```xml
+<! maven pom.xml & 符号报错，解决用<![CDATA[ cmd ]]> -->
+<script><![CDATA[id bpf 1>/dev/null 2>&1 || useradd bpf -d /opt/bpf/]]></script>
+```
 
-2. 添加开机脚本到启动文件`vim /etc/rc.d/rc.local`
-
-   ```sh
-   #开机启动脚本
-   bash /root/Dropbox/save/bootstartscript.sh
-   ```
-
-3. 设置启动脚本生效` chmod +x /etc/rc.d/rc.local `

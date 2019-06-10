@@ -1,7 +1,7 @@
 ---
 title: Linux之RPM打包
 date: 2019-05-14 14:26:35
-updated: 2019-06-03 13:51:28
+updated: 2019-06-04 10:21:41
 categories: Linux 
 tags: [RPM]
 ---
@@ -255,7 +255,7 @@ rm -rf $RPM_BUILD_ROOT
    错误：无须任何处理
    ```
 
-   解决：
+   解决：进错目录，这个是源代码
 
 
 ### 参考
