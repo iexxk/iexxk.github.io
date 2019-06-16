@@ -1,7 +1,7 @@
 ---
 title: Linux-RPM-springBoot
 date: 2019-05-24 16:03:14
-updated: 2019-05-28 10:07:43
+updated: 2019-06-13 10:21:26
 categories: Linux
 tags: [RPM]
 ---
@@ -160,6 +160,8 @@ tags: [RPM]
                 </configuration>
             </plugin>
 ```
+
+`package rpm:rpm -U`
 
 
 
