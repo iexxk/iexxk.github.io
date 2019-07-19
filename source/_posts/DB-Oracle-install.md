@@ -1,7 +1,7 @@
 ---
 title: DB-oracle-install
 date: 2018-04-20 12:02:11
-updated: 2018-05-03 16:27:39
+updated: 2019-07-13 11:05:03
 categories: 数据库
 tags: [oracle,sql]
 ---
@@ -9,6 +9,12 @@ tags: [oracle,sql]
 ## Docker 安装 Oracle
 
 镜像：[sath89/oracle-12c](https://hub.docker.com/r/sath89/oracle-12c/)
+
+挂载需要修改权限
+
+`chown -R 1001:1001 /data/oracle`
+
+docker run -d --name oracle -p 8080:8080 -p 1521:1521  -e TZ=Asia/Shanghai sath89/oracle-12c
 
 | 类别   | host                                  | container                   | 备注                               |
 | ------ | ------------------------------------- | --------------------------- | ---------------------------------- |
@@ -82,5 +88,5 @@ connect as sysdba: true
 
    待优化处理：？？？
 
-   ​
+   
 

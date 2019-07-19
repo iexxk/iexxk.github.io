@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-official
 date: 2018-07-27 13:43:28
-updated: 2019-02-19 23:03:03
+updated: 2019-07-19 17:43:48
 categories: Docker
 tags: [Docker,Gitlab]
 ---
@@ -61,6 +61,22 @@ gitlab_rails['backup_cron'] = '0 0 3 * * ?'
 # gitlab_rails['backup_path'] = '/var/opt/gitlab/backups'
 # limit backup lifetime to 7 days - 604800 seconds
 gitlab_rails['backup_keep_time'] = 604800
+
+# ----优化内存配置-------------
+#数据库缓存大小
+postgresql['shared_buffers'] = "256MB"
+#数据库并发
+postgresql['max_worker_processes'] = 6
+#进程数
+unicorn['worker_processes'] = 2
+#
+unicorn['worker_memory_limit_min'] = "200 * 1 << 20"
+unicorn['worker_memory_limit_max'] = "300 * 1 << 20"
+#减少并发
+sidekiq['concurrency'] = 10
+
+
+
 ```
 
 portainer->secrets->name: `gitlab_root_password`
@@ -119,4 +135,8 @@ Enqueued ActionMailer::DeliveryJob (Job ID: efc41db4-43bb-4f0f-83ca-7481611c2ff4
 
 1. 进入容器可以执行命令`gitlab-rake gitlab:env:info`更多命令见rake
 2. 备份文件`repositories`中`xxx.bundle`可以用git命令解压`git clone xxx.bundle xxx`,详情见`git bundle`打包
+
+## 参考
+
+[gitlab.rb配置文件](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template)
 

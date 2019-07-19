@@ -1,7 +1,7 @@
 ---
 title: DB-MongoDB-Summary
 date: 2019-01-25 09:52:17
-updated: 2019-05-30 09:10:08
+updated: 2019-07-19 14:50:27
 categories: 数据库
 tags: [MongoDB]
 ---
@@ -248,24 +248,34 @@ mongos> sh.status()
    mongo --port 27018
    rs.initiate(
      {
-       _id : shard1,
+       _id : "shard1",
        members: [
          { _id : 0, host : "mongo-server1-shard1:27018" },
          { _id : 1, host : "mongo-server2-shard1:27018" }
        ]
      }
    )
+   
    #进入mongo-server1-shard2
    mongo --port 27018
    rs.initiate(
      {
-       _id : shard2,
+       _id : "shard2",
        members: [
          { _id : 0, host : "mongo-server1-shard2:27018" },
          { _id : 1, host : "mongo-server2-shard2:27018" }
        ]
      }
    )
+   #额外-----------------------
+   //添加额外分片
+   rs.add( { host: "mongodb3.example.net:27017", priority: 0, votes: 0 } )
+   //添加仲裁
+   rs.addArb("shard34:27018");
+   //移除节点
+   rs.remove("shard34:27018");
+   //设置从分片可读
+   db.getMongo().setSlaveOk();
    ```
 
    #### 添加分片集群到`mongos`中
@@ -277,6 +287,12 @@ mongos> sh.status()
    docker exec -it $(docker ps | grep "mongo-router" | awk '{ print $1 }') bash -c "echo 'sh.addShard(\"shard1/mongo-server1-shard1:27018,mongo-server2-shard1:27018\")' | mongo "
    #添加shard1分片集群到mogons
    docker exec -it $(docker ps | grep "mongo-router" | awk '{ print $1 }') bash -c "echo 'sh.addShard(\"shard2/mongo-server1-shard2:27018,mongo-server2-shard2:27018\")' | mongo "
+   ###---------------------等效于以下命令-----
+   mongo
+   sh.addShard("shard1/shard11:27018,shard12:27018,shard13:27018")
+   sh.addShard("shard2/shard21:27018,shard22:27018,shard23:27018")
+   sh.addShard("shard3/shard31:27018,shard32:27018,shard33:27018")
+   
    ```
 
 6. 查看片的状态`sh.status()`
@@ -312,15 +328,105 @@ mongos> sh.status()
                            { "_id" : { "$minKey" : 1 } } -->> { "_id" : { "$maxKey" : 1 } } on : shard1 Timestamp(1, 0)
    ```
 
-   #### 使能分片数据库（待测）
+   #### 使能分片数据库
 
-7. `sh.enableSharding("<database>")`
+7. `sh.enableSharding("<database>")`仅仅只是标记数据库使能分片
+
+   ```json
+   mongos> sh.enableSharding("test")
+   {
+   	"ok" : 1,
+   	"operationTime" : Timestamp(1563271100, 3),
+   	"$clusterTime" : {
+   		"clusterTime" : Timestamp(1563271100, 3),
+   		"signature" : {
+   			"hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+   			"keyId" : NumberLong(0)
+   		}
+   	}
+   }
+   ```
 
    err:`sun.reflect.GeneratedMethodAccessor109.invoke(Unknown Source)`
 
-8. 在`admin`执行`db.runCommand({"shardcollection":"app_test.MusicList","key":{"seat":1}})`
+8. `sh.shardCollection("<database>.<table>",{_id:1})`
 
-9. 在`app_test`执行`db.MusicList.ensureIndex({"seat":1},{background: 1})`
+   ```
+   db.table1.stats();
+   { 
+       "sharded" : true, 
+       "shards" : { 
+       }
+   }   
+   ```
+
+   
+
+9. 在`admin`执行`db.runCommand({"shardcollection":"app_test.MusicList","key":{"seat":1}})`
+
+10. 在`app_test`执行`db.MusicList.ensureIndex({"seat":1},{background: 1})`
+
+## 集群分析
+
+| 模式：主+备+备+仲+仲（主备不区分） | 宕机设备  | mongo可读写 |                              |
+| ---------------------------------- | --------- | ----------- | ---------------------------- |
+| 主+备+仲+仲                        | -备       | 可用        | 选举时间3～4秒(偶尔发生)     |
+| 主+仲+仲                           | -备-备    | 可用        | 选举<1秒，且最后一个节点为主 |
+| 主+仲                              | -备-备-仲 | 不可用      | 最后一个主降级为从           |
+| 主+备+仲                           | -备-仲    | 可用        |                              |
+| 主+备                              | -备-仲-仲 | 不可用      | 无主                         |
+| 主+备+备                           | -仲-仲    | 可用        |                              |
+
+## 总结：
+
+1. 3节点(1注+2副本)可宕机一台，5节点模式（1主+2副本+2仲裁）可宕机2台
+
+2. 仲裁节点：等效于副本，参与选举，但是不能成为主节点，不存储数据
+
+3. 节点主副本其实是不区分的，启动时随机选一个做主节点，当发现宕机是会选举一个新的主节点，当宕机过多，不足以达到高可用，主节点会自动降级，当前主从副本就不会出现主节点，mongo存储数据就会提示错误，没有主节点
+
+4. 路由节点可以不用见主从
+
+5. 配置节点主从可以全部宕机也能正常写数据，但是数据不会自动分片，以及不能进行分片等设置查询操作，涉及配置操作都会失败
+
+6. 数据迁移(Sharded Cluster Balancer)，当一个分片数据过多时，会发生数据平衡，让每个分片数据相差不大
+
+7. 数据回滚，当一个节点宕机，会通过oplog进行节点数据恢复，当数据大于oplog文件设置的大小（没设置是按磁盘的%比设置的）时，数据会被覆盖，4以前的版本，如果数据30分钟内没回滚完（未测），也会终止不会回滚，并提示错误，具体参考[MongoDB副本集的工作原理](https://www.cnblogs.com/wilber2013/p/4154406.html)
+
+8. 读写默认通过主节点，副本节点读数据需要设置副本可读
+
+9. 分片的设置，需要先使能库设置分片库，然后再设置分片表，删了表需要重新使能分片表
+
+10. 当数据达到一定大小才会开始分片(60M?)
+
+11. db.stats()默认byte，可以用参数db.stats(1024*1024)转换为mb
+
+    ```json
+    {
+        "db" : "xxx",   //当前数据库
+        "collections" : 27,  //当前数据库多少表 
+        "objects" : 18738550,  //当前数据库所有表多少条数据
+        "avgObjSize" : 1153.54876188392, //每条数据的平均大小 byte
+        "dataSize" : 21615831152.0,  //所有数据的总大小
+        "storageSize" : 23223312272.0,  //所有数据占的磁盘大小 
+        "numExtents" : 121,
+        "indexes" : 26,   //索引数 
+        "indexSize" : 821082976,  //索引大小 
+        "fileSize" : 25691160576.0,  //预分配给数据库的文件大小
+        "nsSizeMB" : 16,
+        "dataFileVersion" : {
+            "major" : 4,
+            "minor" : 5
+        },
+        "extentFreeList" : {
+            "num" : 1,
+            "totalSize" : 65536
+        },
+        "ok" : 1.0
+    }
+    ```
+
+    
 
 
 
@@ -333,3 +439,5 @@ mongos> sh.status()
 [Deploy a Sharded Cluster](https://docs.mongodb.com/manual/tutorial/deploy-shard-cluster/)
 
 [MongoDB搭建分片集群](https://www.mtyun.com/library/MongoDB-shard-cluster)
+
+[MongoDB副本集的工作原理](https://www.cnblogs.com/wilber2013/p/4154406.html)
