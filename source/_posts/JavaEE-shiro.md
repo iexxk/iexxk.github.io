@@ -1,7 +1,7 @@
 ---
 title: JavaEE-shiro
 date: 2018-05-20 08:54:50
-updated: 2018-12-12 14:28:30
+updated: 2019-07-22 16:02:52
 categories: JavaEE
 tags: [JavaEE]
 ---
@@ -56,7 +56,7 @@ b-->c[Realm/数据源]
    ```java
    //Factory<SecurityManager> factory=new IniSecurityManagerFactory("classpath:shiro.ini"); //此方法过期
    IniRealm iniRealm=new IniRealm("classpath:shiro.ini"); //读取shiro配置文件
-   SecurityManager securityManager=new DefaultSecurityManager(iniRealm);
+   DefaultSecurityManager securityManager=new DefaultSecurityManager(iniRealm);
    SecurityUtils.setSecurityManager(securityManager);
    Subject currentUser=SecurityUtils.getSubject();
    if (!currentUser.isAuthenticated()){

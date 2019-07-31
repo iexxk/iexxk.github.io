@@ -1,7 +1,7 @@
 ---
 title: redis集群搭建
 date: 2019-01-22 22:06:32
-updated: 2019-04-19 12:15:55
+updated: 2019-07-31 13:49:21
 categories: 数据库
 tags: [redis]
 ---
@@ -95,13 +95,25 @@ cluster-node-timeout 15000
 ### 使用docker镜像脚本创建
 
 ```bash
+#创建集群 主1 主2 主3 从1 从2 从3 的顺序来的
 docker run -it --rm exxk/redis-trib ruby redis-trib.rb create --replicas 1 172.16.16.8:7000 172.16.16.8:7001 172.16.16.8:7002 172.16.16.13:7003 172.16.16.13:7004 172.16.16.13:7005
+#检查集群状态
 docker run -it --rm exxk/redis-trib ruby redis-trib.rb check 192.168.101.108:7000
+# 查看集群负载
+docker stats $(docker ps | grep "redis-cluster" | awk '{ print $1 }')
+# 修复集群
+docker run -it --rm exxk/redis-trib ruby redis-trib.rb fix 10.10.10.11:7000
 ```
 
+## 高可用总结
 
-
-
+1. 执行集群creat脚本时，默认前三个为主后三个为从，主从对应关系随机分配
+2. 集群存在主从对应关系，一个主回自动分配一个从，集群宕机也不会改变
+3. 集群一个主从挂了不能访问
+4. 集群必须所有的主都能正常运行
+5. 集群从升级主存在时间间隔，试配置和性能等因素影响，可能长可能短，在没有主选择成功集群状态显示异常，且无法访问，提示错误`Not all 16384 slots are covered by nodes.`
+6. 集群同时宕机两个主，从是无法升级为主，这种情况只在同时，如果其中一个从升级主，再宕机一个主，是没有关系的
+7. 从节点宕机对主节点毫无影响
 
 ### 常见问题
 
