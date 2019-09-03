@@ -1,12 +1,19 @@
 ---
 title: Tools-nexus-maven
 date: 2018-09-06 08:42:44
-updated: 2019-02-13 20:25:15
+updated: 2019-08-14 18:01:44
 categories: 工具
 tags: [nexus3,maven]
 ---
 
 # maven私库nexus3搭建使用
+
+### 常用命令
+
+```bash
+#Maven 测试仓库命令，下载jar包,测试一般会报错，说没有权限
+mvn dependency:get -DremoteRepositories=http://47.98.114.63:14006/repository/maven-third/ -DgroupId=com.taobao -DartifactId=taobao-sdk-java-auto -Dversion=20190804
+```
 
 ### [sonatype/nexus3](https://github.com/sonatype/docker-nexus3)安装
 
@@ -318,6 +325,23 @@ mvn install:install-file -Dfile=fastdfs-1.24.jar -DgroupId=org.csource -Dartifac
    ID: [develop](develop163)
 
    roles: `nx-deploy`
+
+### maven 项目内局部配置私库地址
+
+```xml
+## pom.xml里面设置    
+<repositories>
+        <repository>
+            <id>maven-third</id>
+            <name>maven-third</name>
+            <url>http://47.98.114.63:14006/repository/maven-third/</url>
+        </repository>
+    </repositories>
+```
+
+
+
+
 
 ### 问题
 
