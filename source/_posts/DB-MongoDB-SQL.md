@@ -1,7 +1,7 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2019-09-19 14:15:43
+updated: 2019-10-23 14:51:54
 categories: 数据库
 tags: [mongoDB]
 ---
@@ -114,6 +114,173 @@ db.getCollection("m_user").aggregate([
     "recordNum" : 2.0
 }
 ```
+
+##### `project`控制输出显示的结果
+
+1为显示该字段
+
+```js
+"$project": {
+            "_id": 1, 
+             "customer_id": 1
+}
+```
+
+##### `cond`类似case when
+
+Java: ConditionalOperators
+
+```js
+--如果$err_status=5 输出 1否则输出 0
+"$cond": { "if": { "$eq": ["$err_status", "5"] }, "then": 1, "else": 0 }
+-- 结合project可以统计错误信息等于5的数据条数
+ "$project": {
+            customer_id": 1
+            , "fail_tatus": { "$cond": { "if": { "$eq": ["$err_msg", "5"] }, "then": 1, "else": 0 } }
+        }
+```
+
+##### `match`条件过滤
+
+```
+
+```
+
+##### `unwind`
+
+嵌入实体平铺，1个对象里面包含数组，平铺成一个对象对一个数组的内容，最终等于数组的条数
+
+```js
+"$unwind": "$term_info"
+```
+
+##### `lookup`
+
+Java: LookupOperation
+
+表关联左连接
+
+```js
+-- from 表1 localField 表1字段 foreignField 表2字段 as 表2
+"$lookup": { "from": "b_terminfo", "localField": "devices_statuses.term_id", "foreignField": "term_id", "as": "term_info" }
+```
+
+##### `elemMatch` 内嵌数组，查询，其中数组里面的一个对象完全满足才会查出来
+
+```js
+"$elemMatch": {
+        "term_id": "M59903"
+        , "sync_status": "progressFail"
+        , "err_msg": { "$ne": "5" }
+    }}
+```
+
+对应java
+
+```java
+ Query query = new Query(Criteria.where("devices_statuses").elemMatch(
+                    Criteria.where("term_id").is(termId)
+                            .and("sync_status").is(Constants.OFFLINE_SYNC_DEVICE_PROGRESSFAIL)
+                            .and("err_msg").ne(Constants.OFFLINE_SYNC_ERRORREASON_FAIL_FEATURE)
+            ));
+```
+
+### 最终示例
+
+```js
+db.getCollection("b_customer_info_device").aggregate([
+    { "$unwind": "$devices_statuses" }
+    , { "$lookup": { "from": "b_terminfo", "localField": "devices_statuses.term_id", "foreignField": "term_id", "as": "term_info" } }
+    , { "$unwind": "$term_info" }
+    , { "$match": {} }
+    , {
+        "$project": {
+            "_id": 1, "customer_id": 1, "class_name": 1
+            , "feature_fail": { "$cond": { "if": { "$eq": ["$devices_statuses.err_msg", "5"] }, "then": 1, "else": 0 } }
+            , "total_fail": { "$cond": { "if": { "$eq": ["$devices_statuses.sync_status", "progressFail"] }, "then": 1, "else": 0 } }
+        }
+    }
+    , {
+        "$group": {
+            "_id": { "_id": "$_id", "customer_id": "$customer_id", "class_name": "$class_name" }
+            , "total_fail": { "$sum": "$total_fail" }
+            , "feature_fail": { "$sum": "$feature_fail" }
+        }
+    }
+    , {
+        "$project": {
+            "_id": 1, "customer_id": 1, "img_store_data": 1, "customer_name": 1, "class_name": 1
+            , "feature_fail": { "$cond": { "if": { "$gt": ["$feature_fail", 0] }, "then": 1, "else": 0 } }
+            , "total_fail": { "$cond": { "if": { "$gt": ["$total_fail", 0] }, "then": 1, "else": 0 } }
+        }
+    }
+
+    , {
+        "$group": {
+            "_id": null
+            , "total_customer": { "$sum": 1 }
+            , "total_fail": { "$sum": "$total_fail" }
+            , "feature_fail": { "$sum": "$feature_fail" }
+        }
+    }
+]);
+```
+
+对应mongotemplate
+
+```java
+  ConditionalOperators.Cond condOperatorsFeature=ConditionalOperators.when(
+                criteria.where("devices_statuses.err_msg").is(Constants.OFFLINE_SYNC_ERRORREASON_FAIL_FEATURE))
+                .then(1)
+                .otherwise(0);
+        ConditionalOperators.Cond condOperatorsFail=ConditionalOperators.when(
+                criteria.where("devices_statuses.sync_status").is(Constants.OFFLINE_SYNC_DEVICE_PROGRESSFAIL))
+                .then(1)
+                .otherwise(0);
+
+
+        ConditionalOperators.Cond condOperatorsFeatureTotal=ConditionalOperators.when(
+                criteria.where("feature_fail").gt(0))
+                .then(1)
+                .otherwise(0);
+        ConditionalOperators.Cond condOperatorsFailTotal=ConditionalOperators.when(
+                criteria.where("total_fail").gt(0))
+                .then(1)
+                .otherwise(0);
+
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.unwind("$devices_statuses")
+                ,LookupOperation.newLookup().from("b_terminfo")
+                        .localField("devices_statuses.term_id")
+                        .foreignField("term_id").as("term_info")
+                ,Aggregation.unwind("$term_info")
+                ,Aggregation.match(criteria)
+                ,Aggregation.project("customer_id","class_name")
+                        .and(condOperatorsFeature).as("feature_fail")
+                        .and(condOperatorsFail).as("total_fail")
+                ,Aggregation.group("customer_id","class_name")
+                        .sum("total_fail").as("total_fail")
+                        .sum("feature_fail").as("feature_fail")
+                ,Aggregation.project()
+                        .and(condOperatorsFeatureTotal).as("feature_fail")
+                        .and(condOperatorsFailTotal).as("total_fail")
+                ,Aggregation.group()
+                        .count().as("total_customer")
+                        .sum("total_fail").as("total_fail")
+                        .sum("feature_fail").as("feature_fail")
+        );
+        AggregationResults<BasicDBObject> dBObjects=mongoTemplate.aggregate(aggregation,"b_customer_info_device",BasicDBObject.class);
+
+        JSONArray countResult = JSON.parseObject(dBObjects.getRawResults().toJson()).getJSONArray("result");
+        if(countResult!=null&&countResult.size()>0){
+            JSONObject jobj = (JSONObject)countResult.get(0);
+           return jobj;
+        }
+```
+
+
+
+
 
 
 
