@@ -1,7 +1,7 @@
 ---
 title: oracle常用sql总结
 date: 2019-10-23 10:03:20
-updated: 2019-10-23 14:27:35
+updated: 2019-11-04 17:45:40
 categories: 数据库
 tags: [oracle,sql]
 ---
@@ -141,7 +141,26 @@ union
 select rownum from dual connect by rownum<=4;
 ```
 
+#### 12. ROLLUP 分组汇总
 
+ROLLUP汇总分组排列在最后一条数据，但是数据头为null，可以通过null判断取别名为总数
+
+```sql
+SELECT nvl(CASE
+               WHEN sex = 'boy' THEN '男'
+               WHEN sex = 'girl' THEN '女'
+               ELSE '人妖'
+               END, '总数') AS type,
+       count(1)           as num
+from t_user
+GROUP BY
+    ROLLUP
+    ( CASE
+          WHEN sex = 'boy' THEN '男'
+          WHEN sex = 'girl' THEN '女'
+          ELSE '人妖'
+          END);
+```
 
 #### 示例数据
 
