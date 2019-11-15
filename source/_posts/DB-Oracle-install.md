@@ -1,7 +1,7 @@
 ---
 title: DB-oracle-install
 date: 2018-04-20 12:02:11
-updated: 2019-07-13 11:05:03
+updated: 2019-11-15 11:53:24
 categories: 数据库
 tags: [oracle,sql]
 ---
@@ -79,6 +79,66 @@ connect as sysdba: true
 2. ftp上传文件dmp备份文件到挂在目录`/dockerdata/manager/oracleinitdb/initdb`
 
 3. 进入容器执行切换到`/docker-entrypoint-initdb.d`目录`imp manager/manager file=manager20180413am1052.dmp log=imp_sysdb.log grants=no full=y`导入恢复数据
+
+#### 数据库前的准备工作
+
+```sql
+--创建表空间
+create tablespace SY_DB logging datafile '/u01/app/oracle/oradata/SY_DB.DBF' size 50m autoextend on next 50m maxsize 20480m extent management local;
+--创建用户
+create user SY_DB identified by "SY_DB@2018"   default tablespace SY_DB  temporary tablespace TEMP  profile DEFAULT password expire;
+-- Grant/Revoke role privileges
+grant dba to SY_DB;
+--给用户分配权限
+grant create any table to SY_DB;
+grant create any view to SY_DB;
+grant create user to SY_DB;
+grant drop tablespace to SY_DB;
+grant unlimited tablespace to SY_DB;
+--查询用户密码有效期
+select * from dba_profiles where profile='DEFAULT' and resource_name='PASSWORD_LIFE_TIME';
+--查询用户和密码
+select username,password from dba_users;
+--修改用户密码（密码里面最好不要有@符号，不然执行导入命令时一直无权限）
+alter user SY_DB identified by mimaoracle;
+--去除用户密码有效期
+ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;
+--创建虚拟目录存储导出文件
+create directory db_bak as '/docker-entrypoint-initdb.d';
+```
+
+#### 数据库导入导出(容器bash执行)
+
+```bash
+--数据泵导入文件
+impdp SY_DB/mimaoracle DIRECTORY=db_bak  DUMPFILE=SY_DB20190829.DMP  SCHEMAS=SY_DB
+--数据泵导出文件
+expdp SY_DB/"""SY_DB@2018"""@orcl DIRECTORY=db_bak  DUMPFILE=SY_DB20190829.DMP  SCHEMAS=SY_DB;
+```
+
+#### 修改字符集
+
+```sql
+-- 进入sql命令行
+sqlplus sys/oracle as sysdba
+--若此时数据库服务器已启动，则先执行 SHUTDOWN IMMEDIATE 命令关闭数据库服务器，
+然后执行以下命令:
+SQL>shutdown immediate
+SQL>STARTUP MOUNT
+SQL>ALTER SYSTEM ENABLE RESTRICTED SESSION;
+SQL>ALTER SYSTEM SET JOB_QUEUE_PROCESSES=0;
+SQL>ALTER SYSTEM SET AQ_TM_PROCESSES=0;
+SQL>ALTER DATABASE OPEN;
+SQL>ALTER DATABASE CHARACTER SET ZHS16GBK;
+SQL>ALTER DATABASE CHARACTER SET INTERNAL_USE ZHS16GBK; 
+--执行错误,未解决该错误
+--ERROR at line 1:
+--ORA-12712: new character set must be a superset of old character set
+SQL>SHUTDOWN IMMEDIATE
+SQL>STARTUP
+```
+
+
 
 #### 问题
 

@@ -1,7 +1,7 @@
 ---
 title: oracle常用sql总结
 date: 2019-10-23 10:03:20
-updated: 2019-11-04 17:45:40
+updated: 2019-11-14 16:24:57
 categories: 数据库
 tags: [oracle,sql]
 ---
@@ -161,6 +161,19 @@ GROUP BY
           ELSE '人妖'
           END);
 ```
+
+#### 13. `||`字符连接符
+
+用于单位，用于多条数据拼接
+
+```sql
+select 'sex是'||u.SEX||',年龄是'||u.AGE as detail from T_USER u;
+--------输出结果------
+--sex是boy,年龄是1
+--sex是girl,年龄是2
+```
+
+
 
 #### 示例数据
 
