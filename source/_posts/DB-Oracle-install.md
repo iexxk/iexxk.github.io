@@ -1,7 +1,7 @@
 ---
 title: DB-oracle-install
 date: 2018-04-20 12:02:11
-updated: 2019-11-15 11:53:24
+updated: 2019-11-15 16:36:00
 categories: 数据库
 tags: [oracle,sql]
 ---
@@ -80,7 +80,7 @@ connect as sysdba: true
 
 3. 进入容器执行切换到`/docker-entrypoint-initdb.d`目录`imp manager/manager file=manager20180413am1052.dmp log=imp_sysdb.log grants=no full=y`导入恢复数据
 
-#### 数据库前的准备工作
+#### 数据库前的准备工作/创建数据库
 
 ```sql
 --创建表空间

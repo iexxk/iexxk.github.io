@@ -1,8 +1,8 @@
 ---
 title: Other-CDN
 date: 2019-02-18 17:53:56
-updated: 2019-02-20 20:15:44
-categories: Other
+updated: 2019-11-20 20:43:08
+categories: 杂谈
 tags: [CDN]
 ---
 
