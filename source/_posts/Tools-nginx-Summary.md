@@ -1,7 +1,7 @@
 ---
 title: nginx常用配置总结
 date: 2019-01-29 23:21:37
-updated: 2019-03-02 17:02:33
+updated: 2019-12-30 17:59:26
 categories: Tools
 tags: [nginx]
 ---
@@ -203,5 +203,22 @@ server {
 
 ```
 
+### 本地https配置
 
+```nginx
+    server {
+	   listen       9600 ssl;
+	   server_name  localhost;
+     ssl_certificate  server.crt;
+     ssl_certificate_key server.key;
+     ssl_session_timeout 5m;
+	     location / {
+		     proxy_pass   http://bpf_pf_access;
+	     }
+   }
+```
+
+### tomcat测试https
+
+settings->Automatically follow redirects->Default: Settings->general->ssl certificate verification(off)->certificates->client certificates(添加证书文件即可)
 

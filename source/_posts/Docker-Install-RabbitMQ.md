@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-RabbitMQ
 date: 2018-04-10 12:10:51
-updated: 2019-01-24 20:28:07
+updated: 2019-12-05 11:10:45
 categories: Docker
 tags: [Docker swarm,RabbitMQ]
 ---
@@ -92,6 +92,59 @@ public class MqReceiver {
 ```
 
 测试效果：先启动主程序，再点击测试类发送，主程序就可以接收到消息了。（先发送后启动主程序是接受不到的）
+
+### centos7 install RabbitMQ
+
+1. 首先下载[安装包](http://47.98.114.63:14018/s/J9B2LHJqZkPCGmG):erlang、socat、rabbitmq以此用`rpm -ivh <>`安装这三个
+
+2. 新建修改配置文件`vi /etc/rabbitmq/rabbitmq.config`
+
+   ```properties
+   [
+   {rabbit, [{tcp_listeners, [5672]}, {loopback_users, ["admin"]}]}
+   ].
+   ```
+
+3. 启动rabbitmq服务
+
+   ```bash
+   #启动服务
+   systemctl start rabbitmq-server
+   #查看状态
+   systemctl status rabbitmq-server
+   ```
+
+4. 配置远程管理web界面
+
+   ```bash
+   rabbitmq-plugins enable rabbitmq_management
+   rabbitmq-plugins enable rabbitmq_stomp
+   rabbitmq-plugins enable rabbitmq_web_stomp
+   ```
+
+5. 配置用户远程访问
+
+   ```bash
+   #新建用户test密码test
+   rabbitmqctl add_user test test
+   rabbitmqctl set_user_tags test administrator
+   rabbitmqctl set_permissions -p / test '.*' '.*' '.*'
+   ```
+
+6. 重启rabbitmq服务执行`systemctl restart rabbitmq-server`
+
+7. 添加防火墙访问端口
+
+   ```bash
+   #添加15672端口
+   firewall-cmd --zone=public --add-port=15672/tcp --permanent
+   #加载配置
+   firewall-cmd --reload
+   #查看配置是否生效
+   firewall-cmd --list-all
+   ```
+
+8. 测试，浏览器访问`http://<服务器ip>:15672/`使用test,test用户密码登陆
 
 
 

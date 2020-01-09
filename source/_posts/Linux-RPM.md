@@ -1,7 +1,7 @@
 ---
 title: Linux之RPM打包
 date: 2019-05-14 14:26:35
-updated: 2019-06-04 10:21:41
+updated: 2019-12-06 10:55:48
 categories: Linux 
 tags: [RPM]
 ---
@@ -46,6 +46,8 @@ Requires: vim
 %install
 mkdir -p $RPM_BUILD_ROOT/usr/bin
 cp $RPM_BUILD_DIR/%{name}-%{version}/hello-world $RPM_BUILD_ROOT/usr/bin
+#执行安装完成后需要启动服务或修改配置文件等脚本，例如启动服务等，这里执行的脚本不需要收集文件
+%post
 #删除临时构建目录
 %clean
 rm -rf $RPM_BUILD_ROOT
