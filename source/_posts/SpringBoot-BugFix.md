@@ -1,12 +1,12 @@
 ---
 title: SpringBoot-BugFix
 date: 2020-01-09 09:56:45
-updated: 2020-01-09 10:25:16
+updated: 2020-01-09 11:31:11
 categories: SpringBoot
 tags: [SpringBoot]
 ---
 
-##SpringBoot 遇到问题总结
+## SpringBoot 遇到问题总结
 
 ### request.getInputStream() 为null问题解决
 
