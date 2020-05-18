@@ -1,7 +1,7 @@
 ---
 title: Docker-Install-RabbitMQ
 date: 2018-04-10 12:10:51
-updated: 2019-12-05 11:10:45
+updated: 2020-04-03 10:50:32
 categories: Docker
 tags: [Docker swarm,RabbitMQ]
 ---
@@ -13,6 +13,7 @@ tags: [Docker swarm,RabbitMQ]
 ```yaml
 version: '3'
 services:
+#-------------------------不带管理界面---------------------------------------------
   rabbitmq:
     image: rabbitmq
     restart: always
@@ -30,6 +31,25 @@ services:
         condition: on-failure
       placement:
         constraints: [node.hostname == xuanps]
+#--------------带管理界面（从带管理界面升级要清空挂载目录）---------------------------------        
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine
+    restart: always
+    hostname: me #节点名字
+    environment:
+      RABBITMQ_DEFAULT_USER: test #设置用户名
+      RABBITMQ_DEFAULT_PASS: test #设置密码
+    ports:
+      - 14012:5672
+      - 14013:15672
+    volumes:
+      - "/home/dockerdata/v-nantian-dev/rabbitmq:/var/lib/rabbitmq"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.hostname == me]          
 ```
 
 ### springboot 连接mq

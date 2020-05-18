@@ -1,7 +1,7 @@
 ---
 title: idea ssm 目录结构
 date: 2017-05-04 17:16:28
-updated: 2018-12-12 10:47:58
+updated: 2020-04-28 09:59:26
 categories: JavaEE
 tags: [JavaEE,idea,maven]
 
@@ -41,7 +41,9 @@ tags: [JavaEE,idea,maven]
 
 ##### 子项目打包
 
-`clean package -pl module_name -am `
+`mvn clean package -pl module_name -am `
+
+`mvn clean package -pl pf_model/bpf_pf_platform,pf_model/bpf_pf_process -am`
 
 -am --also-make 同时构建所列模块的依赖模块； 
 

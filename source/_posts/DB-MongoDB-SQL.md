@@ -1,7 +1,7 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2019-10-23 14:51:54
+updated: 2020-04-18 16:28:06
 categories: 数据库
 tags: [mongoDB]
 ---
@@ -50,9 +50,18 @@ update.set("devices_statuses.$.sync_status", "1");
 mongoTemplate.updateMulti(query, update, CustomerInfoDevice.class);
 ```
 
+### 2. 正则匹配`$regex`
 
+```shell
+---data
+  {"notice_key" : "[E00000003, 测试1]"}
+---shell 且查询
+db.getCollection("m_mq_log_record").find({"notice_key":{ $regex: /(?=.*测试1)(?=.*E00000003)/ }})
+---java 且查询,`|`为或查询
+query.addCriteria(Criteria.where("notice_key").regex("(?=.*测试1)(?=.*E00000003|.*E00000004|)"));
+```
 
-### 2. 聚合查询`aggregate`
+### 3. 聚合查询`aggregate`
 
 ##### 数据结构
 

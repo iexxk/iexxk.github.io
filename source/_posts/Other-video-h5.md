@@ -1,7 +1,7 @@
 ---
 title: Other-video-h5
 date: 2019-11-20 20:42:01
-updated: 2019-11-20 21:07:05
+updated: 2020-03-04 16:53:16
 categories: 杂谈
 tags: [rtsp]
 ---
@@ -19,6 +19,10 @@ hls延时高
 原理ffmpeg解码转流(图片)，webSocket接收，然后前端画布按帧绘制
 
 ```bash
+#拉去代码https://github.com/phoboslab/jsmpeg
+git clone git@github.com:phoboslab/jsmpeg.git
+#进入项目目录执行
+npm install ws
 #运行JSMpeg，8081为ffmpeg推流端口，8082为websocket端口
 node websocket-relay.js supersecret 8081 8082
 #运行转码推流

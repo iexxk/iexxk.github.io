@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-official
 date: 2018-07-27 13:43:28
-updated: 2019-07-19 17:43:48
+updated: 2020-05-18 14:19:15
 categories: Docker
 tags: [Docker,Gitlab]
 ---
@@ -128,6 +128,51 @@ Enqueued ActionMailer::DeliveryJob (Job ID: efc41db4-43bb-4f0f-83ca-7481611c2ff4
 ```
 
 到此用root用户登录即可
+
+## 定时备份
+
+```bash
+docker exec -t $(docker ps | grep "gitlab_mygitlab" | awk '{ print $1 }') gitlab-backup create
+#对于GitLab 12.1和更早版本，请使用
+docker exec -t $(docker ps | grep "gitlab_mygitlab" | awk '{ print $1 }')  gitlab-rake gitlab:backup:create
+## 添加定时任务
+crontab -e
+# i进行编辑，esc然后:wq
+0  4  *  *  *  docker exec -t $(docker ps | grep "gitlab_mygitlab" | awk '{ print $1 }') gitlab-backup create
+## 然后查看
+crontab -l
+```
+
+
+
+### centos7 crontab 定时任务
+
+```bash
+# （查看状态）
+systemctl status crond
+# （设为开机启动）
+systemctl enable crond
+# （启动crond服务）
+systemctl start crond
+#添加定时任务
+crontab -e
+#查看定时任务
+crontab -l
+#删除当前用户的定时任务
+crontab -r
+```
+
+备份会有如下警告：
+
+因为配置文件和密码文件需要自己手动备份，为了数据安全
+
+```bash
+Warning: Your gitlab.rb and gitlab-secrets.json files contain sensitive data
+and are not included in this backup. You will need these files to restore a backup.
+Please back them up manually.
+```
+
+
 
 
 
