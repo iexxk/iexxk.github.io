@@ -36,4 +36,4 @@ branches:
 env:
  global:
    - GH_REF: github.com/xuanfong1/xuanfong1.github.io.git
-   - CD_REF: git.coding.net/exxk/exxk.coding.me.git
+   - CD_REF: e.coding.net:exxk/exxk.coding.me.git
