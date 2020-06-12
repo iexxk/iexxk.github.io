@@ -1,10 +1,44 @@
 ---
 title: Network-common-problem
 date: 2018-09-20 09:34:27
-updated: 2018-12-12 10:47:58
+updated: 2020-06-08 10:28:42
 categories: 网络
 tags: [Network,linux]
 ---
+
+# mac 篇
+
+### 常用命令
+
+```bash
+# 查看当前路由表
+netstat -rn
+----------------------------------------------------------------
+Routing tables
+Internet:
+Destination        Gateway            Flags        Netif Expire
+default            192.168.43.88      UGSc           en0
+default            11.13.2.254        UGScI          en7
+-----------------------------------------------------------------
+#获取默认路由
+route get 0.0.0.0
+--------------------------------------------------------------------------------
+   route to: default
+destination: default
+       mask: default
+    gateway: 192.168.43.88
+  interface: en0
+      flags: <UP,GATEWAY,DONE,STATIC,PRCLONING>
+ recvpipe  sendpipe  ssthresh  rtt,msec    rttvar  hopcount      mtu     expire
+       0         0         0         0         0         0      1500         0
+---------------------------------------------------------------------------------
+#删除默认路由
+sudo route -n delete default 192.168.43.88
+#添加外网网关
+sudo route add -net 0.0.0.0 192.168.43.88
+#添加内网网关
+sudo route add -net 11.8.129.0 11.13.2.254
+```
 
 # Linux 篇
 

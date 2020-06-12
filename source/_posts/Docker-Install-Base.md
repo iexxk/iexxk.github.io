@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2019-04-30 17:03:23
+updated: 2020-05-21 14:36:51
 categories: Docker
 tags: [Docker,docker-compose]
 ---
@@ -13,6 +13,10 @@ docker stop <容器id> #停止运行容器
 docker rm <容器id> [-f] #删除容器，-f 删除运行的
 docker rmi <镜像id> #删除镜像
 docker exec -it <容器id> </bin/bash或者sh> 进入容器（bash或者sh）
+# -p端口映射 -v挂载 -d后台，--name容器名字，--rm和-d不能通用，--rm启动停止后删除
+docker run -p 80:80 -v /data:/data --name mynginx -d nginx:latest  
+# 运行容器并进去,一次性
+docker run -it --rm ubuntu:18.04 /bin/bash 
 exit #退出容器
 #添加标签
 docker node update --label-add <KEY>=<VALUE> <NODE ID|NAME>
