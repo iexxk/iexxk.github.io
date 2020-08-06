@@ -1,7 +1,7 @@
 ---
- title: Java-jconsole
+title: Java-jconsole
 date: 2020-05-27 15:13:18
-updated: 2020-05-27 15:34:11
+updated: 2020-08-06 11:27:39
 categories: Java 
 tags: [Java,jvm,springboot]
 ---
