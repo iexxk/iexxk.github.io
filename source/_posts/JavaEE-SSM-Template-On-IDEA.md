@@ -1,7 +1,7 @@
 ---
 title: idea+gradle+ssm框架之整合模板
 date: 2017-05-09 08:16:28
-updated: 2018-12-12 15:44:54
+updated: 2020-08-06 09:57:09
 categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,ssm框架]
 ---
@@ -283,19 +283,19 @@ public class TestController {
 
 ### 相关配置截图
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/tomcat.png)
+![tomcat](http://gt163.cn:14033/blog/20200806095428.png)
 
-![目录结构](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/dir.png)
+![dir](http://gt163.cn:14033/blog/20200806095513.png)
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/spring.png)
+![spring](http://gt163.cn:14033/blog/20200806095542.png)
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/tomcat2.png)
+![tomcat2](http://gt163.cn:14033/blog/20200806095443.png)
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/web.png)
+![web](http://gt163.cn:14033/blog/20200806095606.png)
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/artif.png)
+![artif](http://gt163.cn:14033/blog/20200806095629.png)
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/sour.png)
+![sour](http://gt163.cn:14033/blog/20200806095654.png)
 
 ### 项目地址：
 

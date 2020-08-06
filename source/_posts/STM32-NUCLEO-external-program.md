@@ -1,7 +1,7 @@
 ---
 title: STM32-NUCLEO-external-program
 date: 2018-07-22 10:45:12
-updated: 2018-12-12 15:44:54
+updated: 2020-08-06 10:16:37
 categories: STM32
 tags: [STM32,NUCLEO]
 ---
@@ -27,23 +27,21 @@ tags: [STM32,NUCLEO]
    | NRST       | 5                  |        | 目标MCU的RESET |
    | SWO        | 6                  |        | 保留           |
 
-   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/DSC_0592.JPG)
+   ![stm32](http://gt163.cn:14033/blog/20200806101624.jpg)
 
 2. 打开STM32CubeMX软件，新建个工程，这里直接选STM32F103RBTx的NUCLEO套版，这里直接在这个套版上基础修改
 
 3. 设置led输出引脚：在pinout引脚设置界面去掉PA5，修改PC13为`GPIO_Output`输出，并打上`LED`用户标签
 
-   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/QQ20180722-105903.png)
+   ![QQ20180722-105903](http://gt163.cn:14033/blog/20200806101059.png)
 
 4. 修改时钟引脚设置，由于自己的板子用的高速时钟(HSE)和低速时钟(LSE)都用的外部时钟，所以这里切换时钟模式都为外部(Crystal)
 
-   ![QQ20180722-110145](/Users/xuanleung/Downloads/QQ20180722-110145.png)
-
-   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/QQ20180722-105957.png)
+   ![QQ20180722-105957](http://gt163.cn:14033/blog/20200806101155.png)
 
 5. 修改时钟配置，修改晶振频率和自己板子一致，并且换成外部，然后设置倍数，如果倍数设置高于频率，会提示红报错，选择可用最高倍数即可，该板子只能选`X9`
 
-   ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/QQ20180722-110120.png)
+   ![QQ20180722-110120](http://gt163.cn:14033/blog/20200806101208.png)
 
 6. 最后生成makerfile类型工程
 

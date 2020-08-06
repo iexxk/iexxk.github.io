@@ -1,7 +1,7 @@
 ---
 title: Network-hyper-v-NAt
 date: 2018-04-19 22:05:50
-updated: 2018-12-12 15:44:54
+updated: 2020-08-06 09:41:37
 categories: 网络
 tags: [Network,static,NAT,hyper-v]
 ---
@@ -65,7 +65,7 @@ DNS1="8.8.8.8"
 
 #### 端口映射（需管理员权限）
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1531476067353.png)
+![1531476067353](http://gt163.cn:14033/blog/20200806094041.png)
 
 ```powershell
 #查询端口映射情况
@@ -80,7 +80,7 @@ netsh interface portproxy delete v4tov4 listenaddress=主IP listenport=外网端
 netsh interface portproxy delete v4tov4 listenaddress=192.168.1.158 listenport=14014
 ```
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1531475386029.png)
+![1531475386029](http://gt163.cn:14033/blog/20200806094115.png)
 
 参考[Hyper-V 共享式网络链接 端口映射](https://my.oschina.net/alongite/blog/1537054)
 

@@ -1,7 +1,7 @@
 ---
 title: Git常用操作
 date: 2018-08-07 14:34:06
-updated: 2020-02-28 11:01:19
+updated: 2020-08-06 10:01:55
 categories: 工具
 tags: [git]
 ---
@@ -14,7 +14,7 @@ tags: [git]
 * --hard 源码也会回退到某个版本,commit和index 都回回退到某个版本.(注意,这种方式是改变本地代码仓库源码) 
 * --mixed 会保留源码,只是将git commit和index 信息回退到了某个版本.
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1533623741056.png)
+![1533623741056](http://gt163.cn:14033/blog/20200806100147.png)
 
 #### 回退`revert`(已push)
 

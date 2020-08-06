@@ -1,7 +1,7 @@
 ---
 title: STM32-Dev-Mac
 date: 2018-06-18 18:53:17
-updated: 2018-12-12 15:44:54
+updated: 2020-08-06 09:44:24
 categories: STM32
 tags: [STM32,Mac,CLion]
 typora-copy-images-to: ./image/src_dir
@@ -36,7 +36,7 @@ typora-copy-images-to: ./image/src_dir
 
 * 开发板`NUCLEO-F401RE`跳线如图
 
-  ![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/QQ20180624-125246.png)
+  ![QQ20180624-125246](http://gt163.cn:14033/blog/20200806094235.png)
 
 #### 项目搭建步骤：
 
@@ -136,7 +136,7 @@ Cannot load symbol file: "/Users/xuanleung/IdeaProjects/f401re_demo/cmake-build-
 
 解决：取消勾选
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/image-20180702225403646.png)
+![image-20180702225403646](http://gt163.cn:14033/blog/20200806094403.png)
 
 #### 参考
 

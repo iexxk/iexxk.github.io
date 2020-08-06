@@ -1,7 +1,8 @@
 ---
 title: JavaEE之ssm框架基础
 date: 2017-06-19 12:14:28
-updated: 2018-12-12 14:28:30categories: JavaEE
+updated: 2020-08-06 09:58:14
+categories: JavaEE
 tags: [基础,java,面试]
 ---
 
@@ -11,7 +12,7 @@ tags: [基础,java,面试]
 
 #### 原理
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/TIM%E6%88%AA%E5%9B%BE20170620152443.png)
+![TIM截图20170620152443](http://gt163.cn:14033/blog/20200806095801.png)
 
 #### 特点
 

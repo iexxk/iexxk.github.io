@@ -1,7 +1,8 @@
 ---
 title: viewGroup自定义控件
 date: 2016-12-13 16:48:12
-updated: 2018-12-12 14:28:29categories: Android
+updated: 2020-08-06 10:01:24
+categories: Android
 tags: [viewGroup,卫星菜单，测量]
 ---
 ## 自定义控件的基本使用
@@ -39,7 +40,7 @@ public class ArcMenu extends ViewGroup {
 ```
 
 `childView.layout(cl, ct, cr, cb)`
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/viewgroup.png)
+![viewgroup](http://gt163.cn:14033/blog/20200806100117.png)
 
 >* 在xml里面引用
 ```

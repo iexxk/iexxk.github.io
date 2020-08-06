@@ -1,10 +1,31 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2020-04-18 16:28:06
+updated: 2020-07-30 15:22:44
 categories: 数据库
 tags: [mongoDB]
 ---
+
+## 常用命令
+
+```bash
+# 密码登录验证
+mongo 10.30.80.194:27017 -u admin  --authenticationDatabase=admin -p mima
+#查看数据库列表
+>show dbs
+#切换数据库
+>use admin
+#查看当前数据库
+>db
+#查看所有表
+>show tables
+#验证密码
+>db.auth("admin", "adminPass")
+#查询表中所有数据
+>db.表名.find()
+#查看集群状态
+>rs.status()
+```
 
 ##  常用场景
 

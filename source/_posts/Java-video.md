@@ -1,7 +1,7 @@
 ---
 title: Java-video
 date: 2018-08-24 11:16:50
-updated: 2018-12-12 14:28:30
+updated: 2020-08-06 10:13:00
 categories: Java
 tags: [Java,ffmpeg]
 ---
@@ -46,11 +46,7 @@ ffmpeg -rtsp_transport tcp -i rtsp://admin:12345@192.0.0.63:554/h264/ch1/main/av
 
 #### 控制原理
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1535084718762.png)
-
-
-
-
+![1535084718762](http://gt163.cn:14033/blog/20200806101247.png)
 
 ### dvr视频录像机统一 做直播预览与回放
 

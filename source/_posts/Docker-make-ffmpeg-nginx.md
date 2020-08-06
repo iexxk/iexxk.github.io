@@ -1,7 +1,7 @@
 ---
 title: Docker-make-ffmpeg-nginx
 date: 2018-08-22 10:13:38
-updated: 2019-11-20 20:58:09
+updated: 2020-08-06 10:00:55
 categories: Docker
 tags: [Docker,nginx,ffmpeg]
 ---
@@ -52,9 +52,7 @@ rtmp {
 
 成功输出：
 
-![](https://raw.githubusercontent.com/xuanfong1/xuanfong1.github.io/master/image/src_dir/1534905867716.png)
-
-
+![1534905867716](http://gt163.cn:14033/blog/20200806100035.png)
 
 ### dockerfile编写
 
