@@ -1,7 +1,7 @@
 ---
 title: minio搭建图床
 date: 2020-08-05 18:11:05
-updated: 2020-08-05 18:27:10
+updated: 2020-08-06 10:40:21
 categories: 杂谈
 tags: [图床,minio,oss]
 ---
@@ -10,7 +10,26 @@ tags: [图床,minio,oss]
 
 minio部署见docker脚本
 
-
+```yaml
+version: "3.5"
+services:
+  minio:
+    image: minio/minio
+    ports:
+      - "14033:9000"
+    volumes:
+      - /home/dockerdata/v-minio:/data
+    environment:
+      MINIO_ACCESS_KEY: "username"
+      MINIO_SECRET_KEY: "password"
+    command: server /data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.hostname == me]      
+```
 
 ### 图床客户端工具
 
