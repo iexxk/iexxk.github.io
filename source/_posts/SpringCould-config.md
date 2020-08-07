@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2018-12-12 10:47:58
+updated: 2020-08-07 16:11:05
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -174,5 +174,44 @@ tags: [SpringCould,config]
    F[eureka service]
    ```
 
-   ​
+
+### 使用本地文件作为配置中心
+
+```yaml
+server:
+  port: 8096
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native  #这里进行仓库预选，可设置native和git，分别对应spring.cloud.config.server下面的值
+  cloud:
+    config:
+      label: master  #配置仓库分支
+      server:
+        git:
+          uri: https://github.com/xuanfong1/SpringCould/   #配置仓库git地址
+          search-paths: config/testrepo   #配置仓库路径
+#          username:   #访问git仓库的用户名，这里因为是开放项目所以不需要设置
+#          password:   #访问git仓库的密码
+        native: #本地配置文件仓库的绝对路径
+          search-locations: /Users/xuanleung/workspace/SpringCould/config/testrepo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8091/eureka/ #注意要加eureka，不然找不到
+```
+
+### 公共配置文件
+
+```bash
+application.properties #公共配置文件，所有服务都会加载这个默认配置文件，适合放公共的数据库配置等
+application-dev.properties #公共带环境的配置文件，dev环境会默认加载这个公共配置文件
+config-client-dev.properties #config-client服务的私有配置
+test-dev.properties #部分项目的公共配置，如一些项目引用mysql,一些不引用
+#使用指定配置，需要在项目中设置下面这个选项
+spring.cloud.config.name = config-client,test  #指定配置文件，如果不需要指定，注释该行
+```
+
+
 
