@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Bus
 date: 2018-04-22 17:19:26
-updated: 2018-12-12 10:47:58
+updated: 2020-08-11 16:03:17
 categories: Spring
 tags: [SpringCould,Bus]
 ---
@@ -36,5 +36,11 @@ tags: [SpringCould,Bus]
            include: ["health","info","bus-refresh"]
    ```
 
-4. 测试，依次运行注册中心、配置中心、该服务，然后访问接口，然后修改git config下的配置信息，然后访问接口，还是没变，需要调用`127.0.0.1:8097/actuator/bus-refresh/config-client:8097`其中的`config-client:8097`是指定更新那台服务，也可以不指定，默认就是更新所有，然后在访问测试接口，发现已经配置已经改变了。
+4. 测试，依次运行注册中心、配置中心、该服务，然后访问接口，然后修改git config下的配置信息，然后访问接口，还是没变，需要调用`127.0.0.1:8097/actuator/bus-refresh?destination=config-client:8097`其中的`config-client:8097`是指定更新那台服务，也可以不指定参数，默认就是更新所有，然后在访问测试接口，发现已经配置已经改变了。
+
+### 架构优化
+
+可以在config-server添加config-client的配置，这样就可以调配置刷新`127.0.0.1:8096/actuator/bus-refresh/`接口，刷新所有配置客户端的配置了，注意依赖要加上 `compile('org.springframework.cloud:spring-cloud-starter-config')`config-client的配置依赖，因为config-client的依赖和`config-server`的`bus-refresh`接口不一样
+
+![image-20200811155609870](http://gt163.cn:14033/blog/20200811155613.png)
 

@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2020-08-07 16:11:05
+updated: 2020-08-11 18:13:16
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -212,6 +212,36 @@ test-dev.properties #部分项目的公共配置，如一些项目引用mysql,�
 #使用指定配置，需要在项目中设置下面这个选项
 spring.cloud.config.name = config-client,test  #指定配置文件，如果不需要指定，注释该行
 ```
+
+
+
+### 额外
+
+如果要使用vm启动参数，需要在config client设置如下三个参数
+
+```properties
+#使用vm启动参数，去掉下面的注释
+spring.cloud.config.allowOverride=true
+spring.cloud.config.overrideNone=false
+spring.cloud.config.overrideSystemProperties=false
+```
+
+疑问：vm设置-Dserver.port等参数时，又不需要上面的设置
+解释：vm参数如果不设置上面的会被配置文件里面的覆盖，如果配置文件里面没有设置，那就是用的vm的了
+
+#### 加载顺序
+
+举例`server.port`
+
+1. client 里面的`resources/bootstrap.yml`
+
+2. vm里面`-Dserver.port`
+
+3. config里面`config-client-dev.properties`
+
+三个都设置，使用3，只设置1，2使用2，只设置1，使用1
+
+可推测优先级3>2>1
 
 
 

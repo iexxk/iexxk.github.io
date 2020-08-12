@@ -1,7 +1,7 @@
 ---
 title: STM32-NUCLEO-external-program
 date: 2018-07-22 10:45:12
-updated: 2020-08-06 10:16:37
+updated: 2020-08-11 14:31:52
 categories: STM32
 tags: [STM32,NUCLEO]
 ---
@@ -61,7 +61,7 @@ tags: [STM32,NUCLEO]
 
 9. 编译`make`下载`st-flash write ./build/<项目名>.bin 0x8000000`
 
-###使用CLion进行项目编译运行
+### 使用CLion进行项目编译运行
 
 1. `build->OpenOCD Support->board config file`:`st_nucleo_f103rb.cfg`
 2. 编译运行手动按reset
