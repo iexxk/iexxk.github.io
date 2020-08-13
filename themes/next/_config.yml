@@ -606,8 +606,8 @@ changyan:
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
   enable: true
-  appId: 6YS2gf5tClavYhvSg6pUS4fB-gzGzoHsz # Your leancloud application appid
-  appKey: rFyEbMvnEHb2BBtlCFjzixtN # Your leancloud application appkey
+  appId:  Knshftme94xEJM6dEEop4Qnq-gzGzoHsz # Your leancloud application appid
+  appKey: UpNFcvVri9iYUjDznVdodui4 # Your leancloud application appkey
   placeholder: Just go go # Comment box placeholder
   avatar: mm # Gravatar style
   meta: [nick, mail, link] # Custom comment header
@@ -616,7 +616,7 @@ valine:
   visitor: true # Article reading statistic
   comment_count: true # If false, comment count will only be displayed in post page, not in home page
   recordIP: true # Whether to record the commenter IP
-  serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
+  serverURLs: https://knshftme.lc-cn-n1-shared.com # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
   enableQQ: false # Whether to enable the Nickname box to automatically get QQ Nickname and QQ Avatar
   requiredFields: [] # Set required fields: [nick] | [nick, mail]
   #post_meta_order: 0
@@ -685,8 +685,8 @@ cnzz_siteid:
 # Do not enable both `valine.visitor` and `leancloud_visitors`.
 leancloud_visitors:
   enable: false
-  app_id: 6YS2gf5tClavYhvSg6pUS4fB-gzGzoHsz # <your app id>
-  app_key: rFyEbMvnEHb2BBtlCFjzixtN # <your app key>
+  app_id: # <your app id>
+  app_key: # <your app key>
   # Required for apps from CN region
   server_url: # <your server url>
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
