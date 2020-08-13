@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+/*
+通过改模板快速创建文章
+*/
+
+/*
+---
+title: WSL使用ssh
+date: 2017-11-22 22:12:28
+updated: 2017-12-13 11:00:13
+categories: WSL
+tags: [ssh,ubuntu,sshd]
+---
+*/
+console.log("开始创建文章");
+//取第一个参数，因为1被脚本自己本身占用，所以这里是2
+var title=process.argv[2]?process.argv[2]:"";  //标题也是文件名
+var categories=process.argv[3]?process.argv[3]:"";  //分类
+var tags=process.argv[4]?process.argv[4]:"";  //标签 英文逗号分离
+var filename=process.argv[2]?process.argv[2]:"newfile";
+
+var fs = require("fs"); //请求文件系统
+var template=[];
+template.push('---'+'\r');
+template.push('title: '+title+'\r');
+template.push('date: '+getFormatDate(Date.now())+'\r');
+template.push('updated: '+getFormatDate(Date.now())+'\r');
+template.push('categories: '+categories+'\r');
+template.push('tags: ['+tags+']'+'\r');
+template.push('---'+'\r');
+var result=template.join('');
+fs.writeFile(filename+'.md', result, 'utf8',function(err) { //写入新的文件内容
+				if (err) return console.log("写文件错误：",err);
+				console.log("创建"+title+".md文件成功：",result);
+			});
+			
+			
+/*
+ timeStr:时间，格式可为："September 16,2016 14:15:05、
+ "September 16,2016"、"2016/09/16 14:15:05"、"2016/09/16"、
+ '2014-04-23T18:55:49'和毫秒
+ dateSeparator：年、月、日之间的分隔符，默认为"-"，
+ timeSeparator：时、分、秒之间的分隔符，默认为":"
+ */
+function getFormatDate(timeStr, dateSeparator, timeSeparator) {
+    dateSeparator = dateSeparator ? dateSeparator : "-";
+    timeSeparator = timeSeparator ? timeSeparator : ":";
+    var date = new Date(timeStr),
+            year = date.getFullYear(),// 获取完整的年份(4位,1970)
+            month = date.getMonth(),// 获取月份(0-11,0代表1月,用的时候记得加上1)
+            day = date.getDate(),// 获取日(1-31)
+            hour = date.getHours(),// 获取小时数(0-23)
+            minute = date.getMinutes(),// 获取分钟数(0-59)
+            seconds = date.getSeconds(),// 获取秒数(0-59)
+            Y = year + dateSeparator,
+            M = ((month + 1) > 9 ? (month + 1) : ('0' + (month + 1))) + dateSeparator,
+            D = (day > 9 ? day : ('0' + day)) + ' ',
+            h = (hour > 9 ? hour : ('0' + hour)) + timeSeparator,
+            m = (minute > 9 ? minute : ('0' + minute)) + timeSeparator,
+            s = (seconds > 9 ? seconds : ('0' + seconds)),
+            formatDate = Y + M + D + h + m + s;
+    return formatDate;
+}

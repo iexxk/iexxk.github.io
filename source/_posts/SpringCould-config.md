@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2020-08-11 18:13:16
+updated: 2020-08-13 10:37:40
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -242,6 +242,18 @@ spring.cloud.config.overrideSystemProperties=false
 三个都设置，使用3，只设置1，2使用2，只设置1，使用1
 
 可推测优先级3>2>1
+
+
+
+### 开发加载自己配置优化
+
+利用默认分支功能，全局修改所有微服务为自己的配置
+
+1. 新建个自己的配置分支
+2. 复写spring config server启动参数`spring.cloud.config.server.git.default-label=my-baranch`为自己的分支号
+3. 注意不要在spring config client指定分支`spring.cloud.config.label=master`
+
+
 
 
 
