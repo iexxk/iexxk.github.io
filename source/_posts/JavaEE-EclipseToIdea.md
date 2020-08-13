@@ -1,7 +1,8 @@
 ---
 title: eclipse项目导入idea
 date: 2017-04-20 20:57:28
-updated: 2018-12-12 10:47:58categories: JavaEE
+updated: 2020-08-13 15:53:53
+categories: JavaEE
 tags: [JavaEE,idea,项目移植]
 ---
 
@@ -71,6 +72,6 @@ output directory: `c:\develop\tomcat\webapp\test`
 * 点击+，添加要运行的test项目
 * application context 设置为`/test`
 
-访问地址[localhost:8080/test](localhost:8080/test)或[127.0.0.1:8080/test](127.0.0.1:8080/test)
+访问地址[localhost:8080/test](localhost:8080/test)或[http://127.0.0.1:8080/test](http://127.0.0.1:8080/test)
 
 [eclipse java web项目导入到idea](http://jingyan.baidu.com/article/ca41422f2145641eae99edb9.html)
