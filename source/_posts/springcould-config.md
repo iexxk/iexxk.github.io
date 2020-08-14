@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2020-08-13 15:58:25
+updated: 2020-08-13 10:37:40
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -63,7 +63,7 @@ tags: [SpringCould,config]
 
    - /{label}/{application}-{profile}.properties
 
-     举例：master分支有配置文件`config-client-dev.properties`访问的url为`ip:port/config-client/dev/master`
+     举例：master分支有配置文件`config-client-dev.properties`访问的url为http://ip:port/config-client/dev/master
 
 #### config client
 

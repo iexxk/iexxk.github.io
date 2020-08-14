@@ -1,7 +1,7 @@
 ---
 title: SpringCould-eureka
 date: 2018-04-11 09:59:55
-updated: 2020-08-13 16:01:06
+updated: 2018-12-12 10:47:58
 categories: Spring
 tags: [SpringBoot,SpringCould,eureka]
 ---
@@ -29,7 +29,7 @@ tags: [SpringBoot,SpringCould,eureka]
        fetch-registry: false
    ```
 
-4. 访问[http://127.0.0.1:8091](http://127.0.0.1:8091)可以进入管理页面查看注册了那些服务
+4. 访问[127.0.0.1:8091](127.0.0.1:8091)可以进入管理页面查看注册了那些服务
 
 5. 重复第一步，作为eureka客户端
 
