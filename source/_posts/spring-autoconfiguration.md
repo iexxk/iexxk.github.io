@@ -1,7 +1,7 @@
 ---
 title: Spring AutoConfiguration
 date: 2020-08-18 14:31:27
-updated: 2020-08-18 16:33:26
+updated: 2020-08-18 17:59:15
 categories: Spring
 tags: [AutoConfiguration,Spring]
 ---
@@ -23,7 +23,7 @@ public class Application{}
 1. 在公共依赖里面引入了数据库的依赖，你会发现，某些项目不需要数据库，但是由于公共依赖，也得配置数据库的连接地址
 2. 例如使用spring cloud config-bus热更新配置时，这个功能属于可选功能，因为有些环境可能不支持mq，但是不能每次打包都把依赖移除
 
-###禁用设置
+### 禁用设置
 
 #### 启动文件的修改
 
