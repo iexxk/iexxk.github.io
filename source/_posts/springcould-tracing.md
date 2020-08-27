@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Tracing
 date: 2018-04-22 22:08:49
-updated: 2018-12-12 10:47:58
+updated: 2020-08-20 14:00:55
 categories: Spring
 tags: [SpringCould,Tracing,Sleuth]
 ---
@@ -59,10 +59,6 @@ A[请求]-->B[微服务客户端]
 B-->c[sleuth采集请求]
 c-->d[mq发送请求的信息]
 d-->f[docker-zipkin接受并展示]
-```
-
-```groovy
-
 ```
 
 1. 修改docker-compose部署添加环境变量(目测该镜像还不支持改环境变量)
