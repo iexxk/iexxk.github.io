@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Zuul
 date: 2018-04-17 00:00:36
-updated: 2018-12-12 10:47:58
+updated: 2020-09-01 17:43:27
 categories: Spring
 tags: [SpringCould,Zuul]
 ---
@@ -58,6 +58,8 @@ Zuul的主要功能是路由转发和过滤器。例如／api/user转发到到us
 4. 依次启动注册中心、ribbon服务端、feign服务端、zuul服务端
 
    http://127.0.0.1:8095/api-b/sayhi?name=32访问的就是feign服务端
+
+   注意：api-b不需要在control里面添加路径，只需要添加sayhi就行
 
    http://127.0.0.1:8095/api-a/resthi?name=32访问的就是ribbon服务端
 

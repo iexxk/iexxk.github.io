@@ -1,7 +1,7 @@
 ---
 title: Docker-Compose-file
 date: 2018-04-28 09:36:44
-updated: 2018-12-12 10:47:58
+updated: 2020-09-02 15:28:29
 categories: Docker
 tags: [Docker,stack,yaml,Compose]
 ---
@@ -83,7 +83,8 @@ services:
           - spread: node.labels.zone
       resources: #资源限制
         limits:
-          cpus: '0.50'
+#cpu个数0.5指一个cpu的50%，2.00指2个cpu（猜测99%）其中docker stats命令可以查看cpu使用率和内存使用，其中cpu使用率是指单核的使用率，也就是如果cpus设置为2，使用率200%就代表2个核都使用达到了100%        
+          cpus: '0.50'  
           memory: 50M
         reservations:
           cpus: '0.25'

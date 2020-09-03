@@ -1,7 +1,7 @@
 ---
 title: docker-ELK
 date: 2020-08-20 16:17:51
-updated: 2020-08-21 15:33:02
+updated: 2020-09-03 14:29:14
 categories: Docker
 tags: [ELK]
 ---
@@ -32,9 +32,16 @@ B-->L
 
 Filebeat主要用于数据采集，轻量对应用服务器消耗较小，虽然Logstash也可以采集数据，但Logstash占用应用服务器性能比Filebeat大
 
+## springboot log框架包
+
+* /**[logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)** Star 1.7k
+* /**[logback-kafka-appender](https://github.com/danielwegener/logback-kafka-appender)** Star 472
+* /**[logback-more-appenders](https://github.com/sndyuk/logback-more-appenders)** Star 87
+* [kmtong](https://github.com/kmtong)/**[logback-redis-appender](https://github.com/kmtong/logback-redis-appender)** Star 103
+
 ## 架构选型
 
-### 方案一 EBK(docker log模式)
+### 方案一 EFK(docker log模式)
 
 利用Filebeat采集docker日志，从而监控docker上所有或指定服务的日志，实现SpringCloud的日志监听
 
@@ -97,7 +104,17 @@ graph LR
 B(springboot)--写入-->G([kafka])--读取-->L[Logstash]-->E[Elasticsearch]-->K[Kibana]
 ```
 
-## 部署
+### 方案五 EFK+[logback-more-appenders](https://github.com/sndyuk/logback-more-appenders)
+
+参考：[sndyuk](https://github.com/sndyuk)/**[logback-more-appenders](https://github.com/sndyuk/logback-more-appenders)**
+
+优点：
+
+缺点：
+
+
+
+## EFK/ELK部署
 
 参考[deviantony/docker-elk](https://github.com/deviantony/docker-elk)
 

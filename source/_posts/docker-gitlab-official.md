@@ -1,7 +1,7 @@
 ---
 title: Docker-Gitlab-official
 date: 2018-07-27 13:43:28
-updated: 2020-05-18 14:19:15
+updated: 2020-09-02 15:31:03
 categories: Docker
 tags: [Docker,Gitlab]
 ---
@@ -32,6 +32,14 @@ services:
         target: /omnibus_config.rb
     secrets:
       - gitlab_root_password
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '2.00'  #限制为2核，设置0.50会启动失败，且不报错
+          memory: 8192M   #限制为8g，8g2核为推荐配置，设置为4g，使用卡顿     
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
     deploy:
@@ -143,8 +151,6 @@ crontab -e
 crontab -l
 ```
 
-
-
 ### centos7 crontab 定时任务
 
 ```bash
@@ -172,7 +178,27 @@ and are not included in this backup. You will need these files to restore a back
 Please back them up manually.
 ```
 
+## gitlab 升级
 
+详细升级路径见[GitLab release and maintenance policy](https://docs.gitlab.com/ee/policy/maintenance.html#upgrade-recommendations)
+
+#### 版本介绍：
+
+规则：(Major).(Minor).(Patch)=(主要版本).(次要版本).(补丁号)
+
+例如，Gitlab版本12.10.6:
+
+* `12`代表主要版本。主要版本是12.0.0，但通常称为12.0。
+* `10`代表次要版本。次要版本是12.10.0，但通常称为12.10。
+* `6` 代表补丁号。
+
+升级路径为`12.10.6`->`12.10.14`->`13.0.12`->`13.2.3`
+
+我的理解(仅供参考做好备份):
+
+**先将补丁版本升级到最高，然后升级次要版本升级到最高，最后主要版本一级一级的升**
+
+可以利用[dockerhub的搜索](https://hub.docker.com/r/gitlab/gitlab-ce/tags?page=1&name=13.2)功能,例如搜索框输入12.10，找到最大的补丁版本12.10.14，次要版本的最大输入12.找到次要版本的最大版本
 
 
 
@@ -180,6 +206,40 @@ Please back them up manually.
 
 1. 进入容器可以执行命令`gitlab-rake gitlab:env:info`更多命令见rake
 2. 备份文件`repositories`中`xxx.bundle`可以用git命令解压`git clone xxx.bundle xxx`,详情见`git bundle`打包
+
+## 常见问题
+
+1. gitlab runner 500 error
+
+   ```verilog
+   ActionView::Template::Error ():
+       36: 
+       37:   .col-sm-6
+       38:     .bs-callout
+       39:       = render partial: 'ci/runner/how_to_setup_runner',
+       40:                 locals: { registration_token: Gitlab::CurrentSettings.runners_registration_token,
+       41:                           type: 'shared',
+       42:                           reset_token_url: reset_registration_token_admin_application_settings_path }
+   lib/gitlab/crypto_helper.rb:27:in `aes256_gcm_decrypt'
+   app/models/concerns/token_authenticatable_strategies/encrypted.rb:45:in `get_token'
+   app/models/concerns/token_authenticatable_strategies/base.rb:33:in `ensure_token!'
+   app/models/concerns/token_authenticatable.rb:48:in `block in add_authentication_token_field'
+   app/models/application_setting_implementation.rb:326:in `runners_registration_token'
+   ```
+
+   解决:
+
+   ```bash
+   #需要先还原gtilabb容器的config挂载目录的gitlab-secrets.json，我这里是整个恢复config目录
+   #进入gitlab容器，执行
+   root@f51be17d113b:/# gitlab-rails console
+   然后进入命令行后执行
+   irb(main):001:0> ApplicationSetting.current.reset_runners_registration_token!
+   ```
+
+   
+
+
 
 ## 参考
 

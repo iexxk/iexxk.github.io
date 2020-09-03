@@ -1,7 +1,7 @@
 ---
 title: SpringCould-eureka
 date: 2018-04-11 09:59:55
-updated: 2020-08-14 14:12:54
+updated: 2020-09-01 15:33:55
 categories: Spring
 tags: [SpringBoot,SpringCould,eureka]
 ---
@@ -144,6 +144,20 @@ EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT.
 注册中心不是高可用的原因
 
 出处：https://www.cnblogs.com/xiaojf/p/7919088.html
+
+
+
+## 额外
+
+### 1. 修改eureka client的注册ip，在本地有多个网卡时，默认注册的那个ip可能无法访问，解决指定本地服务ip
+
+```yaml
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 10.88.123.151
+    instance-id: 10.88.123.151:9301
+```
 
 
 

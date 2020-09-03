@@ -1,7 +1,7 @@
 ---
 title: linux-firewall
 date: 2018-11-28 18:26:11
-updated: 2019-04-19 12:12:41
+updated: 2020-09-02 16:29:58
 categories: Linux
 tags: [linux,iptables]
 ---
@@ -36,6 +36,10 @@ firewall-cmd --list-all
 firewall-cmd --state
 # 临时关闭防火墙,重启后会重新自动打开
 systemctl restart firewalld
+#关闭
+systemctl stop firewalld.service
+开机禁用
+systemctl disable firewalld.service
 ```
 
 
