@@ -1,7 +1,7 @@
 ---
 title: docker-ELK
 date: 2020-08-20 16:17:51
-updated: 2020-09-03 14:29:14
+updated: 2020-09-07 10:26:44
 categories: Docker
 tags: [ELK]
 ---
@@ -28,9 +28,11 @@ B-->L
 
 输出支持：elasticsearch,File,Emial,http,Kafka,Redis,MongoDB,Rabbitmq,Syslog,Tcp,Websocket,Zabbix,Stdout,Csv
 
-## Filebeat
+## Filebeat vs fluent
 
 Filebeat主要用于数据采集，轻量对应用服务器消耗较小，虽然Logstash也可以采集数据，但Logstash占用应用服务器性能比Filebeat大
+
+fluent是Filebeat的高级版，支持很多其他日志输入模式
 
 ## springboot log框架包
 
@@ -108,11 +110,67 @@ B(springboot)--写入-->G([kafka])--读取-->L[Logstash]-->E[Elasticsearch]-->K[
 
 参考：[sndyuk](https://github.com/sndyuk)/**[logback-more-appenders](https://github.com/sndyuk/logback-more-appenders)**
 
-优点：
+优点：直接通过jar集成logback框架，干净
 
-缺点：
+缺点：只适合于springboot
 
+```mermaid
+graph LR
+A(springboot依赖logback-more-appenders)-->B(fluent)-->E[Elasticsearch]-->K[Kibana]
+```
 
+步骤：
+
+1. Docker安装`fluent`,fluent镜像需要自己制作[exxk/fluent-elasticsearch:latest](https://github.com/iexxk/dockerbuild-fluent)
+   参考[fluentd/container-deployment/docker-compose](https://docs.fluentd.org/container-deployment/docker-compose)
+
+   ```dockerfile
+   # fluentd/Dockerfile
+   FROM fluent/fluentd:v1.6-debian-1
+   USER root
+   RUN ["gem", "install", "fluent-plugin-elasticsearch", "--no-document", "--version", "3.5.2"]
+   USER fluent
+   ```
+
+2. springboot引入maven依赖
+
+   ```xml
+       // https://mvnrepository.com/artifact/com.sndyuk/logback-more-appenders
+       compile group: 'com.sndyuk', name: 'logback-more-appenders', version: '1.4.2'
+       compile group: 'org.fluentd', name: 'fluent-logger', version: '0.3.4'
+   ```
+
+3. springboot在logback.xml添加fluentd的日志输出模式(具体见logback的配置)
+
+   ```xml
+       <!--EFK ip -->
+       <springProperty scope="context" name="fluentHost" source="logback.fluent.host" />
+       <!--EFK 端口 -->
+       <springProperty scope="context" name="fluentPort" source="logback.fluent.port" />
+   		<!--FLUENT输出    -->
+       <appender name="FLUENT"
+                 class="ch.qos.logback.more.appenders.FluentLogbackAppender">
+           <tag>${APP_NAME}</tag>
+           <label>logback</label>
+           <remoteHost>${fluentHost}</remoteHost>
+           <port>${fluentPort}</port>
+           <layout>
+               <pattern>${LOG_FORMAT}</pattern>
+           </layout>
+       </appender>
+   ```
+
+4. 动态配置`application`
+
+   ```properties
+   spring.cloud.config.logback-profile=FLUENT
+   logback.fluent.host=${LOGBACK_FLUENT_HOST:xxx.cn}
+   logback.fluent.port=${LOGBACK_FLUENT_PORT:14021}
+   ```
+
+5. 然后运行springboot触发日志
+
+6. 然后去页面配置见[日志EFK框架中elastic的配置使用](https://jingyan.baidu.com/article/c45ad29ce31262441753e2c0.html)
 
 ## EFK/ELK部署
 
@@ -132,13 +190,14 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       ELASTIC_PASSWORD: changeme
       discovery.type: single-node
+      TZ: Asia/Shanghai
     deploy:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.hostname == me]  
+        constraints: [node.hostname == me]
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.9.0
+    image: docker.elastic.co/logstash/logstash:7.9.0    
     configs:
       - source: logstash_config
         target: /usr/share/logstash/config/logstash.yml
@@ -146,13 +205,17 @@ services:
         target: /usr/share/logstash/pipeline/logstash.conf
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      TZ: Asia/Shanghai
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 0
       placement:
-        constraints: [node.hostname == me]        
+        constraints: [node.hostname == me]
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.9.0
+    image: docker.elastic.co/kibana/kibana:7.9.0  
+    environment:
+    #无效，但是似乎不重要
+      TZ: Asia/Shanghai      
     ports:
       - "14020:5601"
     configs:
@@ -162,22 +225,39 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.hostname == me]     
+        constraints: [node.hostname == me]
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.9.0
+    image: docker.elastic.co/beats/filebeat:7.9.0    
     user: root
     command: filebeat -e -strict.perms=false
+    environment:
+      TZ: Asia/Shanghai    
     configs:
       - source: filebeat_config
         target: /usr/share/filebeat/filebeat.yml
-    volumes:
+    volumes:   
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
       mode: replicated
+      replicas: 0
+      placement:
+        constraints: [node.hostname == me]
+  fluent:
+    image: exxk/fluent-elasticsearch:latest
+    environment:
+      TZ: Asia/Shanghai     
+    ports:
+      - "14021:24224"  
+      - "14021:24224/udp"
+    configs:
+      - source: fluent_config
+        target: /fluentd/etc/fluent.conf
+    deploy:
+      mode: replicated
       replicas: 1
       placement:
-        constraints: [node.hostname == me]           
+        constraints: [node.hostname == me]        
 configs:
   elastic_config:
     external: true
@@ -188,6 +268,8 @@ configs:
   kibana_config:
     external: true
   filebeat_config:
+    external: true
+  fluent_config:
     external: true
 ```
 
@@ -286,6 +368,41 @@ output.elasticsearch:
   hosts: 'elasticsearch:9200'
   username: 'elastic'
   password: 'changeme'
+```
+
+`fluent_config`
+
+```xml
+# fluentd/conf/fluent.conf
+
+<source>
+  @type forward
+  port 24224
+  bind 0.0.0.0
+</source>
+
+<match *.**>
+  @type copy
+
+  <store>
+    @type elasticsearch
+    host elasticsearch
+    port 9200
+    logstash_format true
+    logstash_prefix fluentd
+    logstash_dateformat %Y%m%d
+    include_tag_key true
+    type_name access_log
+    tag_key @log_name
+    flush_interval 1s
+    user elastic
+	password changeme    
+  </store>
+
+  <store>
+    @type stdout
+  </store>
+</match>
 ```
 
 
