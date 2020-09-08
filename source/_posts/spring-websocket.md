@@ -1,7 +1,7 @@
 ---
 title: Spring-WebSocket
 date: 2019-06-12 10:29:40
-updated: 2019-06-12 13:45:53
+updated: 2020-09-08 11:43:41
 categories: Spring
 tags: [WebSocket]
 ---

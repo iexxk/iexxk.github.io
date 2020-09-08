@@ -1,8 +1,8 @@
 ---
 title: springboot打包套壳
 date: 2020-08-24 11:13:54
-updated: 2020-08-25 11:48:04
-categories: spring
+updated: 2020-09-08 11:43:49
+categories: Spring
 tags: [spring,maven]
 ---
 

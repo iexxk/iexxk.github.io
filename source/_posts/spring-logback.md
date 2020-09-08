@@ -1,8 +1,8 @@
 ---
 title: spring logback
 date: 2020-09-03 15:50:23
-updated: 2020-09-03 17:13:22
-categories: spring
+updated: 2020-09-08 11:44:28
+categories: Spring
 tags: [spring,logback]
 ---
 

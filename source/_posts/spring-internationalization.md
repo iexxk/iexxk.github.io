@@ -1,8 +1,8 @@
 ---
 title: spring 国际化
 date: 2020-09-01 10:34:53
-updated: 2020-09-01 11:17:18
-categories: spring
+updated: 2020-09-08 11:44:07
+categories: Spring
 tags: [spring]
 ---
 
