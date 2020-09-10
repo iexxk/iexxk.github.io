@@ -1,7 +1,8 @@
 ---
 title: Linux下安装与使用DropBox
 date: 2017-12-07 14:26:38
-updated: 2018-12-12 10:47:58categories: 工具
+updated: 2020-09-09 17:01:59
+categories: Tools
 tags: [Tools,Dropbox]
 ---
 ### DropBox介绍

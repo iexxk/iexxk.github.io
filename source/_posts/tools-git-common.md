@@ -1,8 +1,8 @@
 ---
 title: Git常用操作
 date: 2018-08-07 14:34:06
-updated: 2020-08-06 10:01:55
-categories: 工具
+updated: 2020-09-09 17:01:22
+categories: Tools
 tags: [git]
 ---
 

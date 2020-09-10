@@ -1,7 +1,8 @@
 ---
 title: Linux下安装与使用proxychains4
 date: 2017-12-06 11:10:38
-updated: 2018-12-12 10:47:58categories: 工具
+updated: 2020-09-09 17:00:43
+categories: Tools
 tags: [Tools,proxychains4]
 ---
 ### proxychains4介绍

@@ -1,9 +1,9 @@
 ---
 title: Tools-k2-breed
 date: 2018-03-22 23:15:32
-updated: 2018-12-12 10:47:58
-categories: 工具
-tags: [k2路有器,工具]
+updated: 2020-09-09 17:00:37
+categories: Tools
+tags: [k2路有器,Tools]
 ---
 
 #### [斐讯K2 22.4.6.3 非telnet 页面直刷 Breed 详细方法（图文）](http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=204435&highlight=k2%252B22.4.6.3)

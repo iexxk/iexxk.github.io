@@ -1,8 +1,8 @@
 ---
 title: Tools-Python3
 date: 2018-07-14 16:37:49
-updated: 2020-08-06 09:53:44
-categories: Python
+updated: 2020-09-09 17:01:05
+categories: Tools
 tags: [Python]
 ---
 

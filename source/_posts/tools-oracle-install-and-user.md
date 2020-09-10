@@ -1,7 +1,8 @@
 ---
 title: JavaEE之Oracle搭建
 date: 2017-07-17 23:34:28
-updated: 2018-12-12 10:47:58categories: 工具
+updated: 2020-09-09 17:00:57
+categories: Tools
 tags: [sql,环境搭建]
 ---
 
@@ -25,7 +26,7 @@ tags: [sql,环境搭建]
    - [x] 输入口令(数据库名orcl.lan;口令Mimais163)
    - [x] 弹窗口令管理修改 sys(mimais163R)system(mimais163A)
 
-   ​
+   
 
 #### 参考:
 

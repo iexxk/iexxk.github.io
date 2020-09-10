@@ -1,8 +1,8 @@
 ---
 title: Tools-nexus-maven
 date: 2018-09-06 08:42:44
-updated: 2019-08-14 18:01:44
-categories: 工具
+updated: 2020-09-09 17:01:16
+categories: Tools
 tags: [nexus3,maven]
 ---
 

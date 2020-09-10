@@ -1,8 +1,8 @@
 ---
 title: Tools-geoserver-base
 date: 2018-08-17 11:00:14
-updated: 2018-12-12 10:47:58
-categories: 工具
+updated: 2020-09-09 17:01:08
+categories: Tools
 tags: [geoserver]
 ---
 
