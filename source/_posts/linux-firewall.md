@@ -1,7 +1,7 @@
 ---
 title: linux-firewall
 date: 2018-11-28 18:26:11
-updated: 2020-09-02 16:29:58
+updated: 2020-09-23 15:08:49
 categories: Linux
 tags: [linux,iptables]
 ---
@@ -10,13 +10,16 @@ tags: [linux,iptables]
 
 ### iptables
 
-```
+```bash
+#查看防火墙状态
 systemctl status iptables.service
+#查看现有防火墙规则，以及是否生效
+iptables -L -n
+#开放9000端口
+iptables -I INPUT -p tcp --dport 9000 -m state --state NEW -j ACCEPT
+#生效后保存iptables
+iptables-save > /etc/sysconfig/iptables
 ```
-
-
-
-
 
 防火墙端口配置需要放到哪两句之前
 
@@ -24,7 +27,7 @@ systemctl status iptables.service
 
 ### firewall
 
-```
+```bash
 # 添加端口7000-7005/17000-17005
 firewall-cmd --zone=public --add-port=7000/tcp --permanent
 # 重载配置
