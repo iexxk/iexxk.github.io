@@ -1,7 +1,7 @@
 ---
 title: python-dataview
 date: 2020-09-24 11:46:46
-updated: 2020-09-24 17:44:18
+updated: 2020-10-21 11:09:53
 categories: python
 tags: [python]
 ---
@@ -30,7 +30,17 @@ plt.show()
 
 ## [Pandas-Bokeh](https://github.com/PatrikHlobil/Pandas-Bokeh)
 
+首先安装` pip install pandas-bokeh `
 
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+import pandas_bokeh
+pd.set_option('plotting.backend', 'pandas_bokeh')
+df = pd.DataFrame(result)
+df.plot_bokeh()
+plt.show()
+```
 
 ## Pandas-plotly
 
