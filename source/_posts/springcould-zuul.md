@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Zuul
 date: 2018-04-17 00:00:36
-updated: 2020-09-01 17:43:27
+updated: 2020-09-01 17:04:00
 categories: Spring
 tags: [SpringCould,Zuul]
 ---

@@ -1,7 +1,7 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2020-07-30 15:22:44
+updated: 2021-02-05 16:55:09
 categories: 数据库
 tags: [mongoDB]
 ---
@@ -191,8 +191,10 @@ Java: LookupOperation
 表关联左连接
 
 ```js
--- from 表1 localField 表1字段 foreignField 表2字段 as 表2
+-- 表2为主集合
+-- from 表1， localField 表1字段， foreignField 表2字段， as 新表表面
 "$lookup": { "from": "b_terminfo", "localField": "devices_statuses.term_id", "foreignField": "term_id", "as": "term_info" }
+-- 查询出的结果，表2-[表1数组]
 ```
 
 ##### `elemMatch` 内嵌数组，查询，其中数组里面的一个对象完全满足才会查出来
@@ -214,6 +216,61 @@ Java: LookupOperation
                             .and("err_msg").ne(Constants.OFFLINE_SYNC_ERRORREASON_FAIL_FEATURE)
             ));
 ```
+
+##### `facet`
+
+多条语句组合一个结果,a，b，c各为独立的查询语句
+
+```js
+db.getCollection("b_company").aggregate([
+    {
+        "$facet": {
+            "a": [
+                { "$project": { Id: 1, "day": { "$substr": ["$time", 0, 10] } } }
+                , { "$match": { day: "2020-07-09" } }
+                , { "$group": { "_id": "$day", sum: { "$sum": 1 } } }
+            ],
+            "b": [
+                { "$group": { "_id": null, total2: { "$sum": 1 } } }
+            ],
+            "c":[
+                {"$lookup":{from:"b_user",localField:"Id",foreignField:"company_id",as:"user"}}    
+               ,{"$unwind":"$user"}
+               ,{ "$project": { Id: 1, "day": { "$substr": ["$user.user_login_time", 0, 10] } } }
+               ,{ "$match": { day: "2021-02-05" } }
+               ,{"$group":{"_id":"$Id",sum:{"$sum":1}}}
+               ,{"$count":"total"}
+            ]
+        }
+    }
+])
+```
+
+对应java
+
+```java
+Aggregation aggregation = Aggregation.newAggregation(
+                    Aggregation.facet()
+                            .and(
+                                    Aggregation.project("_id").and("time").substring(0, 10).as("day")
+                                    , Aggregation.match(Criteria.where("day").is(nowDate))
+                                    , Aggregation.count().as("count")
+                            ).as("day")
+                            .and(
+                                    Aggregation.count().as("total")
+                            ).as("total")
+                            .and(
+                                    Aggregation.lookup("b_user", "Id", "company_id", "user")
+                                    , Aggregation.unwind("$user")
+                                    , Aggregation.project("_id").and("user.user_login_time").substring(0, 10).as("day")
+                                    , Aggregation.match(Criteria.where("day").is(nowDate))
+                                    , Aggregation.group("_id")
+                                    , Aggregation.count().as("total")
+                            ).as("login")
+            );
+```
+
+
 
 ### 最终示例
 

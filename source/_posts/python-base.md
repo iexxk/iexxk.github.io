@@ -1,10 +1,67 @@
 ---
 title: python-base
 date: 2020-09-24 14:12:20
-updated: 2020-10-30 17:07:45
+updated: 2021-03-02 17:33:04
 categories: python
 tags: [python]
 ---
+
+## python pip 国内仓库代理
+
+在改配置文件 `vim ~/.pip/pip.conf`添加如下内容，没有该文件创建该文件及目录
+
+```properties
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host = mirrors.aliyun.com
+```
+
+## python 版本切换工具-[pyenv](https://github.com/pyenv/pyenv)
+
+常用命令[commands](https://github.com/pyenv/pyenv/blob/master/COMMANDS.md)
+
+常见问题[issues](https://github.com/pyenv/pyenv/issues/1643)
+
+```bash
+#更新安装
+brew update
+brew install pyenv
+#添加补齐
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+#重启shell
+exec "$SHELL"
+# 可选，但建议安装python依赖项
+brew install openssl readline sqlite3 xz zlib bzip2 libiconv libzip
+#查看支持的版本
+pyenv install --list
+#安装指定版本
+pyenv install 2.7.15
+#如遇安装问题，升级Xcode command line tools和配置下面的环境变量，上面可选变必选
+vim ~/.zshenv
+
+#zlib
+#For compilers to find zlib you may need to set:
+export LDFLAGS="-L/usr/local/opt/zlib/lib"
+export CPPFLAGS="-I/usr/local/opt/zlib/include"
+#For pkg-config to find zlib you may need to set:
+export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+
+#bzip2
+#If you need to have bzip2 first in your PATH, run:
+export PATH="/usr/local/opt/bzip2/bin:$PATH"
+#For compilers to find bzip2 you may need to set:
+export LDFLAGS="-L/usr/local/opt/bzip2/lib"
+export CPPFLAGS="-I/usr/local/opt/bzip2/include"
+
+#libiconv
+#If you need to have libiconv first in your PATH, run:
+export PATH="/usr/local/opt/libiconv/bin:$PATH"
+#For compilers to find libiconv you may need to set:
+export LDFLAGS="-L/usr/local/opt/libiconv/lib"
+export CPPFLAGS="-I/usr/local/opt/libiconv/include"
+
+```
 
 ## python包管理工具
 
@@ -28,23 +85,41 @@ tags: [python]
 
 包依赖管理文件`Pipfile`
 
-问题：网上说依赖慢，依赖乱，未实际体验
+问题：网上说依赖慢，依赖乱
 
-#### 方案三：[poetry](https://github.com/python-poetry/poetry)
+```bash
+brew install pipenv
+#设置虚拟环境默认建立在项目目录
+echo 'export PIPENV_VENV_IN_PROJECT=true' >> ~/.zshenv
+```
+
+参考：[PyCharm+Pipenv虚拟环境作开发和依赖管理](https://my.oschina.net/u/4274818/blog/3236481)
+
+#### ~~方案三：[poetry](https://github.com/python-poetry/poetry)~~ 
+
+问题：放弃有各种bug，对PyCharm兼容差，安装依赖经常失败，pycharm不能自动识别poetry
 
 [官方文档](https://python-poetry.org/docs/)
 
 包依赖管理文件`pyproject.toml`
 
 ```bash
-# mac zsh安装步骤
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+# mac zsh安装步骤,注意后面用python3安装
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 # 当前终端临时生效
 source $HOME/.poetry/env
 # 终端永久生效
 echo 'export PATH="$PATH:$HOME/.poetry/bin"' >> ~/.zshrc
 # 设置虚拟环境安装到项目目录，如果设置改设置，所有项目的虚拟目录都默认到了~/Library/Caches/pypoetry/virtualenvs该路径下面
 poetry config virtualenvs.in-project true
+
+brew update
+brew install pyenv
+
+#卸载
+wget https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
+python3 get-poetry.py --uninstall
+rm get-poetry.py
 ```
 
 PyCharm安装插件`Poetry`
@@ -56,6 +131,36 @@ poetry虚拟环境目录`~/Library/Caches/pypoetry/virtualenvs`
 poetry env list 
 #移除虚拟环境
 poetry env remove python3
+```
+
+
+
+### pyproject.toml 配置文件详解
+
+```toml
+[tool.poetry]
+name = "pythonleaning"
+version = "0.1.0"
+description = ""
+authors = ["xuanleung <exxk.lx@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.1.4"
+nupy = "^0.1.1"
+pymongo = "^3.11.1"
+matplotlib = "^3.3.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+#配置代理仓库
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
 ```
 
 
