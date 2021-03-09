@@ -3,15 +3,23 @@
 .posts-expand {
   &.index {
     .post-header {
-      text-align: $site-meta-text-align;
+      text-align: left;
 
       +mobile() {
         text-align: center;
       }
     }
 
-    .post-meta {
+    .post-meta-container {
       margin-top: 5px;
+    }
+
+    .post-meta {
+      justify-content: flex-start;
+
+      +mobile() {
+        justify-content: center;
+      }
     }
   }
 
@@ -25,7 +33,6 @@
 
   .post-header {
     margin-bottom: 20px;
-    text-align: center;
   }
 
   .post-tags {
@@ -33,7 +40,7 @@
 
     a {
       background: var(--content-bg-color);
-      border-bottom: none;
+      border-bottom: 0;
       padding: 1px 5px;
 
       &:hover {

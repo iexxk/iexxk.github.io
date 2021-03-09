@@ -12,7 +12,7 @@
 
   if (hexo-config('post_edit.enable')) {
     .post-edit-link {
-      border-bottom: none;
+      border-bottom: 0;
       color: $grey;
       display: inline-block;
       float: right;
@@ -32,11 +32,10 @@
 }
 
 .posts-expand .post-title-link {
-  border-bottom: none;
+  border-bottom: 0;
   color: var(--link-color);
   display: inline-block;
   position: relative;
-  vertical-align: top;
 
   &::before {
     background: var(--link-color);
@@ -61,7 +60,14 @@
   }
 }
 
-.posts-expand .post-meta {
+.post-sticky-flag {
+  display: inline-block;
+  // Fix issue #80 #140
+  margin-right: 8px;
+  transform: rotate(30deg);
+}
+
+.posts-expand .post-meta-container {
   color: $grey-dark;
   font-family: $font-family-posts;
   font-size: $font-size-smallest;
@@ -78,25 +84,24 @@
   }
 }
 
-.post-meta .post-meta-item + .post-meta-item::before {
-  content: '|';
-  margin: 0 .5em;
+// Flexbox layout makes it possible to reorder the child
+// elements of .post-meta through the `order` CSS property
+.post-meta {
+  flex-wrap();
 }
 
-.post-meta-divider {
+// .post-meta-item exists in .post-meta and footer
+.post-meta-item:not(:first-child)::before {
+  content: '|';
   margin: 0 .5em;
 }
 
 .post-meta-item-icon {
   margin-right: 3px;
-
-  +tablet-mobile() {
-    display: inline-block;
-  }
 }
 
 .post-meta-item-text {
-  if (!hexo-config('post_meta.item_text')) {
+  if (not hexo-config('post_meta.item_text')) {
     display: none;
   }
 

@@ -1,4 +1,4 @@
-.posts-collapse {
+.posts-collapse .post-content {
   margin-bottom: $posts-collapse-margin;
   margin-left: $posts-collapse-margin;
   position: relative;
@@ -76,7 +76,7 @@
     }
   }
 
-  .post-meta {
+  .post-meta-container {
     display: inline;
     font-size: $font-size-smallest;
     margin-right: 10px;
@@ -85,8 +85,8 @@
   .post-title {
     display: inline;
 
-    a, span.exturl {
-      border-bottom: none;
+    a {
+      border-bottom: 0;
       color: var(--link-color);
     }
 
@@ -102,7 +102,7 @@
     height: 100%;
     margin-left: -2px;
     position: absolute;
-    // 1.25em is inaccurate when .collection-title has line breaks on mobile
+    // To do: 1.25em is inaccurate when .collection-title has line breaks on mobile
     top: 1.25em;
     width: 4px;
   }
