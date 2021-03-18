@@ -1,7 +1,7 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2021-02-05 16:55:09
+updated: 2021-03-18 10:30:40
 categories: 数据库
 tags: [mongoDB]
 ---
@@ -117,8 +117,6 @@ query.addCriteria(Criteria.where("notice_key").regex("(?=.*测试1)(?=.*E0000000
 
 `_id:"$code"`按code字段进行统计
 
-
-
 ```js
 db.getCollection("m_user").aggregate([
 {
@@ -145,6 +143,23 @@ db.getCollection("m_user").aggregate([
 }
 ```
 
+group双层嵌套([$push](https://docs.mongodb.com/manual/reference/operator/aggregation/push/))-[Pivot Data](https://docs.mongodb.com/manual/reference/operator/aggregation/group/#pivot-data)
+
+先group统计最内层，然后把group聚合的数组对象放到子对象那（利用 `subName: { $push: "$$ROOT" }`）
+
+` $push: "$$ROOT"`是把聚合的对象放到一个字段subName里面
+
+然后对统计好的再进行统计，如果要统计子对象数组里面的某个字段的数量，用`{ $sum: "$$ROOT.total" }`
+
+```js
+-- 先统计event_id
+{ "$group": { "_id": { "event_id": "$event_id", "event_sub_type": "$event_sub_type" }, "total": { "$sum": "$num" }, sub: { $push: "$$ROOT" } } }
+-- 在分组统计event_sub_type
+{ "$group": { "_id": "$_id.event_sub_type", sub: { $push: "$$ROOT" },total: { $sum: "$$ROOT.total" } } }
+```
+
+
+
 ##### `project`控制输出显示的结果
 
 1为显示该字段
@@ -158,6 +173,8 @@ db.getCollection("m_user").aggregate([
 
 ##### `cond`类似case when
 
+cond里面的if支持一个条件，但是cond可以嵌套
+
 Java: ConditionalOperators
 
 ```js
@@ -168,6 +185,18 @@ Java: ConditionalOperators
             customer_id": 1
             , "fail_tatus": { "$cond": { "if": { "$eq": ["$err_msg", "5"] }, "then": 1, "else": 0 } }
         }
+-- cond嵌套使用，"$gt": ["$record", 0] 可以用于判断对象是否为null，不为null继续cond，然后继续添加条件可以判断数组对象内的某个条件，达到1对多，子对象数组统计，判读子对象满足某个条件就设置为1，达到统计效果
+{
+                    "$cond": {
+                        "if": { "$gt": ["$record", 0] }, "then":
+                            {
+                                "$cond": {
+                                    "if": { "$eq": ["$record.is_opposite", false] }, "then":
+                                       1, "else": 0
+                                }
+                            }, "else": 0
+                    }
+                }
 ```
 
 ##### `match`条件过滤
@@ -182,6 +211,8 @@ Java: ConditionalOperators
 
 ```js
 "$unwind": "$term_info"
+-- preserveNullAndEmptyArrays 为true时允许对象为null，不然平铺时如果对象为null时为null的这条数据就会消失
+{ "$unwind": { "path": "$record", "preserveNullAndEmptyArrays": true } }
 ```
 
 ##### `lookup`
@@ -363,6 +394,87 @@ db.getCollection("b_customer_info_device").aggregate([
             JSONObject jobj = (JSONObject)countResult.get(0);
            return jobj;
         }
+```
+
+### 表关联子类统计
+
+按类别统计每个事件的数量，输出结果如下
+
+```
+|-类型1
+|--事件1
+|----事件1记录1
+|----事件1记录2
+|----事件1记录n条
+|--事件2
+|-类型2
+|--事件3
+|----事件3记录1
+```
+
+```java
+ String startTime = startDay + " 00:00:00";
+
+            ConditionalOperators.Cond condCompany= addCompanyIdCriteriaInCond("record.company_id");
+
+            //判断是否是当天
+            ConditionalOperators.Cond condDay = ConditionalOperators.when(Criteria.where("record.trans_time").gte(startTime)
+            ).then(condCompany!=null?condCompany:1).otherwise(0);
+
+            //添加字表的判断是否是应答事件
+            ConditionalOperators.Cond condOpposite = ConditionalOperators.when(Criteria.where("record.is_opposite").is(false)
+            ).then(condDay).otherwise(0);
+
+            //gt(0)是为了判断对象(是否有记录)是否为null，如果有对象就会大于0
+            ConditionalOperators.Cond condOperators = ConditionalOperators.when(Criteria.where("record").gt(0)
+            ).then(condOpposite).otherwise(0);
+
+            Aggregation aggregation = Aggregation.newAggregation(
+                    Aggregation.match(Criteria.where("event_type").is("device"))
+                    , Aggregation.lookup("r_event_record", "event_id", "event_id", "record")
+                    , Aggregation.unwind("$record", true)
+                    , Aggregation.project("event_id", "event_name","event_sub_type").and(condOperators).as("num")
+                    , Aggregation.group("event_id", "event_name","event_sub_type").sum("num").as("total")
+                    , Aggregation.group("_id.event_sub_type").push("$$ROOT").as("sub").sum("$$ROOT.total").as("total")
+            );
+
+            AggregationResults<BasicDBObject> dBObjects = mongoTemplate.aggregate(aggregation, "b_event_info", BasicDBObject.class);
+```
+
+```js
+db.getCollection("b_event_info").aggregate([
+    { "$match": { "event_type": "device" } }
+    , { "$lookup": { "from": "r_event_record", "localField": "event_id", "foreignField": "event_id", "as": "record" } }
+    , { "$unwind": { "path": "$record", "preserveNullAndEmptyArrays": true } }
+
+    , {
+        "$project": {
+            "event_id": 1, "event_name": 1, "num":
+                {
+                    "$cond": {
+                        "if": { "$gt": ["$record", 0] }, "then":
+                            {
+                                "$cond": {
+                                    "if": { "$eq": ["$record.is_opposite", false] }, "then":
+                                        { "$cond": { "if": { "$gte": ["$record.trans_time", "2021-03-16 00:00:00"] }, "then": 1, "else": 0 } }, "else": 0
+                                }
+                            }, "else": 0
+                    }
+                }
+            , "event_sub_type": 1
+        }
+    }
+    , { "$group": { "_id": { "event_id": "$event_id", "event_sub_type": "$event_sub_type" }, "total": { "$sum": "$num" }, sub: { $push: "$$ROOT" } } }
+    , { "$group": { "_id": "$_id.event_sub_type", sub: { $push: "$$ROOT" },total: { $sum: "$$ROOT.total" } } }
+  --因为$addFields在mongotemplate找不到对应的语句，所以用上面的$group替代
+//    ,{"$project": {"_id":1,"sub":1, total: { $sum: "$sub.total" }}}
+//    , {
+//        $addFields:
+//            {
+//                total: { $sum: "$books.total" }
+//            }
+//    }
+])
 ```
 
 
