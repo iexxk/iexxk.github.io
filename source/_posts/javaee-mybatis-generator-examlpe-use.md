@@ -1,7 +1,7 @@
 ---
 title: Mybatis 使用
 date: 2017-12-14 16:26:28
-updated: 2020-08-06 09:59:03
+updated: 2021-03-18 18:33:40
 categories: JavaEE
 tags: [java,Mybatis]
 typora-copy-images-to: image\src_dir
@@ -101,7 +101,7 @@ typora-copy-images-to: image\src_dir
 
 4. 最后在右侧`maven projects->plugins->mybatis-generator:generate`运行就会生成了
 
-   ![1530182957362](http://gt163.cn:14033/blog/20200806095852.png)
+   ![1530182957362](https://s3.ax1x.com/2021/03/18/627iv9.png)
 
 ##注解式
 

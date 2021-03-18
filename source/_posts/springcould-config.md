@@ -1,7 +1,7 @@
 ---
 title: SpringCould-config
 date: 2018-04-18 23:14:52
-updated: 2020-08-20 15:05:09
+updated: 2021-03-18 18:35:12
 categories: Spring
 tags: [SpringCould,config]
 ---
@@ -10,7 +10,7 @@ tags: [SpringCould,config]
 
 作用多服务统一配置管理，主要分配置中心服务端，和配置中心客户端（主要存储配置）
 
-![image-20200811155609870](http://gt163.cn:14033/blog/20200811155613.png)
+![image-20200811155609870](https://s3.ax1x.com/2021/03/18/627ZE6.png)
 
 #### Config Server
 

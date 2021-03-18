@@ -1,7 +1,7 @@
 ---
 title: 设计模式之MVP
 date: 2016-12-16 17:13:05
-updated: 2020-08-06 10:14:10
+updated: 2021-03-18 18:34:49
 categories: 设计模式
 tags: [框架,mvp,rxjava,单元测试]
 ---
@@ -12,4 +12,4 @@ tags: [框架,mvp,rxjava,单元测试]
 [MVP框架 – Ted Mosby的软件架构](http://www.devtf.cn/?p=551)
 [安卓中MVP模式和RxAndroid的具体实现例子](http://blog.csdn.net/qiantujava/article/details/49383645)
 
-![mvp](http://gt163.cn:14033/blog/20200806101358.png)
+![mvp](https://s3.ax1x.com/2021/03/18/627EHx.png)

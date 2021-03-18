@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Bus
 date: 2018-04-22 17:19:26
-updated: 2020-08-11 16:03:17
+updated: 2021-03-18 18:09:02
 categories: Spring
 tags: [SpringCould,Bus]
 ---
@@ -42,5 +42,5 @@ tags: [SpringCould,Bus]
 
 可以在config-server添加config-client的配置，这样就可以调配置刷新`127.0.0.1:8096/actuator/bus-refresh/`接口，刷新所有配置客户端的配置了，注意依赖要加上 `compile('org.springframework.cloud:spring-cloud-starter-config')`config-client的配置依赖，因为config-client的依赖和`config-server`的`bus-refresh`接口不一样
 
-![image-20200811155609870](http://gt163.cn:14033/blog/20200811155613.png)
+![image-20200811155609870](https://s3.ax1x.com/2021/03/18/625oh4.png)
 

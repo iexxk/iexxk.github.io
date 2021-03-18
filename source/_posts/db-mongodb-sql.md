@@ -1,7 +1,7 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2021-03-18 10:30:40
+updated: 2021-03-18 10:36:43
 categories: 数据库
 tags: [mongoDB]
 ---
@@ -173,7 +173,7 @@ group双层嵌套([$push](https://docs.mongodb.com/manual/reference/operator/agg
 
 ##### `cond`类似case when
 
-cond里面的if支持一个条件，但是cond可以嵌套
+cond里面的if只支持一个条件，但是cond可以嵌套
 
 Java: ConditionalOperators
 

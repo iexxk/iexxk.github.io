@@ -1,7 +1,7 @@
 ---
 title: JavaEE-shiro
 date: 2018-05-20 08:54:50
-updated: 2020-08-06 10:13:35
+updated: 2021-03-18 18:34:28
 categories: JavaEE
 tags: [JavaEE]
 ---
@@ -94,7 +94,7 @@ xml配置
 
 数据库表设计：
 
-![1529049788944](http://gt163.cn:14033/blog/20200806101325.png)
+![1529049788944](https://s3.ax1x.com/2021/03/18/627PgJ.png)
 
 ### 参考
 

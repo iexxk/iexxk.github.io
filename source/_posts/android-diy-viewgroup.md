@@ -1,7 +1,7 @@
 ---
 title: viewGroup自定义控件
 date: 2016-12-13 16:48:12
-updated: 2020-08-06 10:01:24
+updated: 2021-03-18 18:22:26
 categories: Android
 tags: [viewGroup,卫星菜单，测量]
 ---
@@ -40,7 +40,7 @@ public class ArcMenu extends ViewGroup {
 ```
 
 `childView.layout(cl, ct, cr, cb)`
-![viewgroup](http://gt163.cn:14033/blog/20200806100117.png)
+[![62o7O1.png](https://s3.ax1x.com/2021/03/18/62o7O1.png)](https://imgtu.com/i/62o7O1)
 
 >* 在xml里面引用
 ```

@@ -1,7 +1,7 @@
 ---
 title: Tools-Python3
 date: 2018-07-14 16:37:49
-updated: 2020-09-09 17:01:05
+updated: 2021-03-18 18:19:02
 categories: Tools
 tags: [Python]
 ---
@@ -27,7 +27,7 @@ tags: [Python]
 
 1. 登陆百度，通过浏览器设置-内容管理-cookie，找到百度的BDUSS的内容复制
 
-   ![045ca12e-9657-4aa1-a787-fca78bc7ab36](http://gt163.cn:14033/blog/20200806095236.gif)
+   [![62oGQA.gif](https://s3.ax1x.com/2021/03/18/62oGQA.gif)](https://imgtu.com/i/62oGQA)
 
 2. 编写脚本`login.py`
 
@@ -52,7 +52,7 @@ tags: [Python]
 
 上面已经登陆成功了，下面直接用cookie进行爬数据会被重定向，还需要添加请求头，以及翻页参数
 
-![aaccb5e0-b870-481f-951a-7c80151ccac7](http://gt163.cn:14033/blog/20200806095325.gif)
+[![62o9aT.gif](https://s3.ax1x.com/2021/03/18/62o9aT.gif)](https://imgtu.com/i/62o9aT)
 
 ```python
 import requests

@@ -1,7 +1,7 @@
 ---
 title: minio搭建图床
 date: 2020-08-05 18:11:05
-updated: 2020-08-06 10:40:21
+updated: 2021-03-18 18:33:05
 categories: 杂谈
 tags: [图床,minio,oss]
 ---
@@ -97,7 +97,7 @@ minio图片不能预览
 
 1. 需要设置
 
-![image-20200805182053298](http://gt163.cn:14033/blog/20200805182056.png)
+![image-20200805182053298](https://s3.ax1x.com/2021/03/18/627kuR.png)
 
 2. 以及上传图片需要设置content_type为`image/jpg`
 

@@ -1,7 +1,7 @@
 ---
 title: idea+gradle+ssm框架之整合模板
 date: 2017-05-09 08:16:28
-updated: 2020-08-06 09:57:09
+updated: 2021-03-18 18:13:22
 categories: JavaEE
 tags: [JavaEE,idea,gradle,Spring,SpringMVC,MyBatis,ssm框架]
 ---
@@ -283,19 +283,13 @@ public class TestController {
 
 ### 相关配置截图
 
-![tomcat](http://gt163.cn:14033/blog/20200806095428.png)
-
-![dir](http://gt163.cn:14033/blog/20200806095513.png)
-
-![spring](http://gt163.cn:14033/blog/20200806095542.png)
-
-![tomcat2](http://gt163.cn:14033/blog/20200806095443.png)
-
-![web](http://gt163.cn:14033/blog/20200806095606.png)
-
-![artif](http://gt163.cn:14033/blog/20200806095629.png)
-
-![sour](http://gt163.cn:14033/blog/20200806095654.png)
+[![62IMgs.png](https://s3.ax1x.com/2021/03/18/62IMgs.png)](https://imgtu.com/i/62IMgs)
+[![62IK3j.png](https://s3.ax1x.com/2021/03/18/62IK3j.png)](https://imgtu.com/i/62IK3j)
+[![62IeUS.png](https://s3.ax1x.com/2021/03/18/62IeUS.png)](https://imgtu.com/i/62IeUS)
+[![62IuCQ.png](https://s3.ax1x.com/2021/03/18/62IuCQ.png)](https://imgtu.com/i/62IuCQ)
+[![62Im4g.png](https://s3.ax1x.com/2021/03/18/62Im4g.png)](https://imgtu.com/i/62Im4g)
+[![62IQvn.png](https://s3.ax1x.com/2021/03/18/62IQvn.png)](https://imgtu.com/i/62IQvn)
+[![62I1uq.png](https://s3.ax1x.com/2021/03/18/62I1uq.png)](https://imgtu.com/i/62I1uq)
 
 ### 项目地址：
 
