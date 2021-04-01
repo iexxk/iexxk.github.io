@@ -1,7 +1,7 @@
 ---
 title: mongoDb常用应用场景
 date: 2019-08-26 09:58:23
-updated: 2021-03-18 10:36:43
+updated: 2021-03-19 11:13:47
 categories: 数据库
 tags: [mongoDB]
 ---
@@ -299,6 +299,17 @@ Aggregation aggregation = Aggregation.newAggregation(
                                     , Aggregation.count().as("total")
                             ).as("login")
             );
+```
+
+##### `$substr`
+
+日期转换为天
+
+```js
+-- yyyy-mm-dd HH:mm:ss 转化成 yyyy-mm-dd
+  { "$project": { Id: 1, "day": { "$substr": ["$time", 0, 10] } } }
+--java
+	Aggregation.project("_id").and("time").substring(0, 10).as("day")
 ```
 
 

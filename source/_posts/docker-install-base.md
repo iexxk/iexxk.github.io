@@ -1,7 +1,7 @@
 ---
 title: Docker 安装与使用基础
 date: 2017-10-10 10:25:37
-updated: 2020-05-21 14:36:51
+updated: 2021-03-25 17:47:21
 categories: Docker
 tags: [Docker,docker-compose]
 ---
@@ -157,7 +157,11 @@ chmod +x "$HOME/bin/docker-machine.exe"
 
 ### 问题以及解决方法
 
-1. docker inf 出现如下警告
+1. `docker info` 出现如下警告
+
+   奇葩现象，在mongo里面添加了用户之后，springboot连接数据库就连接不是，但是外面能连接上，然后`docker info`会出现下面的错误，然后执行下面 的解决方案就可以连接上了
+
+   可能(阿里云概率)会导致一个stack服务无法通过宿主机内网ip访问第二个stack服务
 
    ```
    WARNING: bridge-nf-call-iptables is disabled
@@ -166,9 +170,21 @@ chmod +x "$HOME/bin/docker-machine.exe"
 
    解决：
 
-   `echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables`
+   方式一
 
-   ` echo 1 > /proc/sys/net/bridge/bridge-nf-call-ip6tables`
+   ```bash
+   # 方式一
+   echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
+   echo 1 > /proc/sys/net/bridge/bridge-nf-call-ip6tables
+   
+   # 方式二
+   vi /etc/sysctl.conf
+   # 添加以下内容
+   net.bridge.bridge-nf-call-ip6tables = 1
+   net.bridge.bridge-nf-call-iptables = 1
+   #最后执行
+   sysctl -p
+   ```
 
 2. 问题：构建镜像不能用`-`减号命名镜像的名字，使用docker-statck 部署找不到镜像
 
@@ -304,7 +320,7 @@ chmod +x "$HOME/bin/docker-machine.exe"
    重启docker服务`systemctl restart docker.service`
 
    原因：冲突和hosts
-   
+
    
 
 
