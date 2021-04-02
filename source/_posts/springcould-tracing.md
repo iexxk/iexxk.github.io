@@ -1,7 +1,7 @@
 ---
 title: SpringCould-Tracing
 date: 2018-04-22 22:08:49
-updated: 2020-08-20 14:00:55
+updated: 2021-04-02 17:24:30
 categories: Spring
 tags: [SpringCould,Tracing,Sleuth]
 ---
@@ -12,10 +12,7 @@ tags: [SpringCould,Tracing,Sleuth]
 
 ```mermaid
 graph LR
-A[请求]-->B[微服务客户端]
-B-->c[sleuth采集请求]
-c-->d[zipkin发送请求的信息]
-d-->f[docker-zipkin接受并展示]
+请求-->微服务客户端-->sleuth采集请求-->zipkin发送请求的信息-->docker-zipkin接受并展示
 ```
 
 ##### sleuth 采样+++zipkin 发送分析展示采样数据
@@ -55,10 +52,7 @@ d-->f[docker-zipkin接受并展示]
 
 ```mermaid
 graph LR
-A[请求]-->B[微服务客户端]
-B-->c[sleuth采集请求]
-c-->d[mq发送请求的信息]
-d-->f[docker-zipkin接受并展示]
+请求-->微服务客户端-->sleuth采集请求-->mq发送请求的信息-->docker-zipkin接受并展示
 ```
 
 1. 修改docker-compose部署添加环境变量(目测该镜像还不支持改环境变量)
