@@ -1,9 +1,9 @@
 ---
 title: spring logback
 date: 2020-09-03 15:50:23
-updated: 2020-09-08 11:44:28
+updated: 2021-04-08 09:30:20
 categories: Spring
-tags: [spring,logback]
+tags: [Spring,Logback]
 ---
 
 ## spring logback 简介
