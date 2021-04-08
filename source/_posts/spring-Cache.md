@@ -1,7 +1,7 @@
 ---
 title: spring-Cache
 date: 2021-04-08 09:29:06
-updated: 2021-04-08 16:52:40
+updated: 2021-04-08 18:28:28
 categories: Spring
 tags: [Spring,Cacheable]
 ---
@@ -159,7 +159,133 @@ public class UserDaoImpl extends BaseDaoImpl<User, String> implements UserDao {
 
 #### 存在的问题
 
-1. 因为`cacheNames`也就是表名不支持SpEL，因此获取不到表名，因此设计是，表就用通用`mongo`字段做完通用表，然后key里面才是表加id的设计，因此也导致了`deletAll`是删除所有的表，因为`deletAll`基本不会用到，也还可以接受，就算用到了，只是缓存没了，还是能从数据库重建缓存
+因为`cacheNames`也就是表名不支持SpEL，因此获取不到表名，因此设计是，表就用通用`mongo`字段做完通用表，然后key里面才是表加id的设计，因此也导致了`deletAll`是删除所有的表，因为`deletAll`基本不会用到，也还可以接受，就算用到了，只是缓存没了，还是能从数据库重建缓存
+
+参考[SpringCache扩展@CacheEvict的key模糊匹配清除](https://my.oschina.net/u/220938/blog/3196609)
+
+##### 解决方案
+
+新建个该文件`CustomizedRedisCacheManager.java`
+
+```java
+public class CustomizedRedisCacheManager extends RedisCacheManager {
+    private final RedisCacheWriter cacheWriter;
+    private final RedisCacheConfiguration defaultCacheConfig;
+
+
+    public CustomizedRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
+        super(cacheWriter, defaultCacheConfiguration);
+        this.cacheWriter = cacheWriter;
+        this.defaultCacheConfig = defaultCacheConfiguration;
+    }
+
+    public CustomizedRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, String... initialCacheNames) {
+        super(cacheWriter, defaultCacheConfiguration, initialCacheNames);
+        this.cacheWriter = cacheWriter;
+        this.defaultCacheConfig = defaultCacheConfiguration;
+    }
+
+    public CustomizedRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, boolean allowInFlightCacheCreation, String... initialCacheNames) {
+        super(cacheWriter, defaultCacheConfiguration, allowInFlightCacheCreation, initialCacheNames);
+        this.cacheWriter = cacheWriter;
+        this.defaultCacheConfig = defaultCacheConfiguration;
+    }
+
+    public CustomizedRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, Map<String, RedisCacheConfiguration> initialCacheConfigurations) {
+        super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations);
+        this.cacheWriter = cacheWriter;
+        this.defaultCacheConfig = defaultCacheConfiguration;
+    }
+
+    public CustomizedRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, Map<String, RedisCacheConfiguration> initialCacheConfigurations, boolean allowInFlightCacheCreation) {
+        super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations, allowInFlightCacheCreation);
+        this.cacheWriter = cacheWriter;
+        this.defaultCacheConfig = defaultCacheConfiguration;
+    }
+
+    /**
+     * 这个构造方法最重要
+     **/
+    public CustomizedRedisCacheManager(RedisConnectionFactory redisConnectionFactory, RedisCacheConfiguration cacheConfiguration) {
+        this(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory), cacheConfiguration);
+    }
+
+    @Override
+    public Map<String, RedisCacheConfiguration> getCacheConfigurations() {
+        Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>(getCacheNames().size());
+        getCacheNames().forEach(it -> {
+            RedisCache cache = CustomizedRedisCache.class.cast(lookupCache(it));
+            configurationMap.put(it, cache != null ? cache.getCacheConfiguration() : null);
+        });
+        return Collections.unmodifiableMap(configurationMap);
+    }
+
+    @Override
+    protected RedisCache createRedisCache(String name, RedisCacheConfiguration cacheConfig) {
+        return new CustomizedRedisCache(name, cacheWriter, cacheConfig != null ? cacheConfig : defaultCacheConfig);
+    }
+}
+```
+
+新建`CustomizedRedisCache.java`
+
+```java
+public class CustomizedRedisCache extends RedisCache {
+    private final String name;
+    private final RedisCacheWriter cacheWriter;
+    private final ConversionService conversionService;
+
+    /**
+     * Create new {@link RedisCache}.
+     *
+     * @param name        must not be {@literal null}.
+     * @param cacheWriter must not be {@literal null}.
+     * @param cacheConfig must not be {@literal null}.
+     */
+    protected CustomizedRedisCache(String name, RedisCacheWriter cacheWriter, RedisCacheConfiguration cacheConfig) {
+        super(name, cacheWriter, cacheConfig);
+        this.name = name;
+        this.cacheWriter = cacheWriter;
+        this.conversionService = cacheConfig.getConversionService();
+    }
+
+    @Override
+    public void evict(Object key) {
+        if (key instanceof String) {
+            String keyString = key.toString();
+            // 后缀删除
+            if (keyString.endsWith("*")) {
+                byte[] pattern = this.conversionService.convert(this.createCacheKey(key), byte[].class);
+                this.cacheWriter.clean(this.name, pattern);
+                return;
+            }
+        }
+        // 删除指定的key
+        super.evict(key);
+    }
+}
+```
+
+添加配置`CachingConfig.java`，指定自定义的缓存类
+
+```java
+@Configuration
+public class CachingConfig {
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.
+                defaultCacheConfig();
+        return new CustomizedRedisCacheManager(redisConnectionFactory, cacheConfiguration);
+    }
+}
+```
+
+最后再修改使用`@CacheEvict`就支持`*`号模糊删除了
+
+```java
+//删除table开头的所有key
+@CacheEvict(key = "#root.target.table+'*'",condition ="#root.target.isCache") 
+```
 
 ### 参考
 
