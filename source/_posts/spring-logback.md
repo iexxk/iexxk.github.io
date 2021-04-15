@@ -1,12 +1,12 @@
 ---
 title: spring logback
 date: 2020-09-03 15:50:23
-updated: 2021-04-08 09:30:20
+updated: 2021-04-13 10:27:30
 categories: Spring
 tags: [Spring,Logback]
 ---
 
-## spring logback 简介
+# spring logback 简介
 
 ### 依赖图
 
@@ -120,9 +120,19 @@ spring.application.name=testDemo
 spring.cloud.config.logback-profile=FILE
 ```
 
+# log 日志脱敏和超长日志处理
+
+#### 需求：
+
+因为日志里面含有大量的base64的图片数据，各处都有打印，导致日志过大，日志不美观排查问题不方便
+
+
+
 
 
 ### 参考
 
 [logback-spring.xml](https://www.jianshu.com/p/6f093b0b0c8a)
+
+[一般人不敢动系列之—基于logback的日志“规范”和“脱敏”](https://cloud.tencent.com/developer/article/1650600)
 

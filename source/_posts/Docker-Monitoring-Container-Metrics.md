@@ -1,7 +1,7 @@
 ---
 title: Docker监控容器指标
 date: 2021-03-31 10:15:33
-updated: 2021-04-01 11:29:13
+updated: 2021-04-15 11:00:15
 categories: Docker
 tags: [Docker,Cadvisor,prometheus]
 ---
@@ -136,6 +136,24 @@ node_filesystem_free_bytes{fstype="rootfs"}[1m]
 ```
 
 [![cEniNR.png](https://z3.ax1x.com/2021/04/01/cEniNR.png)](https://imgtu.com/i/cEniNR)
+
+```sh
+#name是容器名字
+
+#容器名字容易统计死的容器，重启服务的时候，会有多个容器，但其实是一个服务，因此按服务名统计
+sum(container_memory_rss{container_label_com_docker_swarm_service_name=~".+"}) by (container_label_com_docker_swarm_service_name)
+#按服务名存在一个问题，因此可以通过image进行分组，但是存在后缀
+sum(container_memory_rss{name=~".+"})by(image)
+#可以去掉后缀,但是有的官方镜像后缀很难看
+sum(label_replace(container_memory_rss{name=~".+"},"image_sub","$1","image", "(.*)(:)(.*)"))by(image_sub)
+#因此最后采用label_replace方法，进行对原数据进行字段替换，
+#label_replace(原数据,"新的字段名","取正则里面的那一部分","旧的字段名", "正则")，正则每一段都用()包裹，$1代表取第一个括号内容，2就代表第二个括号内容，用了括号才能用转义\\
+label_replace(container_memory_rss{name=~".+"},"name","$1","name", "(.*)(\\.1\\.)(.*)")
+#最终版本，旧的name和新的name要一致，因为有的正则匹配不到，旧的name的数据就会合为一体，就不会丢数据
+sum(label_replace(container_memory_rss{name=~".+"},"name","$1","name", "(.*)(\\.1\\.)(.*)"))by(name)
+#统计cpu，label_replace要在外面替换
+sum(label_replace(rate(container_cpu_usage_seconds_total{name=~".+"}[$interval]),"name","$1","name", "(.*)(\\.1\\.)(.*)"))by (name) * 100
+```
 
 ## cadvisor+influxDB+Grafana
 
