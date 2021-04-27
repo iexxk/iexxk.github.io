@@ -1,10 +1,12 @@
 ---
 title: SpringBoot 动态添加监听 rabbitMQ 队列
 date: 2020-07-10 16:32:40
-updated: 2020-07-10 16:43:06
+updated: 2021-04-27 17:34:03
 categories: SpringBoot
 tags: [rabbitMQ]
 ---
+
+## 动态监听队列
 
 ### 需求
 
@@ -97,4 +99,14 @@ tags: [rabbitMQ]
    ```
 
 6. 测试调用post 127.0.0.1:8080/queue 接口就能添加队列了，发送mq的消息没写测试方法，但是可以直接到mq的管理页面push一条消息进行测试
+
+## 多线程监听队列
+
+监听队列时，单线程
+
+
+
+### 参考
+
+[工作随笔——rabbitmq的多线程监听（Springboot）](https://blog.csdn.net/qq_43585377/article/details/109204501)
 
