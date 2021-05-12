@@ -1,7 +1,7 @@
 ---
 title: minio搭建图床
 date: 2020-08-05 18:11:05
-updated: 2021-03-18 18:33:05
+updated: 2021-05-12 20:06:21
 categories: 杂谈
 tags: [图床,minio,oss]
 ---
@@ -30,6 +30,17 @@ services:
       placement:
         constraints: [node.hostname == me]      
 ```
+
+### minio设置永久分享
+
+```bash
+docker exec -it <容器id> bash
+curl https://dl.minio.io/client/mc/release/linux-amd64/mc --output mc
+./mc config host add minio http://ip:14033 username password
+./mc policy set public minio/<桶的名字>
+```
+
+设置成功后该桶就可以通过url了进行拼接访问了
 
 ### 图床客户端工具
 
