@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Gateway
 date: 2021-04-26 11:17:40
-updated: 2021-04-27 11:30:20
+updated: 2021-05-27 16:48:11
 categories: SpringCloud
 tags: [SpringCloud,Gateway]
 ---
@@ -14,7 +14,7 @@ tags: [SpringCloud,Gateway]
 
 [![gSZKje.png](https://z3.ax1x.com/2021/04/26/gSZKje.png)](https://imgtu.com/i/gSZKje)
 
-## 网关相关类介绍
+## 动态路由相关设置类
 
 #### `RouteDefinitionRepository` 路由存储器
 

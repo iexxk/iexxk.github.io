@@ -1,7 +1,8 @@
 ---
 title: centos7.3升级内核
 date: 2017-09-19 18:13:37
-updated: 2018-12-12 10:47:58categories: Linux
+updated: 2021-05-31 16:01:33
+categories: Linux
 tags: [centos,内核]
 ---
 ### centos7.3升级内核
@@ -18,6 +19,8 @@ rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
 yum --disablerepo="*" --enablerepo="elrepo-kernel" list available
 #安装kernel-ml.x86_64主线稳定版
 yum -y --enablerepo=elrepo-kernel install kernel-ml.x86_64 kernel-ml-devel.x86_64
+#重建grub2的配置文件（可选操作，如果下一步查看内核找不到该文件，执行该命令）
+grub2-mkconfig -o /boot/grub2/grub.cfg
 #查看可用内核
 cat /boot/grub2/grub.cfg |grep menuentry 
 #替换刚刚查看出来的内核名字
