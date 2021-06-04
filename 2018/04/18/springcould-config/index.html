@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="配置(config)中心作用多服务统一配置管理，主要分配置中心服务端，和配置中心客户端（主要存储配置）  Config Server 新建一个springboot项目，取名configserver，勾选   Could discovery-&gt; eureka server   注释掉了，引用了不注册报错，如果要用，就注册就行，这里是测试config所以先不注册  Could config-&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCould-config">
+<meta property="og:url" content="https://blog.iexxk.com/2018/04/18/springcould-config/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="配置(config)中心作用多服务统一配置管理，主要分配置中心服务端，和配置中心客户端（主要存储配置）  Config Server 新建一个springboot项目，取名configserver，勾选   Could discovery-&gt; eureka server   注释掉了，引用了不注册报错，如果要用，就注册就行，这里是测试config所以先不注册  Could config-&amp;g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/18/627ZE6.png">
+<meta property="article:published_time" content="2018-04-18T23:14:52.000Z">
+<meta property="article:modified_time" content="2021-03-18T18:35:12.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="SpringCould">
+<meta property="article:tag" content="config">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s3.ax1x.com/2021/03/18/627ZE6.png">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2018/04/18/springcould-config/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>SpringCould-config | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-config-%E4%B8%AD%E5%BF%83"><span class="nav-number">1.</span> <span class="nav-text">配置(config)中心</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Config-Server"><span class="nav-number">1.1.</span> <span class="nav-text">Config Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#config-client"><span class="nav-number">1.2.</span> <span class="nav-text">config client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">配置中心高可用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#config-server"><span class="nav-number">1.3.1.</span> <span class="nav-text">config server</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#config-client-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">config client</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.3.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">图示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="nav-number">3.</span> <span class="nav-text">使用本地文件作为配置中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">公共配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9D%E5%A4%96"><span class="nav-number">5.</span> <span class="nav-text">额外</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="nav-number">5.1.</span> <span class="nav-text">加载顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%B7%B1%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">开发加载自己配置优化</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2018/04/18/springcould-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringCould-config
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-18 23:14:52" itemprop="dateCreated datePublished" datetime="2018-04-18T23:14:52+00:00">2018-04-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-18 18:35:12" itemprop="dateModified" datetime="2021-03-18T18:35:12+00:00">2021-03-18</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/04/18/springcould-config/" class="post-meta-item leancloud_visitors" data-flag-title="SpringCould-config" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="配置-config-中心"><a href="#配置-config-中心" class="headerlink" title="配置(config)中心"></a>配置(config)中心</h3><p>作用多服务统一配置管理，主要分配置中心服务端，和配置中心客户端（主要存储配置）</p>
+<p><img src="https://s3.ax1x.com/2021/03/18/627ZE6.png" alt="image-20200811155609870"></p>
+<h4 id="Config-Server"><a href="#Config-Server" class="headerlink" title="Config Server"></a>Config Server</h4><ol>
+<li><p>新建一个springboot项目，取名<code>configserver</code>，勾选</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Could discovery-&gt; eureka server   注释掉了，引用了不注册报错，如果要用，就注册就行，这里是测试config所以先不注册</li>
+<li><input checked="" disabled="" type="checkbox"> Could config-&gt;config server</li>
+</ul>
+</li>
+<li><p>在<code>application</code>启动类添加<code>@EnableConfigServer</code></p>
+</li>
+<li><p>新建一个git配置文件仓库，这里就在当前工程创建，因为这个反正都要上传git，在项目目录新建一个<code>config</code>目录,然后在目录里新建一个配置仓库<code>testrepo</code>,再在仓库添加配置文件<code>config-client-dev.properties</code>内容如下</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">config-client.testsmsg</span> = <span class="string">hello config me</span></span><br><span class="line"><span class="attr">test</span> = <span class="string">haa</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后git commit  push推送到远程分支</p>
+</li>
+<li><p>在配置文件<code>application.yml</code>添加如下内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8096</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">config-server</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span>  <span class="comment">#配置仓库分支</span></span><br><span class="line">      <span class="attr">server:</span></span><br><span class="line">        <span class="attr">git:</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">https://github.com/xuanfong1/SpringCould/</span>   <span class="comment">#配置仓库git地址</span></span><br><span class="line">          <span class="attr">search-paths:</span> <span class="string">config/testrepo</span>   <span class="comment">#配置仓库路径</span></span><br><span class="line">          <span class="attr">username:</span>   <span class="comment">#访问git仓库的用户名，这里因为是开放项目所以不需要设置</span></span><br><span class="line">          <span class="attr">password:</span>   <span class="comment">#访问git仓库的密码</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8096/config-client/dev/master%E8%BF%99%E4%B8%AA%E5%9C%B0%E5%9D%80%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">http://127.0.0.1:8096/config-client/dev/master这个地址读取配置文件</a></p>
+<p>下面介绍http请求地址与资源文件映射问题</p>
+<p>Url :  /{application}/{profile}[/{label}]</p>
+<p>资源文件格式可以为</p>
+<ul>
+<li><p>/{application}-{profile}.yml</p>
+</li>
+<li><p>/{label}/{application}-{profile}.yml</p>
+</li>
+<li><p>/{application}-{profile}.properties</p>
+</li>
+<li><p>/{label}/{application}-{profile}.properties</p>
+<p>举例：master分支有配置文件<code>config-client-dev.properties</code>访问的url为<code>ip:port/config-client/dev/master</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="config-client"><a href="#config-client" class="headerlink" title="config client"></a>config client</h4><ol>
+<li><p>新建一个springboot项目，取名<code>configserver</code>，勾选</p>
+<ul>
+<li><input disabled="" type="checkbox"> web-&gt;web</li>
+<li><input disabled="" type="checkbox"> Could config-&gt;config client</li>
+</ul>
+</li>
+<li><p>修改配置文件<code>application.properties</code>一定要修改为**<code>bootstrap.yml</code>**并添加如下内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8097</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">config-client</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span> <span class="comment">#指明远程仓库的分支</span></span><br><span class="line">      <span class="attr">profile:</span> <span class="string">dev</span> <span class="comment">#dev(开放)、test(测试)、pro(正式)</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">http://127.0.0.1:8096/</span>  <span class="comment">#配置中心地址</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加一个api接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class HiController &#123;</span><br><span class="line">    @Value(&quot;$&#123;test&#125;&quot;)  &#x2F;&#x2F;调用配置中心的配置</span><br><span class="line">    String test;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value &#x3D; &quot;&#x2F;hi&quot;)</span><br><span class="line">    public String hi()&#123;</span><br><span class="line">        return test;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8097/hi%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95">http://127.0.0.1:8097/hi进行测试</a></p>
+</li>
+</ol>
+<h4 id="配置中心高可用"><a href="#配置中心高可用" class="headerlink" title="配置中心高可用"></a>配置中心高可用</h4><h5 id="config-server"><a href="#config-server" class="headerlink" title="config server"></a>config server</h5><ol>
+<li><p>添加依赖<code>compile(&#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-server&#39;)</code></p>
+</li>
+<li><p>在<code>Application</code>启动类添加注解<code>@EnableEurekaClient</code></p>
+</li>
+<li><p>在<code>Application.yml</code>配置文件增加</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://127.0.0.1:8091/eureka/</span> <span class="comment">#注意要加eureka，不然找不到</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="config-client-1"><a href="#config-client-1" class="headerlink" title="config client"></a>config client</h5><ol>
+<li><p>添加依赖<code>compile(&#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-server&#39;)</code></p>
+</li>
+<li><p>在<code>Application</code>启动类添加注解<code>@EnableEurekaClient</code></p>
+</li>
+<li><p>在<code>bootstrap.yml</code>配置文件修改如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8097</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">config-client</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span> <span class="comment">#指明远程仓库的分支</span></span><br><span class="line">      <span class="attr">profile:</span> <span class="string">dev</span> <span class="comment">#dev(开放)、test(测试)、pro(正式)</span></span><br><span class="line"><span class="comment">#      uri: http://127.0.0.1:8096/  #配置中心地址  ,用eureka就不是ip地址了</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">        <span class="attr">service-id:</span> <span class="string">config-server</span>  <span class="comment">#这里用服务名</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://127.0.0.1:8091/eureka/</span> <span class="comment">#注意要加eureka，不然找不到</span></span><br></pre></td></tr></table></figure>
+
+<p>所以多个config-server运行，通过负载均衡就可以达到高可用</p>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><p>依次运行服务注册中心、配置中心服务、读配置中心的客户端服务</p>
+<p>访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8097/hi%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95">http://127.0.0.1:8097/hi进行测试</a></p>
+<h3 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[git仓库] --&gt;B(config server)</span><br><span class="line">A[git仓库] --&gt;B1(config server)</span><br><span class="line">A[git仓库] --&gt;B2(config server)</span><br><span class="line">B --&gt; C&#123;负载均衡&#125;</span><br><span class="line">B1 --&gt; C&#123;负载均衡&#125;</span><br><span class="line">B2 --&gt; C&#123;负载均衡&#125;</span><br><span class="line">C --&gt; D[service A]</span><br><span class="line">C --&gt; E[service B]</span><br><span class="line">F[eureka service]</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h3 id="使用本地文件作为配置中心"><a href="#使用本地文件作为配置中心" class="headerlink" title="使用本地文件作为配置中心"></a>使用本地文件作为配置中心</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8096</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">config-server</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">native</span>  <span class="comment">#这里进行仓库预选，可设置native和git，分别对应spring.cloud.config.server下面的值</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">label:</span> <span class="string">master</span>  <span class="comment">#配置仓库分支</span></span><br><span class="line">      <span class="attr">server:</span></span><br><span class="line">        <span class="attr">git:</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">https://github.com/xuanfong1/SpringCould/</span>   <span class="comment">#配置仓库git地址</span></span><br><span class="line">          <span class="attr">search-paths:</span> <span class="string">config/testrepo</span>   <span class="comment">#配置仓库路径</span></span><br><span class="line"><span class="comment">#          username:   #访问git仓库的用户名，这里因为是开放项目所以不需要设置</span></span><br><span class="line"><span class="comment">#          password:   #访问git仓库的密码</span></span><br><span class="line">        <span class="attr">native:</span> <span class="comment">#本地配置文件仓库的绝对路径</span></span><br><span class="line">          <span class="attr">search-locations:</span> <span class="string">/Users/xuanleung/workspace/SpringCould/config/testrepo</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://127.0.0.1:8091/eureka/</span> <span class="comment">#注意要加eureka，不然找不到</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="公共配置文件"><a href="#公共配置文件" class="headerlink" title="公共配置文件"></a>公共配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">application.properties <span class="comment">#公共配置文件，所有服务都会加载这个默认配置文件，适合放公共的数据库配置等</span></span><br><span class="line">application-dev.properties <span class="comment">#公共带环境的配置文件，dev环境会默认加载这个公共配置文件</span></span><br><span class="line">config-client-dev.properties <span class="comment">#config-client服务的私有配置</span></span><br><span class="line">test-dev.properties <span class="comment">#部分项目的公共配置，如一些项目引用mysql,一些不引用</span></span><br><span class="line"><span class="comment">#使用指定配置，需要在项目中设置下面这个选项</span></span><br><span class="line">spring.cloud.config.name = config-client,<span class="built_in">test</span>  <span class="comment">#指定配置文件，如果不需要指定，注释该行</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="额外"><a href="#额外" class="headerlink" title="额外"></a>额外</h3><p>如果要使用vm启动参数，需要在config client设置如下三个参数</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vm启动参数，去掉下面的注释</span></span><br><span class="line"><span class="meta">spring.cloud.config.allowOverride</span>=<span class="string">true</span></span><br><span class="line"><span class="meta">spring.cloud.config.overrideNone</span>=<span class="string">false</span></span><br><span class="line"><span class="meta">spring.cloud.config.overrideSystemProperties</span>=<span class="string">false</span></span><br></pre></td></tr></table></figure>
+
+<p>疑问：vm设置-Dserver.port等参数时，又不需要上面的设置<br>解释：vm参数如果不设置上面的会被配置文件里面的覆盖，如果配置文件里面没有设置，那就是用的vm的了</p>
+<h4 id="加载顺序"><a href="#加载顺序" class="headerlink" title="加载顺序"></a>加载顺序</h4><p>举例<code>server.port</code></p>
+<ol>
+<li><p>client 里面的<code>resources/bootstrap.yml</code></p>
+</li>
+<li><p>vm里面<code>-Dserver.port</code></p>
+</li>
+<li><p>config里面<code>config-client-dev.properties</code></p>
+</li>
+</ol>
+<p>三个都设置，使用3，只设置1，2使用2，只设置1，使用1</p>
+<p>可推测优先级3&gt;2&gt;1</p>
+<h3 id="开发加载自己配置优化"><a href="#开发加载自己配置优化" class="headerlink" title="开发加载自己配置优化"></a>开发加载自己配置优化</h3><p>利用默认分支功能，全局修改所有微服务为自己的配置</p>
+<ol>
+<li>新建个自己的配置分支</li>
+<li>复写spring config server启动参数<code>spring.cloud.config.server.git.default-label=my-baranch</code>为自己的分支号</li>
+<li>注意不要在spring config client指定分支<code>spring.cloud.config.label=master</code></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SpringCould/" rel="tag"># SpringCould</a>
+              <a href="/tags/config/" rel="tag"># config</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/17/springcould-zuul/" rel="prev" title="SpringCould-Zuul">
+                  <i class="fa fa-chevron-left"></i> SpringCould-Zuul
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/19/network-hyper-v-nat/" rel="next" title="Network-hyper-v-NAt">
+                  Network-hyper-v-NAt <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2018/04/18/springcould-config/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

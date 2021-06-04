@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="安装Gradle java环境必须 下载Gradle,其中binary-only为单独的安装包，complete为文档加安装包，然后解压 在path中添加系统环境变量F:\xuan\gradle-4.7\bin 执行gradle -v检查是否安装成功  使用Gradle 进入一个Gradle项目,或者拉取一个 git clone git@github.com:gradle&#x2F;gradle-build">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tools-Gradle-Base">
+<meta property="og:url" content="https://blog.iexxk.com/2018/05/10/tools-gradle-base/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="安装Gradle java环境必须 下载Gradle,其中binary-only为单独的安装包，complete为文档加安装包，然后解压 在path中添加系统环境变量F:\xuan\gradle-4.7\bin 执行gradle -v检查是否安装成功  使用Gradle 进入一个Gradle项目,或者拉取一个 git clone git@github.com:gradle&#x2F;gradle-build">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-05-10T16:58:41.000Z">
+<meta property="article:modified_time" content="2018-12-12T10:47:58.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="Gradle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2018/05/10/tools-gradle-base/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Tools-Gradle-Base | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Gradle"><span class="nav-number">1.</span> <span class="nav-text">安装Gradle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Gradle"><span class="nav-number">2.</span> <span class="nav-text">使用Gradle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradle-build-scans%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">Gradle build scans使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-New-Gradle-Builds"><span class="nav-number">2.2.</span> <span class="nav-text">Creating New Gradle Builds</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96gradle-%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">初始化gradle 项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAtask%E4%BB%BB%E5%8A%A1%E5%90%8D%E5%8F%ABcopy"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">创建task任务名叫copy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Gradle-%E5%BA%94%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">Gradle 应用插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.0.4.</span> <span class="nav-text">常用命令</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%8C"><span class="nav-number">3.</span> <span class="nav-text">手册</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2018/05/10/tools-gradle-base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tools-Gradle-Base
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-05-10 16:58:41" itemprop="dateCreated datePublished" datetime="2018-05-10T16:58:41+00:00">2018-05-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-12-12 10:47:58" itemprop="dateModified" datetime="2018-12-12T10:47:58+00:00">2018-12-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/05/10/tools-gradle-base/" class="post-meta-item leancloud_visitors" data-flag-title="Tools-Gradle-Base" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="安装Gradle"><a href="#安装Gradle" class="headerlink" title="安装Gradle"></a><a target="_blank" rel="noopener" href="https://gradle.org/install/">安装Gradle</a></h2><ol>
+<li>java环境必须</li>
+<li>下载<a target="_blank" rel="noopener" href="https://gradle.org/releases/">Gradle</a>,其中binary-only为单独的安装包，complete为文档加安装包，然后解压</li>
+<li>在path中添加系统环境变量<code>F:\xuan\gradle-4.7\bin</code></li>
+<li>执行<code>gradle -v</code>检查是否安装成功</li>
+</ol>
+<h2 id="使用Gradle"><a href="#使用Gradle" class="headerlink" title="使用Gradle"></a>使用Gradle</h2><ol>
+<li>进入一个Gradle项目,或者拉取一个<code> git clone git@github.com:gradle/gradle-build-scan-quickstart.git</code></li>
+</ol>
+<h3 id="Gradle-build-scans使用"><a href="#Gradle-build-scans使用" class="headerlink" title="Gradle build scans使用"></a>Gradle build scans使用</h3><blockquote>
+<p>Build Scans是用于开发和维护Gradle构建的重要工具。它为你提供了构建的详细信息，并为你识别构建环境、依赖或性能上存在的问题，同时可以帮你更全面地理解并提升构建过程，也便于与他人的合作。</p>
+</blockquote>
+<p>大概理解就是该插件能把构建过程的数据分享出去，方便让别人查看分析构建信息。</p>
+<ol>
+<li><p>进入项目跟目录执行构建扫描命令<code>./gradlew build --scan</code>，有可能会提示<code>Do you accept these terms?</code>是否接受许可协议，输入yes即可，成功后日志会输出一个链接类似<a target="_blank" rel="noopener" href="https://scans.gradle.com/s/z5i6rmnpd4sbu%EF%BC%8C%E8%AE%BF%E9%97%AE%E8%AF%A5%E9%93%BE%E6%8E%A5%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8B%E6%9E%84%E5%BB%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E4%BA%86%EF%BC%88%E6%9C%89%E7%9A%84%E6%89%93%E5%BC%80%E4%B9%9F%E8%AE%B8%E9%9C%80%E8%A6%81%E9%82%AE%E7%AE%B1%EF%BC%89%E3%80%82">https://scans.gradle.com/s/z5i6rmnpd4sbu，访问该链接就可以查看构建日志信息了（有的打开也许需要邮箱）。</a></p>
+</li>
+<li><p>上面虽然得到了链接，但是可以直接在<code>build.gradle</code>添加相关配置信息，构建扫描插件<a target="_blank" rel="noopener" href="https://plugins.gradle.org/plugin/com.gradle.build-scan">build-scan</a>,为了将构建扫码发布到<a target="_blank" rel="noopener" href="https://gradle.com/terms-of-service%E9%9C%80%E8%A6%81%E6%8E%A5%E5%8F%97%E5%8D%8F%E8%AE%AE">https://gradle.com/terms-of-service需要接受协议</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id &#39;com.gradle.build-scan&#39; version &#39;1.13.2&#39; &#x2F;&#x2F;如果是低版本一定要放到其他插件前面</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;配置扫描发送地址，以及同意协议</span><br><span class="line">buildScan &#123;</span><br><span class="line">    termsOfServiceUrl &#x3D; &#39;https:&#x2F;&#x2F;gradle.com&#x2F;terms-of-service&#39;</span><br><span class="line">    termsOfServiceAgree &#x3D; &#39;yes&#39;  &#x2F;&#x2F;同意协议</span><br><span class="line">	tag &#39;xuan test&#39;  &#x2F;&#x2F;打标签</span><br><span class="line">	&#x2F;&#x2F;项目的地址，这里需要是http地址，用git开头的地址编译报错</span><br><span class="line">	link &#39;GitHub&#39;,&#39;https:&#x2F;&#x2F;github.com&#x2F;gradle&#x2F;gradle-build-scan-quickstart&#39;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行<code>gradle build -Dscan</code>运行得到链接，然后访问即可</p>
+</li>
+</ol>
+<h3 id="Creating-New-Gradle-Builds"><a href="#Creating-New-Gradle-Builds" class="headerlink" title="Creating New Gradle Builds"></a>Creating New Gradle Builds</h3><h5 id="初始化gradle-项目"><a href="#初始化gradle-项目" class="headerlink" title="初始化gradle 项目"></a>初始化gradle 项目</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mkdir gradle<span class="literal">-demo</span> <span class="comment">#创建项目目录</span></span><br><span class="line"><span class="built_in">cd</span> gradle<span class="literal">-demo</span> <span class="comment">#进入项目目录</span></span><br><span class="line">gradle init <span class="comment">#初始化为gradle项目</span></span><br><span class="line"><span class="comment">#生成如下目录文件</span></span><br><span class="line">.</span><br><span class="line">├── build.gradle   <span class="comment">#项目配置脚本</span></span><br><span class="line">├── gradle</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── gradle<span class="literal">-wrapper</span>.jar  <span class="comment">#wrapper可执行jar</span></span><br><span class="line">│       └── gradle<span class="literal">-wrapper</span>.properties  <span class="comment">#wrapper 配置文件</span></span><br><span class="line">├── gradlew  <span class="comment"># unix systems（linux）系统下的脚本</span></span><br><span class="line">├── gradlew.bat  <span class="comment"># window 下的脚本</span></span><br><span class="line">└── settings.gradle  <span class="comment">#配置那些项目参与构建脚本</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="创建task任务名叫copy"><a href="#创建task任务名叫copy" class="headerlink" title="创建task任务名叫copy"></a>创建task任务名叫<code>copy</code></h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">task copy(<span class="attr">type:</span> Copy, <span class="attr">group:</span> <span class="string">&quot;Custom&quot;</span>, <span class="attr">description:</span> <span class="string">&quot;复制src目录到dest目录&quot;</span>) &#123;</span><br><span class="line">    from <span class="string">&quot;src&quot;</span>   <span class="comment">//前提需要有src目录</span></span><br><span class="line">    into <span class="string">&quot;dest&quot;</span>  <span class="comment">//不需要创建，会自动创建</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>命令行执行<code>./gradlew copy</code>代表执行task里的copy任务</p>
+<h5 id="Gradle-应用插件"><a href="#Gradle-应用插件" class="headerlink" title="Gradle 应用插件"></a>Gradle 应用插件</h5><p><a target="_blank" rel="noopener" href="https://plugins.gradle.org/">插件仓库</a></p>
+<p>这里以base插件，base插件功能主要是打包为zip文件</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;   <span class="comment">//这个代码快必须放顶部</span></span><br><span class="line">	id <span class="string">&quot;base&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">task copy(<span class="attr">type:</span> Copy, <span class="attr">group:</span> <span class="string">&quot;Custom&quot;</span>, <span class="attr">description:</span> <span class="string">&quot;复制src目录到dest目录&quot;</span>) &#123;</span><br><span class="line">    from <span class="string">&quot;src&quot;</span></span><br><span class="line">    into <span class="string">&quot;dest&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">task zip(<span class="attr">type:</span> Zip, <span class="attr">group:</span> <span class="string">&quot;Util&quot;</span>, <span class="attr">description:</span> <span class="string">&quot;压缩src目录文件&quot;</span>) &#123;</span><br><span class="line">	from <span class="string">&quot;src&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>./gradlew zip</code>,然后在目录  <code>.\build\distributions</code>下就可以看到<code>gradle-demo.zip</code>文件了</p>
+<h5 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./gradlew tasks <span class="comment">#查看可用的task任务</span></span><br><span class="line">./gradlew zip -<span class="literal">-scan</span>  <span class="comment">#结合scan执行zip，分析执行信息</span></span><br><span class="line">./gradlew properties <span class="comment">#查看可用的配置属性，类似环境变量(配置属性)的</span></span><br></pre></td></tr></table></figure>
+
+<p>在<code>build.gradle</code>可以更改<code>properties</code>变量的值，但是不能新增，例如修改项目描述和版本号</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//放在build.gradle文件中，但是不能放在plugins前面，因为plugins这个必须在顶部</span></span><br><span class="line">description = <span class="string">&quot;该项目为测试学习用&quot;</span></span><br><span class="line">version = <span class="string">&quot;1.0&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手册"><a href="#手册" class="headerlink" title="手册"></a>手册</h2><p><a target="_blank" rel="noopener" href="https://docs.gradle.org/4.7/userguide/command_line_interface.html">Gradle 命令手册</a></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>不能在gradle项目的子目录执行<code>gradle init</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Gradle/" rel="tag"># Gradle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/09/android-recyclerview/" rel="prev" title="Android-RecyclerView">
+                  <i class="fa fa-chevron-left"></i> Android-RecyclerView
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/05/11/tools-gradle-muilt-project-builds/" rel="next" title="Tools-Gradle-muilt-project-Builds">
+                  Tools-Gradle-muilt-project-Builds <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2018/05/10/tools-gradle-base/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

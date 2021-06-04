@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="介绍**Gluster**是一个大尺度文件系统。 主要功能简单卷 distribute volume 分布式卷，两台主机的磁盘融合一个磁盘 stripe volume 条带卷，一个文件分成数据块存储到不同的地方 replica volume 复制卷，一个文件分别保存到两台主机  复合卷1+2，1+3，2+3，1+2+3 总结常用命令123456789101112131415161718gluste">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7 安装 GlusterFS">
+<meta property="og:url" content="https://blog.iexxk.com/2018/03/07/linux-install-glusterfs/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="介绍**Gluster**是一个大尺度文件系统。 主要功能简单卷 distribute volume 分布式卷，两台主机的磁盘融合一个磁盘 stripe volume 条带卷，一个文件分成数据块存储到不同的地方 replica volume 复制卷，一个文件分别保存到两台主机  复合卷1+2，1+3，2+3，1+2+3 总结常用命令123456789101112131415161718gluste">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-07T15:45:22.000Z">
+<meta property="article:modified_time" content="2018-12-12T10:47:58.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="GlusterFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2018/03/07/linux-install-glusterfs/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>centos7 安装 GlusterFS | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">主要功能</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8D%B7"><span class="nav-number">1.1.1.</span> <span class="nav-text">简单卷</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E5%8D%B7"><span class="nav-number">1.1.2.</span> <span class="nav-text">复合卷</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">总结常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2018/03/07/linux-install-glusterfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          centos7 安装 GlusterFS
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-07 15:45:22" itemprop="dateCreated datePublished" datetime="2018-03-07T15:45:22+00:00">2018-03-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-12-12 10:47:58" itemprop="dateModified" datetime="2018-12-12T10:47:58+00:00">2018-12-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/03/07/linux-install-glusterfs/" class="post-meta-item leancloud_visitors" data-flag-title="centos7 安装 GlusterFS" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>**<a target="_blank" rel="noopener" href="https://www.gluster.org/">Gluster</a>**是一个大尺度文件系统。</p>
+<h5 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h5><h6 id="简单卷"><a href="#简单卷" class="headerlink" title="简单卷"></a>简单卷</h6><ol>
+<li>distribute volume 分布式卷，两台主机的磁盘融合一个磁盘</li>
+<li>stripe volume 条带卷，一个文件分成数据块存储到不同的地方</li>
+<li>replica volume 复制卷，一个文件分别保存到两台主机</li>
+</ol>
+<h6 id="复合卷"><a href="#复合卷" class="headerlink" title="复合卷"></a>复合卷</h6><p>1+2，1+3，2+3，1+2+3</p>
+<h4 id="总结常用命令"><a href="#总结常用命令" class="headerlink" title="总结常用命令"></a>总结常用命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">gluster peer status     <span class="comment">#查看集群各主机连接状态</span></span><br><span class="line">gluster volume list    <span class="comment">#查看挂载卷信息</span></span><br><span class="line">gluster volume list <span class="comment">#查看卷列表</span></span><br><span class="line"><span class="comment">#创建挂在卷，force忽略在root目录创建挂在卷的警告</span></span><br><span class="line">gluster volume create swarm-volume replica 3 worker:/xuan/docker/gluster-volume home:/xuan/docker/gluster-volume xuanps:/xuan/docker/gluster-volume force</span><br><span class="line">gluster volume start swarm-volume <span class="comment">#启动</span></span><br><span class="line">gluster volume stop swarm-volume <span class="comment">#停止</span></span><br><span class="line">gluster volume delete swarm-volume <span class="comment">#删除 ，了文件还会保留</span></span><br><span class="line"><span class="comment">#挂载本地目录到glusterfs卷（swarm-volume），在本地目录添加的会自动同步到其他挂载卷</span></span><br><span class="line"><span class="comment">#eg在本机mnt添加文件，其他volume-name目录也会添加mount [-参数] [设备名称] [挂载点]</span></span><br><span class="line">mount -t glusterfs worker:/swarm-volume /mnt/</span><br><span class="line">umount worker:/swarm-volume  <span class="comment">#卸载了就不会同步了</span></span><br><span class="line"><span class="comment">#重置，删除所有数据</span></span><br><span class="line">systemctl stop glusterd</span><br><span class="line">rm -rf /var/lib/glusterd/</span><br><span class="line">systemctl start glusterd</span><br><span class="line"><span class="comment">#删除节点</span></span><br><span class="line">gluster peer detach home</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>准备工作：</p>
+<p>三台局域网主机（<a target="_blank" rel="noopener" href="http://jingyan.baidu.com/article/29697b915a5376ab20de3cc2.html">centos7 修改主机名 </a>）</p>
+<table>
+<thead>
+<tr>
+<th>hostname</th>
+<th>ip</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xuanps</td>
+<td>10.14.0.1</td>
+<td></td>
+</tr>
+<tr>
+<td>worker</td>
+<td>10.14.0.4</td>
+<td></td>
+</tr>
+<tr>
+<td>home</td>
+<td>10.14.0.5</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>三台都需要安装GlusterFS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#搜索glusterfs可安装的版本</span></span><br><span class="line">yum search centos-release-gluster</span><br><span class="line"><span class="comment">#安装最新长期稳定版本(Long Term Stable)的gluster软件</span></span><br><span class="line">yum -y install centos-release-gluster</span><br><span class="line"><span class="comment">#安装glusterfs-server</span></span><br><span class="line">yum --enablerepo=centos-gluster*-<span class="built_in">test</span> install glusterfs-server</span><br><span class="line">glusterfs -V <span class="comment">#测试</span></span><br><span class="line">systemctl <span class="built_in">enable</span> glusterd <span class="comment">#开机启动</span></span><br><span class="line">systemctl start glusterd <span class="comment">#启动</span></span><br><span class="line">systemctl status glusterd <span class="comment">#查看是否正常运行</span></span><br><span class="line"><span class="comment">#修改hosts不然不能通过主机名连接到对方</span></span><br><span class="line">vim /etc/hosts</span><br><span class="line"><span class="comment">#----------三台都要添加如下设置--------------------------</span></span><br><span class="line">10.14.0.1 xuanps</span><br><span class="line">10.14.0.4 worker</span><br><span class="line">10.14.0.5 home</span><br><span class="line"><span class="comment">#------------------------------------------------------</span></span><br><span class="line"><span class="comment">#从xuanps上执行下面两条，其他主机不用执行</span></span><br><span class="line">gluster peer probe worker</span><br><span class="line">gluster peer probe home</span><br><span class="line"><span class="comment">#三台都执行该命令是否都是connected</span></span><br><span class="line">gluster peer status</span><br><span class="line"><span class="comment">#查看挂载卷信息</span></span><br><span class="line">gluster volume info</span><br><span class="line"><span class="comment">#创建挂在卷，force忽略在root目录创建挂在卷的警告</span></span><br><span class="line">gluster volume create volume-name replica 3 worker:/xuan/docker/gluster-volume/<span class="built_in">test</span> home:/xuan/docker/gluster-volume/<span class="built_in">test</span> xuanps:/xuan/docker/gluster-volume/<span class="built_in">test</span> force</span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">gluster volume start volume-name</span><br><span class="line"><span class="comment">#启动nfs同步，测试需验证，这里要不要开启</span></span><br><span class="line">gluster volume <span class="built_in">set</span> volume-name nfs.disable off</span><br><span class="line"><span class="comment">#挂载本地目录到glusterfs卷（volume-name），在本地目录添加的会自动同步到其他挂载卷</span></span><br><span class="line"><span class="comment">#eg在本机mnt添加文件，其他volume-name目录也会添加</span></span><br><span class="line">mount -t glusterfs worker:/volume-name /mnt/</span><br></pre></td></tr></table></figure>
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p>官网：<a target="_blank" rel="noopener" href="https://www.gluster.org/">https://www.gluster.org/</a></p>
+<p><a target="_blank" rel="noopener" href="http://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/">文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.centos.org/SpecialInterestGroup/Storage/gluster-Quickstart">centos官方安装手册</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/opensource/os-cn-glusterfs-docker-volume/index.html">基于 GlusterFS 实现 Docker 集群的分布式存储</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/GlusterFS/" rel="tag"># GlusterFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/04/docker-volume-plugin/" rel="prev" title="Docker-volume-plugin">
+                  <i class="fa fa-chevron-left"></i> Docker-volume-plugin
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/03/12/docker-volume-use/" rel="next" title="docker-volume-use">
+                  docker-volume-use <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2018/03/07/linux-install-glusterfs/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

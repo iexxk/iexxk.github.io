@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="常用命令12345678910111213141516171819202122232425#连接mysqlmysql -u root -pshow status like &#39;Threads%&#39;;+-------------------+-------+| Variable_name     | Value |+-------------------+-------+| Thread">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DB-MySQL-Summary">
+<meta property="og:url" content="https://blog.iexxk.com/2018/04/05/db-mysql-summary/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="常用命令12345678910111213141516171819202122232425#连接mysqlmysql -u root -pshow status like &#39;Threads%&#39;;+-------------------+-------+| Variable_name     | Value |+-------------------+-------+| Thread">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-04-05T20:40:41.000Z">
+<meta property="article:modified_time" content="2019-03-06T21:39:52.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2018/04/05/db-mysql-summary/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>DB-MySQL-Summary | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">2.</span> <span class="nav-text">备份与恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">主从库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.1.</span> <span class="nav-text">mysql创建用户命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">3.1.1.</span> <span class="nav-text">常见错误</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2018/04/05/db-mysql-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DB-MySQL-Summary
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-05 20:40:41" itemprop="dateCreated datePublished" datetime="2018-04-05T20:40:41+00:00">2018-04-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-03-06 21:39:52" itemprop="dateModified" datetime="2019-03-06T21:39:52+00:00">2019-03-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/04/05/db-mysql-summary/" class="post-meta-item leancloud_visitors" data-flag-title="DB-MySQL-Summary" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#连接mysql</span><br><span class="line">mysql -u root -p</span><br><span class="line">show status like &#39;Threads%&#39;;</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Variable_name     | Value |</span><br><span class="line">+-------------------+-------+</span><br><span class="line">| Threads_cached    | 8     | #连接缓存数</span><br><span class="line">| Threads_connected | 81    | #打开的连接数,如果该连接数大于max_connections当前最大连接数会报错</span><br><span class="line">| Threads_created   | 181   | #创建过的线程数</span><br><span class="line">| Threads_running   | 1     | #正在运行的连接数</span><br><span class="line">+-------------------+-------+</span><br><span class="line">show variables like &#39;%max_connections%&#39;;</span><br><span class="line">+-----------------+-------+</span><br><span class="line">| Variable_name   | Value |</span><br><span class="line">+-----------------+-------+</span><br><span class="line">| max_connections | 151   | #当前设置的最大连接数</span><br><span class="line">+-----------------+-------+</span><br><span class="line"> show processlist; #显示前100条的连接，如果显示所有show full processlist;</span><br><span class="line">+------+------+------------------+------+---------+------+----------+------------------+</span><br><span class="line">| Id   | User | Host             | db   | Command | Time | State    | Info             |</span><br><span class="line">+------+------+------------------+------+---------+------+----------+------------------+</span><br><span class="line">| 1100 | root | localhost        | NULL | Query   |    0 | starting | show processlist |</span><br><span class="line">| 1147 | root | 10.255.0.2:52580 | xhzg | Sleep   | 7226 |          | NULL             |</span><br><span class="line">+------+------+------------------+------+---------+------+----------+------------------+</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>mysql配置my.cnf，添加挂在卷<code>      - /dockerdata/manager/mysqldata/config:/etc/mysql/conf.d</code></p>
+<p>然后在挂在卷创建配置文件，添加配置<code>my.cnf</code> 文件名字随便</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">[mysql]</span></span><br><span class="line"><span class="comment"># 设置mysql客户端默认字符集</span></span><br><span class="line"><span class="meta">default-character-set</span>=<span class="string">utf8</span></span><br><span class="line"><span class="attr">[mysqld]</span></span><br><span class="line"><span class="attr">skip-name-resolve</span></span><br><span class="line"><span class="comment">#设置3306端口</span></span><br><span class="line"><span class="attr">port</span> = <span class="string">3306</span></span><br><span class="line"><span class="comment"># 设置mysql的安装目录</span></span><br><span class="line"><span class="attr">basedir</span>=<span class="string">/usr/local/mysql</span></span><br><span class="line"><span class="comment"># 设置mysql数据库的数据的存放目录</span></span><br><span class="line"><span class="attr">datadir</span>=<span class="string">/usr/local/mysql/data</span></span><br><span class="line"><span class="comment"># 允许最大连接数</span></span><br><span class="line"><span class="attr">max_connections</span>=<span class="string">200</span></span><br><span class="line"><span class="comment"># 服务端使用的字符集默认为8比特编码的latin1字符集</span></span><br><span class="line"><span class="meta">character-set-server</span>=<span class="string">utf8</span></span><br><span class="line"><span class="comment"># 创建新表时将使用的默认存储引擎</span></span><br><span class="line"><span class="meta">default-storage-engine</span>=<span class="string">INNODB</span></span><br><span class="line"><span class="attr">lower_case_table_names</span>=<span class="string">1</span></span><br><span class="line"><span class="attr">max_allowed_packet</span>=<span class="string">16M</span></span><br><span class="line"><span class="attr">sql_mode</span>=<span class="string">ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#备份数据库 manage geoserver两个</span></span><br><span class="line">mysqldump -uroot -plfadmin --databases manage geoserver &gt; ~/manageandgeoserver20180829.sql</span><br><span class="line"><span class="comment"># 恢复</span></span><br><span class="line">mysql -uroot -plfadmin &lt;manageandgeoserver20180829.sql</span><br><span class="line"><span class="comment"># 检查校验,进入mysql命令行</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"><span class="comment"># 显示所有数据库</span></span><br><span class="line">mysql&gt;  show databases;</span><br><span class="line"><span class="comment"># 使用 manage数据库</span></span><br><span class="line">mysql&gt; use manage;</span><br><span class="line"><span class="comment"># 显示所有用表</span></span><br><span class="line">mysql&gt; show tables;</span><br><span class="line"><span class="comment">#远程连接</span></span><br><span class="line">mysql&gt;  mysql -h172.16.16.8 -P14036 -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>参考 <a target="_blank" rel="noopener" href="https://blog.csdn.net/helloxiaozhe/article/details/77680255">MySql数据库备份与恢复——使用mysqldump 导入与导出方法总结</a></p>
+<h2 id="主从库"><a href="#主从库" class="headerlink" title="主从库"></a>主从库</h2><ol>
+<li>修改主从配置库的配置文件</li>
+</ol>
+<p>主库配置：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">[mysqld]</span></span><br><span class="line"><span class="attr">init_connect</span>=<span class="string">&#x27;SET NAMES utf8&#x27;</span></span><br><span class="line"><span class="meta">character-set-server</span>=<span class="string">utf8</span></span><br><span class="line"><span class="comment">#无效屏蔽</span></span><br><span class="line"><span class="comment"># 设置mysql数据库的数据的存放目录</span></span><br><span class="line"><span class="comment">#datadir=/data/app/mysqldata/master/</span></span><br><span class="line"><span class="comment">#socket=/data/app/mysqldata/master/mysql.sock</span></span><br><span class="line"><span class="comment">#user=mysql</span></span><br><span class="line"><span class="comment">#port=3306</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Disabling symbolic-links is recommended to prevent assorted security risks</span></span><br><span class="line"><span class="meta">symbolic-links</span>=<span class="string">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">log-bin</span>=<span class="string">mysql-bin</span></span><br><span class="line"><span class="meta">server-id</span>=<span class="string">1</span></span><br><span class="line"><span class="meta">binlog-ignore-db</span>=<span class="string">information_schema</span></span><br><span class="line"><span class="meta">binlog-ignore-db</span>=<span class="string">mysql</span></span><br><span class="line"><span class="meta">binlog-do-db</span>=<span class="string">shenqics</span></span><br><span class="line"><span class="comment">#无效屏蔽</span></span><br><span class="line"><span class="comment">#[mysqld_safe]</span></span><br><span class="line"><span class="comment">#log-error=/data/app/mysqldata/master/mysqld.log</span></span><br><span class="line"><span class="comment">#pid-file=/data/app/mysqldata/master/mysqld.pid</span></span><br><span class="line"></span><br><span class="line"><span class="attr">[client]</span></span><br><span class="line"><span class="meta">default-character-set</span>=<span class="string">utf8</span></span><br><span class="line"></span><br><span class="line"><span class="attr">[mysql]</span></span><br><span class="line"><span class="meta">default-character-set</span>=<span class="string">utf8</span></span><br></pre></td></tr></table></figure>
+
+<p>从数据库配置：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">[mysqld]</span></span><br><span class="line"><span class="attr">init_connect</span>=<span class="string">&#x27;SET NAMES utf8&#x27;</span></span><br><span class="line"><span class="meta">character-set-server</span>=<span class="string">utf8</span></span><br><span class="line"><span class="comment">#无效屏蔽</span></span><br><span class="line"><span class="comment">#datadir=/data/app/mysqldata/slave/</span></span><br><span class="line"><span class="comment">#socket=/data/app/mysqldata/slave/mysql.sock</span></span><br><span class="line"><span class="comment">#user=mysql</span></span><br><span class="line"><span class="comment">#port=3307</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Disabling symbolic-links is recommended to prevent assorted security risks</span></span><br><span class="line"><span class="meta">symbolic-links</span>=<span class="string">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">log-bin</span>=<span class="string">mysql-bin</span></span><br><span class="line"><span class="meta">server-id</span>=<span class="string">2</span></span><br><span class="line"><span class="meta">binlog-ignore-db</span>=<span class="string">information_schema</span></span><br><span class="line"><span class="meta">binlog-ignore-db</span>=<span class="string">mysql</span></span><br><span class="line"><span class="comment">#只会复制shenqics该数据库，其他不会</span></span><br><span class="line"><span class="meta">replicate-do-db</span>=<span class="string">shenqics</span></span><br><span class="line"><span class="meta">replicate-ignore-db</span>=<span class="string">mysql</span></span><br><span class="line"><span class="attr">log-slave-updates</span></span><br><span class="line"><span class="meta">slave-skip-errors</span>=<span class="string">all</span></span><br><span class="line"><span class="meta">slave-net-timeout</span>=<span class="string">60</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#无效屏蔽</span></span><br><span class="line"><span class="comment">#[mysqld_safe]</span></span><br><span class="line"><span class="comment">#log-error=/data/app/mysqldata/slave/mysqld.log</span></span><br><span class="line"><span class="comment">#pid-file=/data/app/mysqldata/slave/mysqld.pid</span></span><br><span class="line"></span><br><span class="line"><span class="attr">[client]</span></span><br><span class="line"><span class="meta">default-character-set</span>=<span class="string">utf8</span></span><br><span class="line"></span><br><span class="line"><span class="attr">[mysql]</span></span><br><span class="line"><span class="meta">default-character-set</span>=<span class="string">utf8</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>启动服务</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mysql-master:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">mysql:5.7.18</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">admin</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">/data/v-yinfu/mysql/master/data:/var/lib/mysql</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">/data/v-yinfu/mysql/master/config:/etc/mysql/conf.d</span></span><br><span class="line">   <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">target:</span> <span class="number">3306</span></span><br><span class="line">       <span class="attr">published:</span> <span class="number">14036</span></span><br><span class="line">       <span class="attr">protocol:</span> <span class="string">tcp</span></span><br><span class="line">       <span class="attr">mode:</span> <span class="string">host</span>   </span><br><span class="line">   <span class="attr">deploy:</span></span><br><span class="line">     <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">     <span class="attr">restart_policy:</span></span><br><span class="line">       <span class="attr">condition:</span> <span class="string">on-failure</span></span><br><span class="line">     <span class="attr">placement:</span></span><br><span class="line">       <span class="attr">constraints:</span> [<span class="string">node.hostname</span> <span class="string">==</span> <span class="string">VM_16_8_centos</span>]      </span><br><span class="line"> <span class="attr">mysql-slave:</span></span><br><span class="line">   <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">   <span class="attr">image:</span> <span class="string">mysql:5.7.18</span></span><br><span class="line">   <span class="attr">environment:</span></span><br><span class="line">     <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">admin</span></span><br><span class="line">   <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">/data/v-yinfu/mysql/slave/data:/var/lib/mysql</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">/data/v-yinfu/mysql/slave/config:/etc/mysql/conf.d</span></span><br><span class="line">   <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">target:</span> <span class="number">3306</span></span><br><span class="line">       <span class="attr">published:</span> <span class="number">14037</span></span><br><span class="line">       <span class="attr">protocol:</span> <span class="string">tcp</span></span><br><span class="line">       <span class="attr">mode:</span> <span class="string">host</span>   </span><br><span class="line">   <span class="attr">deploy:</span></span><br><span class="line">     <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">     <span class="attr">restart_policy:</span></span><br><span class="line">       <span class="attr">condition:</span> <span class="string">on-failure</span></span><br><span class="line">     <span class="attr">placement:</span></span><br><span class="line">       <span class="attr">constraints:</span> [<span class="string">node.hostname</span> <span class="string">==</span> <span class="string">VM_16_13_centos</span>]     </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>授权</p>
+<p>进入主库容器执行<code>mysql -uroot -p</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ip为从库ip，设置为只有从库可以访问</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#39;app_sync&#39;@&#39;172.16.16.13&#39; IDENTIFIED BY &#39;password&#39;;</span><br><span class="line">GRANT ALL ON *.* TO &#39;app_root&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;;</span><br><span class="line">GRANT SELECT ON *.* TO &#39;app_read&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后执行<code>show master status;</code></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+------------------+----------+--------------+--------------------------+-------------------+</span><br><span class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB         | Executed_Gtid_Set |</span><br><span class="line">+------------------+----------+--------------+--------------------------+-------------------+</span><br><span class="line">| mysql-bin<span class="variable">.000003</span> |     <span class="number">1164</span> | shenqics     | information_schema,mysql |                   |</span><br><span class="line">+------------------+----------+--------------+--------------------------+-------------------+</span><br><span class="line"><span class="number">1</span> row in set (<span class="number">0</span><span class="variable">.00</span> sec)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入从库容器执行<code>mysql -uroot -p</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">stop slave;</span><br><span class="line">change master to master_host&#x3D;&#39;172.16.16.8&#39;,master_port&#x3D;14036,master_user&#x3D;&#39;app_sync&#39;,master_password&#x3D;&#39;password&#39;,master_log_file&#x3D;&#39;mysql-bin.000003&#39;, master_log_pos&#x3D;1164;</span><br><span class="line">start slave;</span><br><span class="line">show slave status;</span><br><span class="line">#授权</span><br><span class="line">GRANT SELECT ON *.* TO &#39;app_read&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行<code>show slave status\G;</code>检查是否这两个为yes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Slave_IO_Running: Connecting</span><br><span class="line">Slave_SQL_Running: Yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新注册</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">stop slave;</span><br><span class="line">change master to master_host&#x3D;&#39;172.16.16.8&#39;,master_port&#x3D;14036,master_user&#x3D;&#39;app_sync&#39;,master_password&#x3D;&#39;admin&#39;,master_log_file&#x3D;&#39;mysql-bin.000005&#39;, master_log_pos&#x3D;361;</span><br><span class="line">start slave;</span><br><span class="line">#清除log,执行start slave报错时</span><br><span class="line">reset slave;</span><br><span class="line">start slave;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再次执行第6步检查</p>
+</li>
+</ol>
+<h3 id="mysql创建用户命令详解"><a href="#mysql创建用户命令详解" class="headerlink" title="mysql创建用户命令详解"></a>mysql创建用户命令详解</h3><p>创建用户</p>
+<p><code>GRANT 权限 ON 数据库.表名 TO &#39;用户&#39;@&#39;主机&#39; IDENTIFIED BY &#39;密码&#39; </code></p>
+<ul>
+<li>权限：all,select,等</li>
+<li>主机：指定ip地址访问、localhost或127.0.0.1（本地访问）、%（任意主机均可访问）</li>
+<li>密码：为空时则不需要密码</li>
+</ul>
+<p>eg: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#39;app_sync&#39;@&#39;172.16.16.13&#39; IDENTIFIED BY &#39;admin&#39;;</span><br><span class="line">#意思是创建一个专门的用户（app_sync）进行从库复制，复制任何库和任何表,密码是admin,可以访问的ip只有来源172.16.16.13（从库ip）</span><br></pre></td></tr></table></figure>
+
+<p>删除用户<code>drop user test@&#39;172.16.16.13&#39;;</code></p>
+<h4 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h4><ol>
+<li><p><code>Too many connections</code>症状，不断重启运行springboot并访问，出现如下错误</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">05</span> <span class="number">21</span>:<span class="number">48</span>:<span class="number">56</span><span class="variable">.824</span> ERROR <span class="number">6838</span> --- [           main] com<span class="variable">.xhzg</span><span class="variable">.xhzg</span><span class="variable">.XhzgApplicationTests</span>       : nested exception is org<span class="variable">.apache</span><span class="variable">.ibatis</span><span class="variable">.exceptions</span><span class="variable">.PersistenceException</span>: </span><br><span class="line">### Error querying database.  Cause: org<span class="variable">.springframework</span><span class="variable">.jdbc</span><span class="variable">.CannotGetJdbcConnectionException</span>: Failed to obtain JDBC Connection; nested exception is com<span class="variable">.mysql</span><span class="variable">.jdbc</span><span class="variable">.exceptions</span><span class="variable">.jdbc4</span><span class="variable">.MySQLNonTransientConnectionException</span>: Data source rejected establishment of connection,  message from server: <span class="string">&quot;Too many connections&quot;</span></span><br><span class="line">### The error may exist in com/xhzg/xhzg/mapper/UserMapper<span class="variable">.java</span> (best guess)</span><br><span class="line">### The error may involve com<span class="variable">.xhzg</span><span class="variable">.xhzg</span><span class="variable">.mapper</span><span class="variable">.UserMapper</span><span class="variable">.loadUserByUsername</span></span><br><span class="line">### The error occurred <span class="keyword">while</span> executing a query</span><br><span class="line">### Cause: org<span class="variable">.springframework</span><span class="variable">.jdbc</span><span class="variable">.CannotGetJdbcConnectionException</span>: Failed to obtain JDBC Connection; nested exception is com<span class="variable">.mysql</span><span class="variable">.jdbc</span><span class="variable">.exceptions</span><span class="variable">.jdbc4</span><span class="variable">.MySQLNonTransientConnectionException</span>: Data source rejected establishment of connection,  message from server: <span class="string">&quot;Too many connections&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>解决：快速解决重启mysql释放<code>Threads_connected</code>连接数，或者等待一会儿，也会慢慢释放连接数,另一种更改<code>max_connections</code>最大连接数启动mysql添加参数<code>--ulimit nofile=65536:65536</code></p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://www.yanning.wang/archives/559.html">Docker容器中MySQL最大连接数被限制为214的解决方案</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/39054410/increasing-mysql-max-connections-to-1024-in-a-docker-container">Increasing mysql max_connections to 1024 in a docker container</a>]</p>
+</li>
+<li><p>错误</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Err] 1055 - Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column &#x27;information_schema.PROFILING.SEQ&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<p>删除配置文件<code>sql_mode=ONLY_FULL_GROUP_BY</code>这个属性值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;SELECT @@sql_mode;</span><br><span class="line">mysql&gt;SELECT @@GLOBAL.sql_mode;</span><br></pre></td></tr></table></figure>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/37942423">https://www.zhihu.com/question/37942423</a></p>
+</li>
+<li><p>navicat客户端，连接mysql 8.0以上报错,提示授权啥的错误</p>
+</li>
+<li><p>设置主从模式时，使用用户<code>&#39;app_sync&#39;@&#39;172.16.16.13&#39;</code>连接时提示，以及一直<code>Slave_IO_Running: Connecting</code></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR <span class="number">1045</span> (<span class="number">28000</span>): Access denied <span class="keyword">for</span> user &#x27;app_sync&#x27;@&#x27;<span class="number">10</span><span class="variable">.255</span><span class="variable">.0</span><span class="variable">.2</span>&#x27; (using password: YES)</span><br></pre></td></tr></table></figure>
+
+<p>解决：部署时设置host模式</p>
+<p>原因：非host模式连接时,访问客户端ip是内部ip不是host的ip</p>
+</li>
+<li><p>错误</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java<span class="variable">.sql</span><span class="variable">.SQLException</span>: Incorrect <span class="keyword">string</span> value: &#x27;\xF0\x9F\x90\xB6&#x27; <span class="keyword">for</span> column &#x27;UserNickname&#x27; at row <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<ol>
+<li><p>在mysql配置文件添加后，重启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">default-character-set &#x3D; utf8mb4</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">default-character-set &#x3D; utf8mb4</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character-set-client-handshake &#x3D; FALSE</span><br><span class="line">character-set-server &#x3D; utf8mb4</span><br><span class="line">collation-server &#x3D; utf8mb4_unicode_ci</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改数据表的编码</p>
+<p><code>ALTER TABLE TABLE_NAME CONVERT TO CHARACTER SET utf8mb4;</code></p>
+</li>
+<li><p>修改数据库连接</p>
+<p><code>jdbc:mysql://localhost:3306/&quot;+DATABASENAME+&quot;?useunicode=true&amp;characterEncoding=utf8</code></p>
+<p>方式一：去掉参数<code>&amp;characterEncoding=utf8</code>和<code>useunicode=true</code></p>
+<p>方式二(建议)：添加<code>autoReconnect=true</code></p>
+</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/05/java-date/" rel="prev" title="Java 日期总结">
+                  <i class="fa fa-chevron-left"></i> Java 日期总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/07/db-storedprocedure/" rel="next" title="DB-StoredProcedure">
+                  DB-StoredProcedure <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2018/04/05/db-mysql-summary/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

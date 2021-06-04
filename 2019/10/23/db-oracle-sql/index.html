@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="语法1. SUM(&lt;需要求和的字段,字段必须是数字类型&gt;)和count(&lt;需要统计条数的字段&gt;)sum注意区分count，一个是根据字段里面的值求和，一个是根据条数求数据总条数 12-- 对所有用户的年龄进行累加求和select  SUM(u.AGE) from t_user u ;  2. CASE WHEN &lt;条件&gt; THEN &lt;满足条件的结果&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle常用sql总结">
+<meta property="og:url" content="https://blog.iexxk.com/2019/10/23/db-oracle-sql/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="语法1. SUM(&lt;需要求和的字段,字段必须是数字类型&gt;)和count(&lt;需要统计条数的字段&gt;)sum注意区分count，一个是根据字段里面的值求和，一个是根据条数求数据总条数 12-- 对所有用户的年龄进行累加求和select  SUM(u.AGE) from t_user u ;  2. CASE WHEN &lt;条件&gt; THEN &lt;满足条件的结果&gt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-23T10:03:20.000Z">
+<meta property="article:modified_time" content="2019-11-14T16:24:57.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="oracle">
+<meta property="article:tag" content="sql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2019/10/23/db-oracle-sql/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>oracle常用sql总结 | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-SUM-lt-%E9%9C%80%E8%A6%81%E6%B1%82%E5%92%8C%E7%9A%84%E5%AD%97%E6%AE%B5-%E5%AD%97%E6%AE%B5%E5%BF%85%E9%A1%BB%E6%98%AF%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B-gt-%E5%92%8Ccount-lt-%E9%9C%80%E8%A6%81%E7%BB%9F%E8%AE%A1%E6%9D%A1%E6%95%B0%E7%9A%84%E5%AD%97%E6%AE%B5-gt"><span class="nav-number">1.1.</span> <span class="nav-text">1. SUM(&lt;需要求和的字段,字段必须是数字类型&gt;)和count(&lt;需要统计条数的字段&gt;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-CASE-WHEN-lt-%E6%9D%A1%E4%BB%B6-gt-THEN-lt-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%9C-gt-ELSE-lt-%E4%B8%8D%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%9C-gt-END"><span class="nav-number">1.2.</span> <span class="nav-text">2. CASE WHEN &lt;条件&gt; THEN &lt;满足条件的结果&gt; ELSE &lt;不满足条件的结果&gt; END</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-DECODE-lt-%E6%9D%A1%E4%BB%B6%E5%AD%97%E6%AE%B5-gt-lt-%E5%80%BC1-gt-lt-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6-%E5%80%BC1%E7%9A%84%E7%BB%93%E6%9E%9C-gt-lt-%E5%80%BC2-gt-lt-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6-%E5%80%BC2%E7%9A%84%E7%BB%93%E6%9E%9C-gt-lt-%E9%83%BD%E4%B8%8D%E6%BB%A1%E8%B6%B3-gt"><span class="nav-number">1.3.</span> <span class="nav-text">3. DECODE(&lt;条件字段&gt;,&lt;值1&gt;,&lt;满足条件&#x3D;值1的结果&gt;,&lt;值2&gt;,&lt;满足条件&#x3D;值2的结果&gt;,....,&lt;都不满足&gt;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-NVL-lt-%E9%9C%80%E8%A6%81%E5%88%A4%E6%96%AD%E7%9A%84%E5%AD%97%E6%AE%B5-gt-lt-%E5%A6%82%E6%9E%9C%E5%88%A4%E6%96%AD%E7%9A%84%E5%AD%97%E6%AE%B5%E4%B8%BAnull%E8%BE%93%E5%87%BA%E7%9A%84%E7%BB%93%E6%9E%9C-gt"><span class="nav-number">1.4.</span> <span class="nav-text">4. NVL(&lt;需要判断的字段&gt;,&lt;如果判断的字段为null输出的结果&gt;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-group-by-lt-%E5%88%86%E7%BB%84%E7%9A%84%E5%AD%97%E6%AE%B51%EF%BC%8C%E5%AD%97%E6%AE%B52-gt-%E5%88%86%E7%BB%84%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.5.</span> <span class="nav-text">5.  group by &lt;分组的字段1，字段2...&gt;分组统计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-order-by-lt-%E6%8E%92%E5%BA%8F%E5%AD%97%E6%AE%B5-gt-lt-desc-asc-gt-asc%E5%8D%87%E5%BA%8F%EF%BC%8Cdesc%E9%99%8D%E5%BA%8F"><span class="nav-number">1.6.</span> <span class="nav-text">5. order by &lt;排序字段&gt; &lt;desc&#x2F;asc&gt; asc升序，desc降序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-to-char-sysdate-39-yyyy-MM-dd-39-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%A5%E6%9C%9F"><span class="nav-number">1.7.</span> <span class="nav-text">6. to_char(sysdate, &#39;yyyy-MM-dd&#39;)格式化日期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-round-lt-%E5%B0%8F%E6%95%B0-gt-lt-%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E%E4%BD%8D%E6%95%B0-gt"><span class="nav-number">1.8.</span> <span class="nav-text">7. round(&lt;小数&gt;,&lt;保留小数点后位数&gt;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-left-join-%E5%B7%A6%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.9.</span> <span class="nav-text">8. left join 左连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-substr-lt-%E9%9C%80%E8%A6%81%E8%A3%81%E5%89%AA%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2-gt-lt-%E5%BC%80%E5%A7%8B%E4%BD%8D%E7%BD%AE-gt-lt-%E7%BB%93%E6%9D%9F%E4%BD%8D%E7%BD%AE-gt"><span class="nav-number">1.10.</span> <span class="nav-text">9. substr(&lt;需要裁剪的字符串&gt;,&lt;开始位置&gt;, &lt;结束位置&gt;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-connect-by"><span class="nav-number">1.11.</span> <span class="nav-text">10. connect by</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-union-lt-all-gt-%E4%B8%A4%E4%B8%AA%E7%BB%93%E6%9E%9C%E9%9B%86%E5%90%88%E5%B9%B6"><span class="nav-number">1.12.</span> <span class="nav-text">11. union &lt;all&gt; 两个结果集合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-ROLLUP-%E5%88%86%E7%BB%84%E6%B1%87%E6%80%BB"><span class="nav-number">1.13.</span> <span class="nav-text">12. ROLLUP 分组汇总</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-%E5%AD%97%E7%AC%A6%E8%BF%9E%E6%8E%A5%E7%AC%A6"><span class="nav-number">1.14.</span> <span class="nav-text">13. ||字符连接符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE"><span class="nav-number">1.15.</span> <span class="nav-text">示例数据</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2019/10/23/db-oracle-sql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          oracle常用sql总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-23 10:03:20" itemprop="dateCreated datePublished" datetime="2019-10-23T10:03:20+00:00">2019-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-11-14 16:24:57" itemprop="dateModified" datetime="2019-11-14T16:24:57+00:00">2019-11-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2019/10/23/db-oracle-sql/" class="post-meta-item leancloud_visitors" data-flag-title="oracle常用sql总结" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><h4 id="1-SUM-lt-需要求和的字段-字段必须是数字类型-gt-和count-lt-需要统计条数的字段-gt"><a href="#1-SUM-lt-需要求和的字段-字段必须是数字类型-gt-和count-lt-需要统计条数的字段-gt" class="headerlink" title="1. SUM(&lt;需要求和的字段,字段必须是数字类型&gt;)和count(&lt;需要统计条数的字段&gt;)"></a>1. <code>SUM(&lt;需要求和的字段,字段必须是数字类型&gt;)</code>和<code>count(&lt;需要统计条数的字段&gt;)</code></h4><p>sum注意区分count，一个是根据字段里面的值求和，一个是根据条数求数据总条数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 对所有用户的年龄进行累加求和</span></span><br><span class="line"><span class="keyword">select</span>  <span class="built_in">SUM</span>(u.AGE) <span class="keyword">from</span> t_user u ;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-CASE-WHEN-lt-条件-gt-THEN-lt-满足条件的结果-gt-ELSE-lt-不满足条件的结果-gt-END"><a href="#2-CASE-WHEN-lt-条件-gt-THEN-lt-满足条件的结果-gt-ELSE-lt-不满足条件的结果-gt-END" class="headerlink" title="2. CASE WHEN &lt;条件&gt; THEN &lt;满足条件的结果&gt; ELSE &lt;不满足条件的结果&gt; END"></a>2. <code>CASE WHEN &lt;条件&gt; THEN &lt;满足条件的结果&gt; ELSE &lt;不满足条件的结果&gt; END</code></h4><p><code>CASE &lt;条件字段&gt; WHEN &lt;值1&gt; THEN &lt;满足条件=值1的结果&gt; WHEN &lt;值2&gt; THEN &lt;满足条件=值2的结果&gt;    ... ELSE &lt;不满足所有条件的结果&gt; END</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--eg:查询年龄大于18的flag输出成年人，否则未成年人</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> u.age<span class="operator">&gt;</span><span class="number">18</span> <span class="keyword">THEN</span> <span class="string">&#x27;成年人&#x27;</span> <span class="keyword">ELSE</span> <span class="string">&#x27;未成年人&#x27;</span> <span class="keyword">END</span> <span class="keyword">as</span> flag <span class="keyword">from</span> t_user u;</span><br><span class="line"><span class="comment">--eg:多条件组合查询年龄大于18且是男的的flag输出男成年人，否则未成年人</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> u.age<span class="operator">&gt;</span><span class="number">18</span> <span class="keyword">and</span> u.sex<span class="operator">=</span><span class="string">&#x27;男&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;男成年人&#x27;</span> <span class="keyword">ELSE</span> <span class="string">&#x27;未成年人&#x27;</span> <span class="keyword">END</span> <span class="keyword">as</span> flag <span class="keyword">from</span> t_user u;</span><br><span class="line"><span class="comment">--按条件统计总数，sum是求和，输出只能是1 ELSE 0，因为要进行累加</span></span><br><span class="line"><span class="comment">--统计大于18的总人数</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(<span class="keyword">CASE</span> <span class="keyword">WHEN</span> u.age<span class="operator">&gt;</span><span class="number">18</span> <span class="keyword">THEN</span> <span class="number">1</span> <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) <span class="keyword">as</span> total <span class="keyword">from</span> t_user u;</span><br><span class="line"><span class="comment">--多条件switch实现,将boy替换成男，girl替换成女，其他输出人妖</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">CASE</span> u.sex</span><br><span class="line">    <span class="keyword">WHEN</span> <span class="string">&#x27;boy&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;男&#x27;</span></span><br><span class="line">    <span class="keyword">WHEN</span> <span class="string">&#x27;girl&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;女&#x27;</span></span><br><span class="line">    <span class="keyword">ELSE</span> <span class="string">&#x27;人妖&#x27;</span> <span class="keyword">END</span>  <span class="keyword">from</span> t_user u;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-DECODE-lt-条件字段-gt-lt-值1-gt-lt-满足条件-值1的结果-gt-lt-值2-gt-lt-满足条件-值2的结果-gt-lt-都不满足-gt"><a href="#3-DECODE-lt-条件字段-gt-lt-值1-gt-lt-满足条件-值1的结果-gt-lt-值2-gt-lt-满足条件-值2的结果-gt-lt-都不满足-gt" class="headerlink" title="3. DECODE(&lt;条件字段&gt;,&lt;值1&gt;,&lt;满足条件=值1的结果&gt;,&lt;值2&gt;,&lt;满足条件=值2的结果&gt;,....,&lt;都不满足&gt;)"></a>3. <code>DECODE(&lt;条件字段&gt;,&lt;值1&gt;,&lt;满足条件=值1的结果&gt;,&lt;值2&gt;,&lt;满足条件=值2的结果&gt;,....,&lt;都不满足&gt;)</code></h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--将boy替换成男，girl替换成女，其他输出人妖，等效于case when</span></span><br><span class="line"><span class="keyword">select</span> DECODE(u.SEX,<span class="string">&#x27;boy&#x27;</span>,<span class="string">&#x27;男&#x27;</span>,<span class="string">&#x27;girl&#x27;</span>,<span class="string">&#x27;女&#x27;</span>,<span class="string">&#x27;人妖&#x27;</span>) <span class="keyword">from</span> t_user u;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-NVL-lt-需要判断的字段-gt-lt-如果判断的字段为null输出的结果-gt"><a href="#4-NVL-lt-需要判断的字段-gt-lt-如果判断的字段为null输出的结果-gt" class="headerlink" title="4. NVL(&lt;需要判断的字段&gt;,&lt;如果判断的字段为null输出的结果&gt;)"></a>4. <code>NVL(&lt;需要判断的字段&gt;,&lt;如果判断的字段为null输出的结果&gt;)</code></h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--数据为null的会替换成人妖</span></span><br><span class="line"><span class="keyword">select</span> nvl(u.SEX,<span class="string">&#x27;人妖&#x27;</span>) <span class="keyword">from</span> t_user u;</span><br><span class="line"><span class="comment">--没有年龄的设置为0,方便统计空数据</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(nvl(u.age,<span class="number">0</span>)) <span class="keyword">from</span> t_user u;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-group-by-lt-分组的字段1，字段2-gt-分组统计"><a href="#5-group-by-lt-分组的字段1，字段2-gt-分组统计" class="headerlink" title="5.  group by &lt;分组的字段1，字段2...&gt;分组统计"></a>5.  <code>group by &lt;分组的字段1，字段2...&gt;</code>分组统计</h4><p>select后面的字段=分组的字段+统计求和等字段，原理分组过后，查询不能查一个组有多个不同结果的字段，如果是相同的结果加入group by 字段1，字段2</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--按年龄分组统计各个年龄的总数</span></span><br><span class="line"><span class="keyword">select</span> u.AGE,<span class="built_in">count</span>(u.SEX) <span class="keyword">from</span> T_USER u <span class="keyword">group</span> <span class="keyword">by</span> u.AGE;</span><br><span class="line"><span class="comment">--按年龄性别进行分组统计,统计年龄相同且性别相同的个数</span></span><br><span class="line"><span class="keyword">select</span> u.AGE,u.SEX,<span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> T_USER u <span class="keyword">group</span> <span class="keyword">by</span> u.AGE,u.SEX</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-order-by-lt-排序字段-gt-lt-desc-asc-gt-asc升序，desc降序"><a href="#5-order-by-lt-排序字段-gt-lt-desc-asc-gt-asc升序，desc降序" class="headerlink" title="5. order by &lt;排序字段&gt; &lt;desc/asc&gt; asc升序，desc降序"></a>5. <code>order by &lt;排序字段&gt; &lt;desc/asc&gt;</code> asc升序，desc降序</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--按时间升序</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>  T_USER <span class="keyword">order</span> <span class="keyword">by</span> &quot;creat_time&quot; <span class="keyword">asc</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="6-to-char-sysdate-39-yyyy-MM-dd-39-格式化日期"><a href="#6-to-char-sysdate-39-yyyy-MM-dd-39-格式化日期" class="headerlink" title="6. to_char(sysdate, &#39;yyyy-MM-dd&#39;)格式化日期"></a>6. <code>to_char(sysdate, &#39;yyyy-MM-dd&#39;)</code>格式化日期</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--sysdate获取当前日期，to_char格式化为天</span></span><br><span class="line"><span class="keyword">select</span> to_char(sysdate, <span class="string">&#x27;yyyy-MM-dd&#x27;</span>) <span class="keyword">from</span> DUAL;</span><br><span class="line"><span class="comment">--按天分组统计</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(<span class="number">1</span>),to_char(u.&quot;creat_time&quot;,<span class="string">&#x27;YYYY-MM-DD&#x27;</span>) <span class="keyword">as</span> <span class="keyword">day</span> <span class="keyword">from</span> t_user u <span class="keyword">group</span> <span class="keyword">by</span> to_char(u.&quot;creat_time&quot;,<span class="string">&#x27;YYYY-MM-DD&#x27;</span>);</span><br><span class="line"><span class="comment">--按月分组统计，按年等其他日期类似</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(<span class="number">1</span>),to_char(u.&quot;creat_time&quot;,<span class="string">&#x27;YYYY-MM&#x27;</span>) <span class="keyword">as</span> <span class="keyword">day</span> <span class="keyword">from</span> t_user u <span class="keyword">group</span> <span class="keyword">by</span> to_char(u.&quot;creat_time&quot;,<span class="string">&#x27;YYYY-MM&#x27;</span>);</span><br><span class="line"><span class="comment">--查询7天前的数据，其他天类似</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> T_USER u <span class="keyword">where</span> to_char(u.&quot;creat_time&quot;,<span class="string">&#x27;yyyy-MM-dd&#x27;</span>)<span class="operator">&gt;</span>to_char(sysdate<span class="number">-7</span>, <span class="string">&#x27;yyyy-MM-dd&#x27;</span>)</span><br><span class="line"><span class="comment">--统计查询前7天的数据，当天没有统计为0，按时间降序</span></span><br><span class="line"><span class="keyword">select</span> t_date.day, NVl(t_data.total, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">from</span> (<span class="keyword">select</span> TO_CHAR(trunc(sysdate <span class="operator">+</span> <span class="number">1</span> <span class="operator">-</span> ROWNUM), <span class="string">&#x27;yyyy-MM-dd&#x27;</span>) <span class="keyword">day</span> <span class="keyword">from</span> DUAL <span class="keyword">connect</span> <span class="keyword">by</span> ROWNUM <span class="operator">&lt;=</span> <span class="number">7</span>) t_date</span><br><span class="line">         <span class="keyword">left</span> <span class="keyword">join</span> (<span class="keyword">select</span> to_char(u.&quot;creat_time&quot;, <span class="string">&#x27;yyyy-MM-dd&#x27;</span>) <span class="keyword">as</span> <span class="keyword">day</span>, <span class="built_in">count</span>(<span class="number">1</span>) <span class="keyword">as</span> total</span><br><span class="line">                    <span class="keyword">from</span> T_USER u</span><br><span class="line">                    <span class="keyword">group</span> <span class="keyword">by</span> to_char(u.&quot;creat_time&quot;, <span class="string">&#x27;yyyy-MM-dd&#x27;</span>)) t_data</span><br><span class="line">                   <span class="keyword">on</span> t_data.day <span class="operator">=</span> t_date.day</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> t_date.day <span class="keyword">asc</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-round-lt-小数-gt-lt-保留小数点后位数-gt"><a href="#7-round-lt-小数-gt-lt-保留小数点后位数-gt" class="headerlink" title="7. round(&lt;小数&gt;,&lt;保留小数点后位数&gt;)"></a>7. round(&lt;小数&gt;,&lt;保留小数点后位数&gt;)</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--保留小数点后2位，输出33.33</span></span><br><span class="line"><span class="keyword">select</span> round( <span class="number">1</span><span class="operator">/</span><span class="number">3</span><span class="operator">*</span><span class="number">100</span> ,<span class="number">2</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-left-join-左连接"><a href="#8-left-join-左连接" class="headerlink" title="8. left join 左连接"></a>8. <code>left join</code> 左连接</h4><p>以左边为主，右边有就连接，没有就null</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> T_USER l <span class="keyword">left</span> <span class="keyword">join</span> T_USER r <span class="keyword">on</span> l.AGE<span class="operator">=</span>r.FLAG;</span><br></pre></td></tr></table></figure>
+
+<h4 id="9-substr-lt-需要裁剪的字符串-gt-lt-开始位置-gt-lt-结束位置-gt"><a href="#9-substr-lt-需要裁剪的字符串-gt-lt-开始位置-gt-lt-结束位置-gt" class="headerlink" title="9. substr(&lt;需要裁剪的字符串&gt;,&lt;开始位置&gt;, &lt;结束位置&gt;)"></a>9. <code>substr(&lt;需要裁剪的字符串&gt;,&lt;开始位置&gt;, &lt;结束位置&gt;)</code></h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 输出2019</span></span><br><span class="line"><span class="keyword">select</span> substr(<span class="string">&#x27;2019-01-02&#x27;</span>,<span class="number">1</span>, <span class="number">4</span>) <span class="keyword">from</span> DUAL;</span><br></pre></td></tr></table></figure>
+
+<h4 id="10-connect-by"><a href="#10-connect-by" class="headerlink" title="10. connect by"></a>10. <code>connect by</code></h4><p>其他用法，获取树形数据(也就是父子关系)见google</p>
+<p><code>rownum</code>数据库关键字，行数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--生成1-10的序列</span></span><br><span class="line"><span class="keyword">select</span> rownum <span class="keyword">from</span> dual <span class="keyword">connect</span> <span class="keyword">by</span> rownum<span class="operator">&lt;=</span><span class="number">10</span>;</span><br><span class="line"><span class="comment">--生成7天的日期</span></span><br><span class="line"><span class="keyword">select</span> TO_CHAR(trunc(sysdate<span class="operator">+</span><span class="number">1</span><span class="operator">-</span>ROWNUM),<span class="string">&#x27;yyyy-MM-dd&#x27;</span>) dd <span class="keyword">from</span> DUAL <span class="keyword">connect</span> <span class="keyword">by</span>  ROWNUM <span class="operator">&lt;=</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="11-union-lt-all-gt-两个结果集合并"><a href="#11-union-lt-all-gt-两个结果集合并" class="headerlink" title="11. union &lt;all&gt; 两个结果集合并"></a>11. <code>union &lt;all&gt;</code> 两个结果集合并</h4><p>有all 全连接，不去重，没有all 去重</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 输出1-4-1-4</span></span><br><span class="line"><span class="keyword">select</span> rownum <span class="keyword">from</span> dual <span class="keyword">connect</span> <span class="keyword">by</span> rownum<span class="operator">&lt;=</span><span class="number">4</span></span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line"><span class="keyword">select</span> rownum <span class="keyword">from</span> dual <span class="keyword">connect</span> <span class="keyword">by</span> rownum<span class="operator">&lt;=</span><span class="number">4</span>;</span><br><span class="line"><span class="comment">-- 输出1-4</span></span><br><span class="line"><span class="keyword">select</span> rownum <span class="keyword">from</span> dual <span class="keyword">connect</span> <span class="keyword">by</span> rownum<span class="operator">&lt;=</span><span class="number">4</span></span><br><span class="line"><span class="keyword">union</span> </span><br><span class="line"><span class="keyword">select</span> rownum <span class="keyword">from</span> dual <span class="keyword">connect</span> <span class="keyword">by</span> rownum<span class="operator">&lt;=</span><span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="12-ROLLUP-分组汇总"><a href="#12-ROLLUP-分组汇总" class="headerlink" title="12. ROLLUP 分组汇总"></a>12. ROLLUP 分组汇总</h4><p>ROLLUP汇总分组排列在最后一条数据，但是数据头为null，可以通过null判断取别名为总数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> nvl(<span class="keyword">CASE</span></span><br><span class="line">               <span class="keyword">WHEN</span> sex <span class="operator">=</span> <span class="string">&#x27;boy&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;男&#x27;</span></span><br><span class="line">               <span class="keyword">WHEN</span> sex <span class="operator">=</span> <span class="string">&#x27;girl&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;女&#x27;</span></span><br><span class="line">               <span class="keyword">ELSE</span> <span class="string">&#x27;人妖&#x27;</span></span><br><span class="line">               <span class="keyword">END</span>, <span class="string">&#x27;总数&#x27;</span>) <span class="keyword">AS</span> type,</span><br><span class="line">       <span class="built_in">count</span>(<span class="number">1</span>)           <span class="keyword">as</span> num</span><br><span class="line"><span class="keyword">from</span> t_user</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">    <span class="keyword">ROLLUP</span></span><br><span class="line">    ( <span class="keyword">CASE</span></span><br><span class="line">          <span class="keyword">WHEN</span> sex <span class="operator">=</span> <span class="string">&#x27;boy&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;男&#x27;</span></span><br><span class="line">          <span class="keyword">WHEN</span> sex <span class="operator">=</span> <span class="string">&#x27;girl&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;女&#x27;</span></span><br><span class="line">          <span class="keyword">ELSE</span> <span class="string">&#x27;人妖&#x27;</span></span><br><span class="line">          <span class="keyword">END</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="13-字符连接符"><a href="#13-字符连接符" class="headerlink" title="13. ||字符连接符"></a>13. <code>||</code>字符连接符</h4><p>用于单位，用于多条数据拼接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="string">&#x27;sex是&#x27;</span><span class="operator">||</span>u.SEX<span class="operator">||</span><span class="string">&#x27;,年龄是&#x27;</span><span class="operator">||</span>u.AGE <span class="keyword">as</span> detail <span class="keyword">from</span> T_USER u;</span><br><span class="line"><span class="comment">--------输出结果------</span></span><br><span class="line"><span class="comment">--sex是boy,年龄是1</span></span><br><span class="line"><span class="comment">--sex是girl,年龄是2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> T_USER</span><br><span class="line">(</span><br><span class="line">	AGE NUMBER,</span><br><span class="line">	FLAG VARCHAR2(<span class="number">10</span>),</span><br><span class="line">	SEX VARCHAR2(<span class="number">4</span>),</span><br><span class="line">	&quot;creat_time&quot; <span class="type">DATE</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> SYSTEM.T_USER (AGE, FLAG, SEX, &quot;creat_time&quot;) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;boy&#x27;</span>, TO_DATE(<span class="string">&#x27;2019-10-23 03:14:11&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD HH24:MI:SS&#x27;</span>));</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> SYSTEM.T_USER (AGE, FLAG, SEX, &quot;creat_time&quot;) <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;girl&#x27;</span>, TO_DATE(<span class="string">&#x27;2019-10-24 03:14:14&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD HH24:MI:SS&#x27;</span>));</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> SYSTEM.T_USER (AGE, FLAG, SEX, &quot;creat_time&quot;) <span class="keyword">VALUES</span> (<span class="number">3</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;ff&#x27;</span>, TO_DATE(<span class="string">&#x27;2019-10-26 03:14:19&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD HH24:MI:SS&#x27;</span>));</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> SYSTEM.T_USER (AGE, FLAG, SEX, &quot;creat_time&quot;) <span class="keyword">VALUES</span> (<span class="number">3</span>, <span class="string">&#x27;2&#x27;</span>, <span class="keyword">null</span>, TO_DATE(<span class="string">&#x27;2019-10-23 03:14:23&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD HH24:MI:SS&#x27;</span>));</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> SYSTEM.T_USER (AGE, FLAG, SEX, &quot;creat_time&quot;) <span class="keyword">VALUES</span> (<span class="keyword">null</span>, <span class="string">&#x27;2&#x27;</span>, <span class="keyword">null</span>, TO_DATE(<span class="string">&#x27;2019-10-23 03:14:25&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD HH24:MI:SS&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/oracle/" rel="tag"># oracle</a>
+              <a href="/tags/sql/" rel="tag"># sql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/15/dcoker-gitlab-ci/" rel="prev" title="Dcoker-gitlab-ci">
+                  <i class="fa fa-chevron-left"></i> Dcoker-gitlab-ci
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/20/other-video-h5/" rel="next" title="Other-video-h5">
+                  Other-video-h5 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2019/10/23/db-oracle-sql/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

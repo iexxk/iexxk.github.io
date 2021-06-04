@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="docker 名词解释下面简单解释下名词的含义，后面会详细介绍：  docker：docker代表这一个技术的名词，下面一个docker代表一台机器上装的一个docker服务 container：docker容器，相当于一个轻量的沙盒系统（可以暂时理解一个运行好的虚拟机系统）一个容器只运行一个服务 images：docker镜像，相当于一个安装包（可以暂时理解成一个系统iso镜像） service">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker入门学习">
+<meta property="og:url" content="https://blog.iexxk.com/2020/11/30/docker-leaning/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="docker 名词解释下面简单解释下名词的含义，后面会详细介绍：  docker：docker代表这一个技术的名词，下面一个docker代表一台机器上装的一个docker服务 container：docker容器，相当于一个轻量的沙盒系统（可以暂时理解一个运行好的虚拟机系统）一个容器只运行一个服务 images：docker镜像，相当于一个安装包（可以暂时理解成一个系统iso镜像） service">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/04/6VVz11.png">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/04/6VZP0O.png">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/04/6VJ3LQ.png">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/05/6eAkhd.jpg">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/05/6e1abd.png">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/05/6e1UDH.png">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/05/6e1NKe.png">
+<meta property="og:image" content="https://s3.ax1x.com/2021/03/05/6eGvIs.png">
+<meta property="article:published_time" content="2020-11-30T10:44:15.000Z">
+<meta property="article:modified_time" content="2021-03-05T16:35:36.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s3.ax1x.com/2021/03/04/6VVz11.png">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2020/11/30/docker-leaning/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>docker入门学习 | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">docker 名词解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">docker简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF%EF%BC%9A"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">优势：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%9C%BAvs%E5%AE%B9%E5%99%A8"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">虚机vs容器</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">docker安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#centos%E5%AE%89%E8%A3%85"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">centos安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-swarm-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">docker swarm 初始化</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DockerFile%E9%95%9C%E5%83%8F%E7%BC%96%E6%8E%92"><span class="nav-number">4.</span> <span class="nav-text">DockerFile镜像编排</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-hub-%E5%92%8C-registry"><span class="nav-number">4.1.</span> <span class="nav-text">Docker-hub 和 registry</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-compose"><span class="nav-number">5.</span> <span class="nav-text">docker-compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-swarm-VS-k8s-Kubernetes"><span class="nav-number">6.</span> <span class="nav-text">docker swarm VS k8s(Kubernetes)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">平台安装部署流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot%E5%92%8Cdocker-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">6.2.</span> <span class="nav-text">springboot和docker 环境变量</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2020/11/30/docker-leaning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker入门学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-30 10:44:15" itemprop="dateCreated datePublished" datetime="2020-11-30T10:44:15+00:00">2020-11-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-05 16:35:36" itemprop="dateModified" datetime="2021-03-05T16:35:36+00:00">2021-03-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2020/11/30/docker-leaning/" class="post-meta-item leancloud_visitors" data-flag-title="docker入门学习" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="docker-名词解释"><a href="#docker-名词解释" class="headerlink" title="docker 名词解释"></a>docker 名词解释</h1><p>下面简单解释下名词的含义，后面会详细介绍：</p>
+<ul>
+<li>docker：docker代表这一个技术的名词，下面<strong>一个docker</strong>代表一台机器上装的一个docker服务</li>
+<li>container：docker容器，相当于一个轻量的沙盒系统（可以暂时理解一个运行好的虚拟机系统）一个容器只运行一个服务</li>
+<li>images：docker镜像，相当于一个安装包（可以暂时理解成一个系统iso镜像）</li>
+<li>service：docker服务，多个相同的容器组成的一个服务，相当于容器的多个复制，提高了扩展性</li>
+<li>swarm：docker集群，将一个docker或多个docker组成的一个资源集合，包含了网络、负载均衡、多个服务节点、服务发现、服务伸缩</li>
+<li>node：docker节点，一台实际机器上的一个docker算一个节点，节点只有在docker初始化为集群才存在该概念</li>
+<li>docker-compose.yml：服务编排脚本，该脚本只支持单机docker服务编排，相当于服务的启动参数，服务数量都在该脚本配置</li>
+<li>stack：docker集群服务编排模式,stack.yml为集群部署模式的配置文件，文件name可以自定义，这个是多节点服务编排部署模式，在单机的基础上面多支持了容器在那个节点运行，及运行个数等</li>
+<li>DockerFile：docker镜像编排脚本</li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/search?q=&type=image">Docker-hub</a>：官方docker仓库</li>
+<li>registry：可搭建的私有镜像仓库</li>
+<li>集群-无状态服务vs有状态服务(共享存储/NAS)</li>
+<li>分布式集群</li>
+</ul>
+<p>docker swarm服务关系</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6VVz11"><img src="https://s3.ax1x.com/2021/03/04/6VVz11.png" alt="6VVz11.png"></a></p>
+<p>docker编排部署流程</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6VZP0O"><img src="https://s3.ax1x.com/2021/03/04/6VZP0O.png" alt="6VZP0O.png"></a></p>
+<h1 id="docker简介"><a href="#docker简介" class="headerlink" title="docker简介"></a><a target="_blank" rel="noopener" href="https://www.docker.com/resources/what-container">docker简介</a></h1><p>容器是打包代码及其所有依赖项的软件的标准单元，因此应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。Docker容器映像是一个轻量级的，独立的，可执行的软件软件包，其中包含运行应用程序所需的一切：代码，运行时，系统工具，系统库和设置。</p>
+<h4 id="优势："><a href="#优势：" class="headerlink" title="优势："></a>优势：</h4><ul>
+<li><strong>标准：</strong> Docker创建了容器的行业标准，因此它们可以在任何地方移植</li>
+<li><strong>轻巧：</strong>容器共享计算机的OS系统内核，因此不需要每个应用程序都具有OS，从而提高了服务器效率，并降低了服务器和许可成本</li>
+<li><strong>安全：</strong>容器中的应用程序更安全，Docker提供业界最强大的默认隔离功能</li>
+</ul>
+<h4 id="虚机vs容器"><a href="#虚机vs容器" class="headerlink" title="虚机vs容器"></a>虚机vs容器</h4><p>容器虚化的是操作系统而不是硬件，容器更加便携和高效</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6VJ3LQ"><img src="https://s3.ax1x.com/2021/03/04/6VJ3LQ.png" alt="6VJ3LQ.png"></a></p>
+<h1 id="docker安装部署"><a href="#docker安装部署" class="headerlink" title="docker安装部署"></a><a href="https://blog.iexxk.com/2017/10/10/docker-install-base/?highlight=docker">docker安装部署</a></h1><h4 id="centos安装"><a href="#centos安装" class="headerlink" title="centos安装"></a><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/">centos安装</a></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils</span><br><span class="line">sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">sudo yum install docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">systemctl start docker.service</span><br><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+
+<h4 id="docker-swarm-初始化"><a href="#docker-swarm-初始化" class="headerlink" title="docker swarm 初始化"></a><a href="https://blog.iexxk.com/2017/09/14/docker-install-swarm/?highlight=docker+swarm">docker swarm 初始化</a></h4><h1 id="DockerFile镜像编排"><a href="#DockerFile镜像编排" class="headerlink" title="DockerFile镜像编排"></a><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/">DockerFile镜像编排</a></h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 镜像编排命令</span></span><br><span class="line">docker build -t image-name:tag .</span><br></pre></td></tr></table></figure>
+
+<p>dockerfile常见命令说明</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#基础镜像选择alpine 小巧安全流行方便</span></span><br><span class="line"><span class="keyword">FROM</span> exxk/tomcat:<span class="number">8</span>-alpine-cst-font</span><br><span class="line"><span class="comment">#指定用户</span></span><br><span class="line"><span class="keyword">USER</span> patrick</span><br><span class="line"><span class="comment">#指定工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /path/to/workdir</span></span><br><span class="line"><span class="comment">#编译时的环境参数</span></span><br><span class="line"><span class="keyword">ARG</span> DOCKER_MACHINE_VERSION</span><br><span class="line"><span class="comment">#暴露的端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span>/udp</span><br><span class="line"><span class="comment">#拷贝文件到镜像的指定目录</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> geoserver /usr/<span class="built_in">local</span>/tomcat/webapps/geoserver</span></span><br><span class="line"><span class="comment">#拷贝文件，但是add功能比copy多，压缩文件会自动解压，不建议用高级的add</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> geoserver /usr/<span class="built_in">local</span>/tomcat/webapps/geoserver</span></span><br><span class="line"><span class="comment">#设置环境变量，启动时可以通过参数进行覆盖</span></span><br><span class="line"><span class="keyword">ENV</span> GEOSERVER_HOME=/usr/local/tomcat/webapps/geoserver/data</span><br><span class="line"><span class="comment">#运行编译时的命令</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x /usr/bin/gitlab-runner</span></span><br><span class="line"><span class="comment">#健康检查/类似心跳，前面命令执行的时间，cmd后面为心跳检测的命令</span></span><br><span class="line"><span class="keyword">HEALTHCHECK</span><span class="bash"> --interval=5m --timeout=3s CMD curl -f http://localhost/ || <span class="built_in">exit</span> 1</span></span><br><span class="line"><span class="comment">#设置挂在卷</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> [<span class="string">&quot;/etc/gitlab-runner&quot;</span>, <span class="string">&quot;/home/gitlab-runner&quot;</span>]</span></span><br><span class="line"><span class="comment">#启动时容器时，初始化容器的命令脚本</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;/usr/bin/dumb-init&quot;</span>, <span class="string">&quot;/entrypoint&quot;</span>]</span></span><br><span class="line"><span class="comment">#入口启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;catalina.sh&quot;</span>, <span class="string">&quot;run&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-hub-和-registry"><a href="#Docker-hub-和-registry" class="headerlink" title="Docker-hub 和 registry"></a><a target="_blank" rel="noopener" href="https://hub.docker.com/?ref=login">Docker-hub</a> 和 <a href="https://blog.iexxk.com/2018/01/24/docker-install-registry/?highlight=regis">registry</a></h2><h1 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a><a href="https://blog.iexxk.com/2018/04/28/docker-compose-file/?highlight=compose">docker-compose</a></h1><p><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/compose-file/">官方文档</a></p>
+<h1 id="docker-swarm-VS-k8s-Kubernetes"><a href="#docker-swarm-VS-k8s-Kubernetes" class="headerlink" title="docker swarm VS k8s(Kubernetes)"></a><a href="https://blog.iexxk.com/2017/09/14/docker-install-swarm/?highlight=swarm">docker swarm</a> VS k8s(Kubernetes)</h1><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6eAkhd"><img src="https://s3.ax1x.com/2021/03/05/6eAkhd.jpg" alt="6eAkhd.jpg"></a></p>
+<h2 id="平台安装部署流程"><a href="#平台安装部署流程" class="headerlink" title="平台安装部署流程"></a>平台安装部署流程</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6e1abd"><img src="https://s3.ax1x.com/2021/03/05/6e1abd.png" alt="6e1abd.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6e1UDH"><img src="https://s3.ax1x.com/2021/03/05/6e1UDH.png" alt="6e1UDH.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6e1NKe"><img src="https://s3.ax1x.com/2021/03/05/6e1NKe.png" alt="6e1NKe.png"></a></p>
+<h2 id="springboot和docker-环境变量"><a href="#springboot和docker-环境变量" class="headerlink" title="springboot和docker 环境变量"></a>springboot和docker 环境变量</h2><p>springboot 支持系统环境变量<br>docker 支持容器环境变量设置</p>
+<p>设计原理，不改变基础镜像的情况下，适应不同的环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">优先级由高到低</span><br><span class="line">1	启动命令中指定的配置项；</span><br><span class="line">2	操作系统配置项；</span><br><span class="line">3	环境变量</span><br><span class="line">4	配置中心中的配置文件；</span><br><span class="line">5	本地的application.properties(yml)</span><br><span class="line">5	本地boostrap.properties（yml）</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6eGvIs"><img src="https://s3.ax1x.com/2021/03/05/6eGvIs.png" alt="6eGvIs.png"></a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/24/python-base/" rel="prev" title="python-base">
+                  <i class="fa fa-chevron-left"></i> python-base
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/08/docker-tls/" rel="next" title="docker 配置 tls 安全远程连接">
+                  docker 配置 tls 安全远程连接 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2020/11/30/docker-leaning/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

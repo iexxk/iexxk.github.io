@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iexxk.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="jenkins使用pipeline脚本名词解释 pipeline &lt;必须&gt; Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。agent &lt;必须&gt; 定义pipeline的执行环境，必须存在stages&lt;阶段&gt; 包含多个子阶段stage(‘子阶段名’) jenkins 的工作空间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tools-Jenkins-pipeline">
+<meta property="og:url" content="https://blog.iexxk.com/2018/06/04/tools-jenkins-pipline/index.html">
+<meta property="og:site_name" content="e想行空">
+<meta property="og:description" content="jenkins使用pipeline脚本名词解释 pipeline &lt;必须&gt; Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。agent &lt;必须&gt; 定义pipeline的执行环境，必须存在stages&lt;阶段&gt; 包含多个子阶段stage(‘子阶段名’) jenkins 的工作空间">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-04T14:33:16.000Z">
+<meta property="article:modified_time" content="2018-12-12T10:47:58.000Z">
+<meta property="article:author" content="e想行空">
+<meta property="article:tag" content="Jenkins">
+<meta property="article:tag" content="pipeline">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.iexxk.com/2018/06/04/tools-jenkins-pipline/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Tools-Jenkins-pipeline | e想行空</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">e想行空</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jenkins%E4%BD%BF%E7%94%A8pipeline"><span class="nav-number">1.</span> <span class="nav-text">jenkins使用pipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pipeline-lt-%E5%BF%85%E9%A1%BB-gt-Pipeline%E6%98%AFCD%E7%AE%A1%E9%81%93%E7%9A%84%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B%E3%80%82Pipeline%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9A%E4%B9%89%E4%BA%86%E6%82%A8%E7%9A%84%E6%95%B4%E4%B8%AA%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B%EF%BC%8C%E9%80%9A%E5%B8%B8%E5%8C%85%E6%8B%AC%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%8C%E6%B5%8B%E8%AF%95%E5%92%8C%E4%BA%A4%E4%BB%98%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%98%B6%E6%AE%B5%E3%80%82"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">pipeline &lt;必须&gt; Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#agent-lt-%E5%BF%85%E9%A1%BB-gt-%E5%AE%9A%E4%B9%89pipeline%E7%9A%84%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%BF%85%E9%A1%BB%E5%AD%98%E5%9C%A8"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">agent &lt;必须&gt; 定义pipeline的执行环境，必须存在</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#stages-lt-%E9%98%B6%E6%AE%B5-gt-%E5%8C%85%E5%90%AB%E5%A4%9A%E4%B8%AA%E5%AD%90%E9%98%B6%E6%AE%B5stage-%E2%80%98%E5%AD%90%E9%98%B6%E6%AE%B5%E5%90%8D%E2%80%99"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">stages&lt;阶段&gt; 包含多个子阶段stage(‘子阶段名’)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node-vs-agent-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">node vs agent 区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pipeline%E4%BD%BF%E7%94%A8gradle"><span class="nav-number">2.0.1.</span> <span class="nav-text">pipeline使用gradle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pipeline%E4%BD%BF%E7%94%A8gradle%E6%89%93%E5%8C%85java-spring-boot"><span class="nav-number">2.0.2.</span> <span class="nav-text">pipeline使用gradle打包java spring boot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%8C%85jar%E4%B8%BA%E9%95%9C%E5%83%8F"><span class="nav-number">2.0.3.</span> <span class="nav-text">打包jar为镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E9%95%9C%E5%83%8F"><span class="nav-number">2.0.4.</span> <span class="nav-text">运行镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pipeline-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%80%89%E6%8B%A9%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.0.5.</span> <span class="nav-text">pipeline 环境变量选择设置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%A5%E9%87%8D%E6%B3%A8%E6%84%8F-%E8%BF%99%E4%B8%AA%E9%9C%80%E8%A6%81%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%BF%90%E8%A1%8C%E6%89%8D%E4%BC%9A%E7%94%9F%E6%95%88%EF%BC%8C%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%BE%E7%BD%AE%E4%B9%8B%E5%90%8E%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B8%8D%E4%BC%9A%E5%87%BA%E6%9D%A5%EF%BC%8C%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8B%89%E5%8E%BB%E8%BF%90%E8%A1%8C%E6%89%8D%E4%BC%9A%E5%87%BA%E6%9D%A5"><span class="nav-number">2.0.5.0.1.</span> <span class="nav-text">**严重注意**这个需要第二次运行才会生效，第一次设置之后运行，不会出来，第二次拉去运行才会出来</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pipeline-agent%E7%89%88gradle%E8%84%9A%E6%9C%AC"><span class="nav-number">2.0.6.</span> <span class="nav-text">pipeline agent版gradle脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%B3%E6%98%8E%E5%BC%8F%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E5%BC%8F%E8%AF%AD%E8%A8%80script"><span class="nav-number">2.0.7.</span> <span class="nav-text">申明式使用脚本式语言script</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.0.8.</span> <span class="nav-text">环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="e想行空"
+      src="/uploads/headimg.jpg">
+  <p class="site-author-name" itemprop="name">e想行空</p>
+  <div class="site-description" itemprop="description">e想天开，天马行空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">239</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">311</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iexxk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iexxk" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exxk.lx@gmail.com" title="E-Mail → mailto:exxk.lx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/iexxk" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iexxk.com/2018/06/04/tools-jenkins-pipline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/headimg.jpg">
+      <meta itemprop="name" content="e想行空">
+      <meta itemprop="description" content="e想天开，天马行空">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="e想行空">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tools-Jenkins-pipeline
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-04 14:33:16" itemprop="dateCreated datePublished" datetime="2018-06-04T14:33:16+00:00">2018-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-12-12 10:47:58" itemprop="dateModified" datetime="2018-12-12T10:47:58+00:00">2018-12-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/06/04/tools-jenkins-pipline/" class="post-meta-item leancloud_visitors" data-flag-title="Tools-Jenkins-pipeline" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="jenkins使用pipeline"><a href="#jenkins使用pipeline" class="headerlink" title="jenkins使用pipeline"></a>jenkins使用pipeline</h2><p>脚本名词解释</p>
+<h5 id="pipeline-lt-必须-gt-Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。"><a href="#pipeline-lt-必须-gt-Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。" class="headerlink" title="pipeline &lt;必须&gt; Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。"></a><code>pipeline</code> <strong>&lt;必须&gt;</strong> Pipeline是CD管道的用户定义模型。Pipeline的代码定义了您的整个构建过程，通常包括构建应用程序，测试和交付应用程序的阶段。</h5><h5 id="agent-lt-必须-gt-定义pipeline的执行环境，必须存在"><a href="#agent-lt-必须-gt-定义pipeline的执行环境，必须存在" class="headerlink" title="agent &lt;必须&gt; 定义pipeline的执行环境，必须存在"></a><code>agent</code> <strong>&lt;必须&gt;</strong> 定义pipeline的执行环境，必须存在</h5><h5 id="stages-lt-阶段-gt-包含多个子阶段stage-‘子阶段名’"><a href="#stages-lt-阶段-gt-包含多个子阶段stage-‘子阶段名’" class="headerlink" title="stages&lt;阶段&gt; 包含多个子阶段stage(‘子阶段名’)"></a><code>stages</code>&lt;阶段&gt; 包含多个子阶段stage(‘子阶段名’)</h5><p> jenkins 的工作空间目录 <code>/var/jenkins_home/workspace/</code></p>
+<h3 id="node-vs-agent-区别"><a href="#node-vs-agent-区别" class="headerlink" title="node vs agent 区别"></a>node vs agent 区别</h3><p>agent是声明性的pipelines，node是脚本性的pipelines</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><h4 id="pipeline使用gradle"><a href="#pipeline使用gradle" class="headerlink" title="pipeline使用gradle"></a>pipeline使用gradle</h4><p>学习到如何使用工具，和配置工具全局变量</p>
+<ol>
+<li><p>配置工具<code>系统管理-&gt;全局工具配置-&gt;Gradle-&gt;Gradle 安装</code></p>
+<p>name：gradle4.8</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 自动安装</li>
+</ul>
+<p>版本 Gradle 4.8</p>
+<p><code>Apply-&gt;Save</code>即可</p>
+<p>注释：如果没有Gradle设置，先去安装Gradle插件，默认推荐设置是安装了的</p>
+</li>
+<li><p>编写Jenkinsfile进行测试</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line">node &#123;</span><br><span class="line">	<span class="keyword">def</span> gradleHome = tool <span class="string">&#x27;gradle4.8&#x27;</span>   <span class="comment">//这里的gradle4.8要和gradle工具的配置里的name要一致</span></span><br><span class="line">	env.PATH = <span class="string">&quot;$&#123;gradleHome&#125;/bin:$&#123;env.PATH&#125;&quot;</span></span><br><span class="line">	stage(<span class="string">&#x27;build&#x27;</span>) &#123;</span><br><span class="line">		sh <span class="string">&#x27;gradle -v&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="pipeline使用gradle打包java-spring-boot"><a href="#pipeline使用gradle打包java-spring-boot" class="headerlink" title="pipeline使用gradle打包java spring boot"></a>pipeline使用gradle打包java spring boot</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line">node &#123;</span><br><span class="line">    <span class="keyword">def</span> gradleHome = tool <span class="string">&#x27;gradle4.8&#x27;</span>  <span class="comment">//这里的gradle4.8要和gradle工具的配置里的name要一致</span></span><br><span class="line">    env.PATH = <span class="string">&quot;$&#123;gradleHome&#125;/bin:$&#123;env.PATH&#125;&quot;</span></span><br><span class="line">    stage(<span class="string">&#x27;gradle build&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isUnix()) &#123;</span><br><span class="line">            <span class="comment">//sh &#x27;./gradlew clean :eurekaserver:build&#x27;  //这里会自动下载项目里的gradle版本(4.7)</span></span><br><span class="line">            sh <span class="string">&#x27;gradle clean :eurekaserver:build&#x27;</span> <span class="comment">//使用jenkns安装的gradle工具(4.8)</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// bat &#x27;gradlew.bat clean :eurekaserver:build&#x27;</span></span><br><span class="line">            bat <span class="string">&#x27;gradle clean :eurekaserver:build&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="打包jar为镜像"><a href="#打包jar为镜像" class="headerlink" title="打包jar为镜像"></a>打包jar为镜像</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line">node &#123;</span><br><span class="line">    <span class="keyword">def</span> gradleHome = tool <span class="string">&#x27;gradle4.8&#x27;</span>  <span class="comment">//这里的gradle4.8要和gradle工具的配置里的name要一致</span></span><br><span class="line">    env.PATH = <span class="string">&quot;$&#123;gradleHome&#125;/bin:$&#123;env.PATH&#125;&quot;</span></span><br><span class="line">    stage(<span class="string">&#x27;gradle build&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isUnix()) &#123;</span><br><span class="line">            <span class="comment">//sh &#x27;./gradlew clean :eurekaserver:build&#x27;  //这里会自动下载项目里的gradle版本(4.7)</span></span><br><span class="line">            sh <span class="string">&#x27;gradle clean :eurekaserver:build&#x27;</span> <span class="comment">//使用jenkns安装的gradle工具(4.8)</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// bat &#x27;gradlew.bat clean :eurekaserver:build&#x27;</span></span><br><span class="line">            bat <span class="string">&#x27;gradle clean :eurekaserver:build&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&#x27;docker build image&#x27;</span>)&#123;</span><br><span class="line">        dir(<span class="string">&#x27;eurekaserver&#x27;</span>)&#123;  <span class="comment">//dockerfile的跟目录</span></span><br><span class="line">            docker.build(<span class="string">&quot;springcould/eurekaserver:$&#123;env.BUILD_NUMBER&#125;&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line">node &#123;</span><br><span class="line">    <span class="keyword">def</span> gradleHome = tool <span class="string">&#x27;gradle4.8&#x27;</span>  <span class="comment">//这里的gradle4.8要和gradle工具的配置里的name要一致</span></span><br><span class="line">    env.PATH = <span class="string">&quot;$&#123;gradleHome&#125;/bin:$&#123;env.PATH&#125;&quot;</span></span><br><span class="line">    stage(<span class="string">&#x27;gradle build&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isUnix()) &#123;</span><br><span class="line">            sh <span class="string">&#x27;gradle clean :eurekaserver:build&#x27;</span> <span class="comment">//使用jenkns安装的gradle工具(4.8)</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            bat <span class="string">&#x27;gradle clean :eurekaserver:build&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&#x27;docker build image&#x27;</span>)&#123;</span><br><span class="line">        dir(<span class="string">&#x27;eurekaserver&#x27;</span>)&#123;  <span class="comment">//dockerfile的跟目录</span></span><br><span class="line">            docker.build(<span class="string">&quot;springcould/eurekaserver:$&#123;env.BUILD_NUMBER&#125;&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&#x27;docker run Application&#x27;</span>)&#123;</span><br><span class="line">        sh <span class="string">&quot;docker run -p 8091:8091 springcould/eurekaserver:$&#123;env.BUILD_NUMBER&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="pipeline-环境变量选择设置"><a href="#pipeline-环境变量选择设置" class="headerlink" title="pipeline 环境变量选择设置"></a>pipeline 环境变量选择设置</h4><h6 id="严重注意-这个需要第二次运行才会生效，第一次设置之后运行，不会出来，第二次拉去运行才会出来"><a href="#严重注意-这个需要第二次运行才会生效，第一次设置之后运行，不会出来，第二次拉去运行才会出来" class="headerlink" title="**严重注意**这个需要第二次运行才会生效，第一次设置之后运行，不会出来，第二次拉去运行才会出来"></a><code>**严重注意**</code>这个需要第二次运行才会生效，第一次设置之后运行，不会出来，第二次拉去运行才会出来</h6><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(<span class="attr">name:</span> <span class="string">&#x27;door_choice&#x27;</span>,</span><br><span class="line">                <span class="symbol">choices:</span> <span class="string">&#x27;one\ntwo\nthree\nfour&#x27;</span>,</span><br><span class="line">                <span class="symbol">description:</span> <span class="string">&#x27;What door do you choose?&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(<span class="string">&#x27;build&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo <span class="string">&quot;$&#123;params.door_choice&#125;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="pipeline-agent版gradle脚本"><a href="#pipeline-agent版gradle脚本" class="headerlink" title="pipeline agent版gradle脚本"></a>pipeline agent版gradle脚本</h4><p>not support <code>tool &quot;gradle4.8&quot;</code>单个设置</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(<span class="attr">name:</span> <span class="string">&#x27;door_choice&#x27;</span>,</span><br><span class="line">                <span class="symbol">choices:</span> <span class="string">&#x27;one\ntwo\nthree\nfour&#x27;</span>,</span><br><span class="line">                <span class="symbol">description:</span> <span class="string">&#x27;What door do you choose?&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(<span class="string">&#x27;build&#x27;</span>) &#123;</span><br><span class="line">            tools&#123;</span><br><span class="line">                gradle <span class="string">&quot;gradle4.8&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo <span class="string">&quot;$&#123;params.door_choice&#125;&quot;</span></span><br><span class="line">                sh <span class="string">&#x27;gradle -v&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="申明式使用脚本式语言script"><a href="#申明式使用脚本式语言script" class="headerlink" title="申明式使用脚本式语言script"></a>申明式使用脚本式语言<code>script</code></h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env groovy Jenkinsfile</span></span><br><span class="line"></span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(<span class="attr">name:</span> <span class="string">&#x27;project_choice&#x27;</span>,</span><br><span class="line">                <span class="symbol">choices:</span> <span class="string">&#x27;eurekaserver\neurekaclient\neurekafeign\neurekazuul&#x27;</span>,</span><br><span class="line">                <span class="symbol">description:</span> <span class="string">&#x27;你要编译构建那个项目?&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(<span class="string">&#x27;docker build&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">               dir(<span class="string">&quot;$&#123;params.project_choice&#125;&quot;</span>)&#123;</span><br><span class="line">                   sh <span class="string">&quot;pwd&quot;</span></span><br><span class="line">                   script &#123;  <span class="comment">//需要用script包裹，就能使用脚本式语言</span></span><br><span class="line">                       docker.build(<span class="string">&quot;my-image:$&#123;env.BUILD_ID&#125;&quot;</span>)</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><p>env.BUILD_ID 当前的编译id，和Jenkins versions 1.597+ 的env.BUILD_NUMBER一样</p>
+<p>env.JOB_NAME 当前项目名</p>
+<p>env.JENKINS_URL only available if Jenkins URL set in “System Configuration”</p>
+<p><code> git diff HEAD^ eurekaserver/</code> 和上个版本比较eurekaserver目录，可以不要</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://github.com/arun-gupta/docker-jenkins-pipeline">https://github.com/arun-gupta/docker-jenkins-pipeline</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Jenkins/" rel="tag"># Jenkins</a>
+              <a href="/tags/pipeline/" rel="tag"># pipeline</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/29/android-osmdroid/" rel="prev" title="Android-osmdroid">
+                  <i class="fa fa-chevron-left"></i> Android-osmdroid
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/05/springcould-summary/" rel="next" title="SpringCould-summary">
+                  SpringCould-summary <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">e想行空</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"Knshftme94xEJM6dEEop4Qnq-gzGzoHsz","appKey":"UpNFcvVri9iYUjDznVdodui4","serverURLs":"https://knshftme.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/2018/06/04/tools-jenkins-pipline/",
+      serverURLs: "https://knshftme.lc-cn-n1-shared.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
