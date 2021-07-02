@@ -1,7 +1,7 @@
 ---
 title: Docker-alpine-nginx
 date: 2018-08-22 09:49:33
-updated: 2018-12-12 10:47:58
+updated: 2021-07-02 11:20:19
 categories: Docker
 tags: [Docker,nginx,alpine]
 
@@ -61,6 +61,23 @@ location / {
             root   /tmp/video;
         }
 #用http://<url>/...访问的文件地址为/tmp/video/
+
+
+location /test/ {
+      proxy_pass http://127.0.0.1:9266/;
+        }
+#访问地址 http://<url>/test/....转发地址 http://127.0.0.1:9266/...
+
+location /test {
+      proxy_pass http://127.0.0.1:9266/;
+        }
+#访问地址 http://<url>/test/....转发地址 http://127.0.0.1:9266//...
+
+location /test/ {
+      proxy_pass http://127.0.0.1:9266;
+        }
+#访问地址 http://<url>/test/....转发地址 http://127.0.0.1:9266/test/...
+
 ```
 
 常用配置文件
